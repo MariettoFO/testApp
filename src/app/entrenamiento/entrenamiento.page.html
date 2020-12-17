@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Entrenamiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+<h1>Entrenamiento</h1>
+<!-- Red add button -->
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button color="danger">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>
+<ion-tab-bar slot="bottom">
+  <ion-tab-button tab="entrenamiento" routerLink="/entrenamiento">
+    <ion-label>Entrenamiento</ion-label>
+    <ion-icon name="barbell-outline"></ion-icon>
+  </ion-tab-button>
+  <ion-tab-button tab="equipo" routerLink="/equipo">
+    <ion-label>Equipo</ion-label>
+    <ion-icon name="shield-outline"></ion-icon>
+  </ion-tab-button>
+  <ion-tab-button tab="partido" routerLink="/partido">
+    <ion-label>Partido</ion-label>
+    <ion-icon name="football-outline"></ion-icon>
+  </ion-tab-button>
+</ion-tab-bar>
