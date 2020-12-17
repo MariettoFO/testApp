@@ -12,8 +12,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'principal',
-    loadChildren: () => import('./principal/principal.module').then( m => m.PrincipalPageModule)
+    path: 'equipo',
+    loadChildren: () => import('./equipo/equipo.module').then( m => m.EquipoPageModule)
+  },
+  {
+    path: 'partido',
+    loadChildren: () => import('./partido/partido.module').then( m => m.PartidoPageModule)
+  },
+  {
+    path: 'entrenamiento',
+    loadChildren: () => import('./entrenamiento/entrenamiento.module').then( m => m.EntrenamientoPageModule)
   },
 ];
 
