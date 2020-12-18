@@ -1,5 +1,5 @@
 *{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 ion-title{
@@ -7,4 +7,12 @@ ion-title{
     font-weight: bold;
     font-size: 25pt;
 }
+.tabbar {
+    justify-content: center;
+  }
+  
+  .tab-button {
+    max-width: 200px;
+  }
+
 

@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'entrenamiento',
     loadChildren: () => import('./entrenamiento/entrenamiento.module').then( m => m.EntrenamientoPageModule)
-  },
+  }
 ];
 
 @NgModule({
