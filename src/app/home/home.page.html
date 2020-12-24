@@ -9,18 +9,25 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
   </ion-header>
-  <ion-card routerLink="/equipo">
-    <img src="../../assets/icon/favicon.png" />
-    <ion-card-header>
-      <ion-card-subtitle>Este es tu equipo</ion-card-subtitle>
-      <ion-card-title>Real Madrid CF</ion-card-title>
-    </ion-card-header>
+  <ion-card routerLink="/equipo">  
     <ion-card-content>
-      Juega en el Santiago Bernabeu, Madrid.
+      <img src="../../assets/icon/favicon.png" />
+      <h1><b>Real Madrid CF</b></h1>
     </ion-card-content>
   </ion-card>
   <div id="container">
     <strong>Ready to create an app?</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
+
+  <ion-item lines="full" routerLink="/equipo">
+    <!-- <ion-avatar slot="start">
+      <img src="../../assets/icon/favicon.png" />
+    </ion-avatar> -->
+    
+    <h1>Real Madrid CF</h1>
+    <ion-thumbnail slot="end">
+      <img src="../../assets/icon/favicon.png">
+    </ion-thumbnail>
+  </ion-item>
 </ion-content>

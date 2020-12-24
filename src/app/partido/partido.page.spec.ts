@@ -21,4 +21,5 @@ describe('PartidoPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });

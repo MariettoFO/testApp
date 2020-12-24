@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: PartidoPage
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'modal-info',
+    loadChildren: () => import('./modal-info/modal-info.module').then( m => m.ModalInfoPageModule)
   }
 ];
 
