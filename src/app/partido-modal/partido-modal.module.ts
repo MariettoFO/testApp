@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModalPageRoutingModule } from './modal-routing.module';
+import { PartidoModalPageRoutingModule } from './partido-modal-routing.module';
 
-import { ModalPage } from './modal.page';
+import { PartidoModalPage } from './partido-modal.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalPageRoutingModule
+    PartidoModalPageRoutingModule
   ],
-  declarations: [ModalPage]
+  declarations: [PartidoModalPage]
 })
-export class ModalPageModule {}
+export class PartidoModalPageModule {}

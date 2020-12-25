@@ -22,7 +22,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Partido</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content fullscreen class=\"ion-padding\">\n<h1>Partido</h1>\n<!-- Red add button -->\n    <ion-fab horizontal=\"end\" vertical=\"bottom\" slot=\"fixed\">\n      <ion-fab-button color=\"danger\">\n        <ion-icon name=\"add\"></ion-icon>\n      </ion-fab-button>\n    </ion-fab>\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Partido</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content fullscreen class=\"ion-padding\">\n<h1>Partido</h1>\n<!-- Red add button -->\n    <ion-fab horizontal=\"end\" vertical=\"bottom\" slot=\"fixed\">\n      <ion-fab-button color=\"danger\">\n        <ion-icon (click)=\"abrirModalPartido()\" name=\"add\"></ion-icon>\n      </ion-fab-button>\n    </ion-fab>\n</ion-content>";
       /***/
     },
 
@@ -153,6 +153,9 @@
       };
 
       PartidoPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        // entryComponents:[
+        //   PartidoModalPage
+        // ],
         imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _partido_routing_module__WEBPACK_IMPORTED_MODULE_5__["PartidoPageRoutingModule"]],
         declarations: [_partido_page__WEBPACK_IMPORTED_MODULE_6__["PartidoPage"]]
       })], PartidoPageModule);
@@ -210,22 +213,79 @@
       var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/core */
       "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic/angular */
+      "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+      /* harmony import */
+
+
+      var _partido_modal_partido_modal_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ../partido-modal/partido-modal.page */
+      "./src/app/partido-modal/partido-modal.page.ts");
 
       var PartidoPage = /*#__PURE__*/function () {
-        function PartidoPage() {
+        function PartidoPage(modalCtrl) {
           _classCallCheck(this, PartidoPage);
+
+          this.modalCtrl = modalCtrl;
         }
 
         _createClass(PartidoPage, [{
           key: "ngOnInit",
           value: function ngOnInit() {}
+        }, {
+          key: "abrirModalPartido",
+          value: function abrirModalPartido() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var modal, _yield$modal$onDidDis, data;
+
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.next = 2;
+                      return this.modalCtrl.create({
+                        component: _partido_modal_partido_modal_page__WEBPACK_IMPORTED_MODULE_3__["PartidoModalPage"],
+                        componentProps: {
+                          equipo: 'CD San Roque EFF',
+                          icono: '../../assets/icon/favicon.png'
+                        }
+                      });
+
+                    case 2:
+                      modal = _context.sent;
+                      _context.next = 5;
+                      return modal.present();
+
+                    case 5:
+                      _context.next = 7;
+                      return modal.onDidDismiss();
+
+                    case 7:
+                      _yield$modal$onDidDis = _context.sent;
+                      data = _yield$modal$onDidDis.data;
+                      console.log('retorno del modal', data);
+
+                    case 10:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
         }]);
 
         return PartidoPage;
       }();
 
       PartidoPage.ctorParameters = function () {
-        return [];
+        return [{
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"]
+        }];
       };
 
       PartidoPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar padding=20>
+    <!-- <ion-icon size="large" (click)="salirSinGuardar()" slot="start" color="danger" name="close-circle-outline"></ion-icon> -->
+    <ion-buttons  (click)="salirSinGuardar()" slot="start">
+      <!-- <ion-button color="danger">
+        Cancelar
+      </ion-button> -->
+      <ion-icon size="large" color="danger" name="close-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-buttons (click)="salirGuardando()" slot="end">
+      <!-- <ion-button color="primary">
+        Guardar
+      </ion-button> -->
+      <ion-icon size="large" color="primary" name="checkmark-circle-outline"></ion-icon>
+
+    </ion-buttons>
+    <ion-title><b>Crear partido</b></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label position="floating">Nombre del equipo</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+</ion-content>

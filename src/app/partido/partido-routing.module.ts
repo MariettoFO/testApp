@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PartidoModalPageModule } from '../partido-modal/partido-modal.module';
+import { PartidoModalPage } from '../partido-modal/partido-modal.page';
 
 import { PartidoPage } from './partido.page';
 
@@ -7,14 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: PartidoPage
-  },
-  {
-    path: 'modal',
-    loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
-  },
-  {
-    path: 'modal-info',
-    loadChildren: () => import('./modal-info/modal-info.module').then( m => m.ModalInfoPageModule)
   }
 ];
 

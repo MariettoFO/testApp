@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
   </ion-header>
-  <ion-card routerLink="/equipo">  
+  <ion-card routerLink="/tabs/equipo">  
     <ion-card-content>
       <img src="../../assets/icon/favicon.png" />
       <h1><b>Real Madrid CF</b></h1>
@@ -20,14 +20,16 @@
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
 
-  <ion-item lines="full" routerLink="/equipo">
+  <ion-item  vertical="center" lines="full" routerLink="/tabs/equipo">
     <!-- <ion-avatar slot="start">
       <img src="../../assets/icon/favicon.png" />
     </ion-avatar> -->
     
-    <h1>Real Madrid CF</h1>
-    <ion-thumbnail slot="end">
+    <ion-label><b>Real Madrid</b></ion-label>
+    <ion-thumbnail slot="start">
       <img src="../../assets/icon/favicon.png">
     </ion-thumbnail>
+    <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
+
   </ion-item>
 </ion-content>

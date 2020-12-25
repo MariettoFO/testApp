@@ -432,6 +432,83 @@ const openURL = async (url, ev, direction, animation) => {
 
 
 
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/partido-modal/partido-modal.page.html":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/partido-modal/partido-modal.page.html ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar padding=20>\n    <!-- <ion-icon size=\"large\" (click)=\"salirSinGuardar()\" slot=\"start\" color=\"danger\" name=\"close-circle-outline\"></ion-icon> -->\n    <ion-buttons  (click)=\"salirSinGuardar()\" slot=\"start\">\n      <!-- <ion-button color=\"danger\">\n        Cancelar\n      </ion-button> -->\n      <ion-icon size=\"large\" color=\"danger\" name=\"close-circle-outline\"></ion-icon>\n    </ion-buttons>\n    <ion-buttons (click)=\"salirGuardando()\" slot=\"end\">\n      <!-- <ion-button color=\"primary\">\n        Guardar\n      </ion-button> -->\n      <ion-icon size=\"large\" color=\"primary\" name=\"checkmark-circle-outline\"></ion-icon>\n\n    </ion-buttons>\n    <ion-title><b>Crear partido</b></ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-item>\n    <ion-label position=\"floating\">Nombre del equipo</ion-label>\n    <ion-input></ion-input>\n  </ion-item>\n</ion-content>\n");
+
+/***/ }),
+
+/***/ "./src/app/partido-modal/partido-modal.page.scss":
+/*!*******************************************************!*\
+  !*** ./src/app/partido-modal/partido-modal.page.scss ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("ion-title {\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFydGlkby1tb2RhbC9wYXJ0aWRvLW1vZGFsLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGtCQUFBO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9wYXJ0aWRvLW1vZGFsL3BhcnRpZG8tbW9kYWwucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLXRpdGxle1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59Il19 */");
+
+/***/ }),
+
+/***/ "./src/app/partido-modal/partido-modal.page.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/partido-modal/partido-modal.page.ts ***!
+  \*****************************************************/
+/*! exports provided: PartidoModalPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PartidoModalPage", function() { return PartidoModalPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+
+
+
+let PartidoModalPage = class PartidoModalPage {
+    constructor(modalCtrl) {
+        this.modalCtrl = modalCtrl;
+    }
+    ngOnInit() {
+    }
+    salirSinGuardar() {
+        this.modalCtrl.dismiss();
+    }
+    salirGuardando() {
+        this.modalCtrl.dismiss({
+            equipo: 'CD San Roque',
+            icono: 'hola'
+        });
+    }
+};
+PartidoModalPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"] }
+];
+PartidoModalPage.propDecorators = {
+    equipo: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
+    icono: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
+};
+PartidoModalPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-partido-modal',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./partido-modal.page.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/partido-modal/partido-modal.page.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./partido-modal.page.scss */ "./src/app/partido-modal/partido-modal.page.scss")).default]
+    })
+], PartidoModalPage);
+
+
+
 /***/ })
 
 }]);

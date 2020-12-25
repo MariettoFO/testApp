@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { PartidoModalPage } from '../partido-modal/partido-modal.page';
 
 @Component({
   selector: 'app-partido',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartidoPage implements OnInit {
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
+  }
+
+  async abrirModalPartido(){
+    const modal = await this.modalCtrl.create({
+      component: PartidoModalPage,
+      componentProps:{
+        equipo: 'CD San Roque EFF',
+        icono: '../../assets/icon/favicon.png'
+      }
+    });
+
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+
+    console.log('retorno del modal', data);
   }
 
 }

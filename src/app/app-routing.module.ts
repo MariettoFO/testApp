@@ -22,6 +22,14 @@ const routes: Routes = [
   {
     path: 'entrenamiento',
     loadChildren: () => import('./entrenamiento/entrenamiento.module').then( m => m.EntrenamientoPageModule)
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  {
+    path: 'partido-modal',
+    loadChildren: () => import('./partido-modal/partido-modal.module').then( m => m.PartidoModalPageModule)
   }
 ];
 
