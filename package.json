@@ -39,6 +39,7 @@
     "cordova-plugin-filepath": "^1.5.8",
     "cordova-plugin-telerik-imagepicker": "^2.3.6",
     "express": "^4.17.1",
+    "jetifier": "^1.6.6",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
