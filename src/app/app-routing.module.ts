@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'partido-modal',
     loadChildren: () => import('./partido-modal/partido-modal.module').then( m => m.PartidoModalPageModule)
+  },
+  {
+    path: 'entrenamiento-modal',
+    loadChildren: () => import('./entrenamiento-modal/entrenamiento-modal.module').then( m => m.EntrenamientoModalPageModule)
   }
 ];
 

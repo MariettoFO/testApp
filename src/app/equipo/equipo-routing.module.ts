@@ -7,6 +7,18 @@ const routes: Routes = [
   {
     path: '',
     component: EquipoPage
+  },
+  {
+    path: 'plantilla',
+    loadChildren: () => import('./plantilla/plantilla.module').then( m => m.PlantillaPageModule)
+  },
+  {
+    path: 'estadisticas',
+    loadChildren: () => import('./estadisticas/estadisticas.module').then( m => m.EstadisticasPageModule)
+  },
+  {
+    path: 'calendario',
+    loadChildren: () => import('./calendario/calendario.module').then( m => m.CalendarioPageModule)
   }
 ];
 

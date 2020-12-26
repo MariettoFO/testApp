@@ -118,11 +118,16 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
+        <ion-menu-toggle>
+          <ion-item button vertical="center" lines="full" routerLink="home">
+            <ion-label>Seleccionar equipo</ion-label>
+            <ion-icon color="primary" slot="start" name="home-outline"></ion-icon>
+          </ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+        </ion-menu-toggle>   
       </ion-list>
     </ion-content>
   </ion-menu>

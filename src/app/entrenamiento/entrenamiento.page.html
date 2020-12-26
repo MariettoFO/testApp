@@ -12,12 +12,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding">
-<h1>Entrenamiento</h1>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-item button vertical="center" lines="full" routerLink="/tabs/equipo"> 
+    <ion-icon color="dark" name="barbell-outline" slot="start"></ion-icon> 
+    <ion-label>
+      <p><b>Semana 1 - Entrenamiento 1</b></p>
+      <p>Lunes 19/05/2020</p>
+      <p>12:00</p>
+    </ion-label>
+    <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
+
+  </ion-item>
 <!-- Red add button -->
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button color="danger">
-        <ion-icon name="add"></ion-icon>
+        <ion-icon (click)="abrirModalEntrenamiento()" name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 </ion-content>

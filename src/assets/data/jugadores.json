@@ -1,0 +1,30 @@
+[
+    {
+        "nombre": "Mario",
+        "apellidos": "Fernández",
+        "apodo": "Marietto",
+        "numero": "10",
+        "posicion": "MED" 
+    },
+    {
+        "nombre": "Sergio",
+        "apellidos": "Peña",
+        "apodo": "Junny",
+        "numero": "6",
+        "posicion": "DEF" 
+    },
+    {
+        "nombre": "Sergio",
+        "apellidos": "Lozano",
+        "apodo": "Loza",
+        "numero": "9",
+        "posicion": "DEL" 
+    },
+    {
+        "nombre": "Óscar",
+        "apellidos": "Gaspar",
+        "apodo": "Primo",
+        "numero": "1",
+        "posicion": "POR" 
+    }
+]

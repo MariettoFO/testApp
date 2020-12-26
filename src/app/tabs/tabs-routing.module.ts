@@ -6,19 +6,23 @@ import { TabsPage } from './tabs.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'equipo'
+  },
+  {
+    path: '',
     component: TabsPage,
     children: [
       {
         path:'entrenamiento',
-        loadChildren: '../entrenamiento/entrenamiento.module#EntrenamientoPageModule'
+        loadChildren: () => import('../entrenamiento/entrenamiento.module').then( m => m.EntrenamientoPageModule)
       },
       {
         path:'equipo',
-        loadChildren: '../equipo/equipo.module#EquipoPageModule'
+        loadChildren: () => import('../equipo/equipo.module').then( m => m.EquipoPageModule)
       },
       {
         path:'partido',
-        loadChildren: '../partido/partido.module#PartidoPageModule'
+        loadChildren: () => import('../partido/partido.module').then( m => m.PartidoPageModule)
       }
     ]
   }

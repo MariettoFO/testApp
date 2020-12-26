@@ -27,11 +27,16 @@
   </div> -->
 
   <ion-item button vertical="center" lines="full" routerLink="/tabs/equipo">  
-    <ion-label><b>Real Madrid</b></ion-label>
+    <ion-label><b>C.D. San Roque E.F.F.</b></ion-label>
     <ion-thumbnail slot="start">
-      <img src="../../assets/icon/favicon.png">
+      <img src="../../assets/icon/escudoSanro.png">
     </ion-thumbnail>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
-
   </ion-item>
+  <!-- Red add button -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="danger">
+      <ion-icon (click)="abrirModalEquipo()" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

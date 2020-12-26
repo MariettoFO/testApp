@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="tabs/equipo">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Equipo - Plantilla</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-toolbar>
+  <ion-segment scrollable value="todos" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="todos">
+      <ion-label>TODOS</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="porteros">
+      <ion-label>POR</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="defensas">
+      <ion-label>DEF</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="mediocentros">
+      <ion-label>MED</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="delanteros">
+      <ion-label>DEL</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+<ion-content>
+  <ion-list>
+
+    <ion-item *ngFor="let jugador of jugadores">
+      <ion-label>
+        <h3>{{jugadores.nombre}} <small>{{jugadores.apellidos}}{{jugadores.numero}}</small></h3>
+        <p>
+          {{jugadores.apodo}}
+        </p>
+      </ion-label>
+      <ion-label slot="end" text-right>
+          {{jugadores.posicion}}
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

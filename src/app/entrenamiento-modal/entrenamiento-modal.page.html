@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons  (click)="salirSinGuardar()" slot="start">
+      <ion-icon size="large" color="danger" name="close-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-buttons (click)="salirGuardando()" slot="end">
+      <ion-icon size="large" color="primary" name="checkmark-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title><b>Crear entrenamiento</b></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item-divider>Datos del entrenamiento</ion-item-divider>
+  <ion-item>
+    <ion-label position="stacked">Nº de entrenamiento</ion-label>
+    <ion-input required placeholder="Introducir" type="number" value="0"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Nº de semana</ion-label>
+    <ion-input required placeholder="Introducir" type="number" value="0"></ion-input>
+  </ion-item>
+  <ion-item-divider>Fecha y hora</ion-item-divider>
+  <ion-item>
+    <ion-label>Seleccionar fecha</ion-label>
+    <ion-datetime dayNames="Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo" displayFormat="DDDD DD/MM/YYYY" placeholder="Elegir"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Seleccionar hora</ion-label>
+    <ion-datetime display-format="HH:mm" picker-format="HH:mm" placeholder="Elegir"></ion-datetime>
+  </ion-item>
+
+  
+  <!-- <ion-button (click)="UploadFile()">Subir imagen</ion-button>
+  <ion-label><b>{{UploadText}}</b></ion-label> 
+  <br/><br/>
+  <ion-button (click)="AbortUpload()">Cancelar subida</ion-button> -->
+</ion-content>
