@@ -1,11 +1,33 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Equipo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding">
-<h1>Equipo</h1>
+<ion-content [fullscreen]="true" class="ion-padding">
+<ion-item  button vertical="center" lines="full">
+  <ion-icon slot="start" color="dark" name="people-outline"></ion-icon>
+  <ion-label>Plantilla</ion-label>
+  <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>  
+</ion-item>
+<ion-item button vertical="center" lines="full">
+  <ion-icon slot="start" color="dark" name="stats-chart-outline"></ion-icon>
+  <ion-label>Estadísticas</ion-label>
+  <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
+</ion-item>
+<ion-item button vertical="center" lines="full">
+  <ion-icon slot="start" color="dark" name="calendar-outline"></ion-icon>
+  <ion-label>Calendario</ion-label>
+  <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
+</ion-item>
 <!-- Red add button -->
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button color="danger">

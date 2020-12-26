@@ -1,15 +1,21 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      {{AppTitle}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button auto-hide="false"></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="primary">
+        <ion-button>
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Football Coach</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-  </ion-header>
-  <ion-card routerLink="/tabs/equipo">  
+  <!-- <ion-header collapse="condense">
+  </ion-header> -->
+  <!-- <ion-card routerLink="/tabs/equipo">  
     <ion-card-content>
       <img src="../../assets/icon/favicon.png" />
       <h1><b>Real Madrid CF</b></h1>
@@ -18,13 +24,9 @@
   <div id="container">
     <strong>Ready to create an app?</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  </div> -->
 
-  <ion-item  vertical="center" lines="full" routerLink="/tabs/equipo">
-    <!-- <ion-avatar slot="start">
-      <img src="../../assets/icon/favicon.png" />
-    </ion-avatar> -->
-    
+  <ion-item button vertical="center" lines="full" routerLink="/tabs/equipo">  
     <ion-label><b>Real Madrid</b></ion-label>
     <ion-thumbnail slot="start">
       <img src="../../assets/icon/favicon.png">

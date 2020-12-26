@@ -1,11 +1,37 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Partido</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding">
-<h1>Partido</h1>
+<ion-content [fullscreen]="true">
+  <ion-item button vertical="center" lines="full" routerLink="/tabs/equipo"> 
+    <ion-icon color="dark" name="football-outline" slot="start"></ion-icon> 
+    <ion-label>
+      <p>Jornada 1</p>
+      <b>Getafe C.F<br/>vs<br/>C.D. San Roque E.F.F.</b>
+      <p>19/05/2020</p>
+      <p>12:00</p>
+    </ion-label>
+    <ion-thumbnail slot="start">
+      <img src="../../assets/icon/GETAFE.png">
+      <ion-label color="success">1º</ion-label>
+    </ion-thumbnail>
+    <ion-thumbnail slot="end">
+      <img src="../../assets/icon/escudoSanro.png">
+      <ion-label color="danger">14º</ion-label>
+    </ion-thumbnail>
+    <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
+
+  </ion-item>
 <!-- Red add button -->
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button color="danger">

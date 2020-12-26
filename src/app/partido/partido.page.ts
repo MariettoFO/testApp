@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PartidoModalPage } from '../partido-modal/partido-modal.page';
 
+
+
 @Component({
   selector: 'app-partido',
   templateUrl: './partido.page.html',
@@ -9,7 +11,13 @@ import { PartidoModalPage } from '../partido-modal/partido-modal.page';
 })
 export class PartidoPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController) { }
+
+  constructor(private modalCtrl: ModalController) { 
+      
+    }
+
+
+    
 
   ngOnInit() {
   }
