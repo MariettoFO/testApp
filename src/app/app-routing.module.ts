@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'entrenamiento-modal',
     loadChildren: () => import('./entrenamiento-modal/entrenamiento-modal.module').then( m => m.EntrenamientoModalPageModule)
+  },
+  {
+    path: 'home-modal',
+    loadChildren: () => import('./home-modal/home-modal.module').then( m => m.HomeModalPageModule)
   }
 ];
 

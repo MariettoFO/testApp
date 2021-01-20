@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'calendario',
     loadChildren: () => import('./calendario/calendario.module').then( m => m.CalendarioPageModule)
+  },
+  {
+    path: 'plantilla-modal',
+    loadChildren: () => import('./plantilla-modal/plantilla-modal.module').then( m => m.PlantillaModalPageModule)
   }
 ];
 

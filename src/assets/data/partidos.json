@@ -1,0 +1,11 @@
+[
+    {
+        "jornada": "1",
+        "local": "Getafe C.F",
+        "escudolcl": "../../assets/icon/GETAFE.png",
+        "visitante": "C.D. San Roque E.F.F.",
+        "escudovis": "../../assets/icon/escudoSanro.png",
+        "fecha": "19/05/2020",
+        "hora": "12:00"
+    }
+]

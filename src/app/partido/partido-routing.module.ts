@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '',
     component: PartidoPage
+  },
+  {
+    path: 'control',
+    loadChildren: () => import('./control/control.module').then( m => m.ControlPageModule)
   }
 ];
 

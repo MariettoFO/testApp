@@ -9,7 +9,7 @@
         <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Equipo - Plantilla</ion-title>
+    <ion-title>Plantilla</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-toolbar>
@@ -34,17 +34,24 @@
 <ion-content>
   <ion-list>
 
-    <ion-item *ngFor="let jugador of jugadores | async">
+    <ion-item lines="full" detail="false" button *ngFor="let jugador of jugadores | async">
+      <ion-text color="danger"> <h2 text-left>
+        {{jugadores.posicion}}POR
+      </h2></ion-text>
       <ion-label>
-        <h3>{{jugadores.nombre}} Sergio<small>{{jugadores.apellidos}}Fernandez Osorio 10{{jugadores.numero}}</small></h3>
+        <h2>{{jugadores.nombre}}Sergio{{jugadores.apellidos}} Fernández Osorio</h2>
         <p>
-          {{jugadores.apodo}}Loza
-        </p>
+          <h2>{{jugadores.apodo}}"Junny"</h2>
       </ion-label>
-      <ion-label slot="end" text-right>
-          {{jugadores.posicion}}MED
-
-      </ion-label>
+      <h2 text-right >
+        10{{jugadores.numero}}  
+      </h2>
     </ion-item>
   </ion-list>
+  <!-- Red add button -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="danger">
+      <ion-icon (click)="abrirModalPlantilla()" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
