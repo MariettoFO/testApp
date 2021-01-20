@@ -7,7 +7,7 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  public getJugadores(){
+  getJugadores(){
     return this.http.get('/assets/data/jugadores.json');
   }
 }

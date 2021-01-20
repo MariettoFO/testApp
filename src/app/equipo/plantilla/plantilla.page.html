@@ -34,15 +34,15 @@
 <ion-content>
   <ion-list>
 
-    <ion-item *ngFor="let jugador of jugadores">
+    <ion-item *ngFor="let jugador of jugadores | async">
       <ion-label>
-        <h3>{{jugadores.nombre}} <small>{{jugadores.apellidos}}{{jugadores.numero}}</small></h3>
+        <h3>{{jugadores.nombre}} Sergio<small>{{jugadores.apellidos}}Fernandez Osorio 10{{jugadores.numero}}</small></h3>
         <p>
-          {{jugadores.apodo}}
+          {{jugadores.apodo}}Loza
         </p>
       </ion-label>
       <ion-label slot="end" text-right>
-          {{jugadores.posicion}}
+          {{jugadores.posicion}}MED
 
       </ion-label>
     </ion-item>

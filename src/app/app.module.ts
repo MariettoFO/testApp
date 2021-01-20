@@ -15,13 +15,14 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 // import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule],
   providers: [
     StatusBar,
     Title,
@@ -29,6 +30,7 @@ import { File } from '@ionic-native/file/ngx';
     FileTransfer,
     FileChooser,
     FilePath,
+    HttpClientModule,
     // ImagePicker,
     // File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
