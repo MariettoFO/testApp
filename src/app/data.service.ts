@@ -9,5 +9,7 @@ export class DataService {
 
   getJugadores(){
     return this.http.get('/assets/data/jugadores.json');
+
+    
   }
 }
