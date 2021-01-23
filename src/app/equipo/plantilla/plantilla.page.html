@@ -36,15 +36,17 @@
 
     <ion-item lines="full" detail="false" button *ngFor="let jugador of jugadores | async">
       <ion-text color="danger"> <h2 text-left>
-        {{jugadores.posicion}}POR
+        {{jugador.posicion}}
       </h2></ion-text>
       <ion-label>
-        <h2>{{jugadores.nombre}}Sergio{{jugadores.apellidos}} Fernández Osorio</h2>
+        <h2>{{jugador.nombre}} {{jugador.apellidos}}</h2>
         <p>
-          <h2>{{jugadores.apodo}}"Junny"</h2>
+          <h2>"{{jugador.apodo}}"</h2>
+        <p>
+          <h2>Edad: {{jugador.edad}}</h2>
       </ion-label>
       <h2 text-right >
-        10{{jugadores.numero}}  
+        {{jugador.numero}}  
       </h2>
     </ion-item>
   </ion-list>
