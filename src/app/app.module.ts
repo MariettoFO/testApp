@@ -17,12 +17,22 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 // import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule],
+  imports: [BrowserModule, 
+    IonicModule.forRoot(), 
+    HttpClientModule, 
+    AppRoutingModule, 
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
+  ],
   providers: [
     StatusBar,
     Title,
