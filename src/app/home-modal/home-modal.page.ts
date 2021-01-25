@@ -25,16 +25,15 @@ salirSinGuardar(){
 
 salirGuardando(){
 
-  const path = 'equipos/'
-  const nuevoEquipo: Equipo = {
-    nombre: 'Real Madrid C. F.'
-  }
-  this.firebaseService.crearEquipo<Equipo>
+  // const path = 'equipos/'
+  // const nuevoEquipo: Equipo = {
+  //   nombre: 'Real Madrid C. F.'
+  // }
+  // this.firebaseService.crearEquipo<Equipo>
 
   // this.modalCtrl.dismiss({
   //   equipo: 'CD San Roque',
   //   icono: 'hola'
   // });
-
 }
 }

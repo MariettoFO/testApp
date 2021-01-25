@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -38,6 +38,22 @@ const routes: Routes = [
   {
     path: 'home-modal',
     loadChildren: () => import('./home-modal/home-modal.module').then( m => m.HomeModalPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'recuperar-password',
+    loadChildren: () => import('./recuperar-password/recuperar-password.module').then( m => m.RecuperarPasswordPageModule)
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
+    path: 'loginscreen',
+    loadChildren: () => import('./loginscreen/loginscreen.module').then( m => m.LoginscreenPageModule)
   }
 ];
 
