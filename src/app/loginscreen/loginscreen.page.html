@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <!-- <ion-title>loginscreen</ion-title> -->
+    <!-- <ion-title>Bienvenido</ion-title> -->
   </ion-toolbar>
   <ion-buttons slot="start">
     <ion-back-button defaulthref="login" text=""></ion-back-button>
@@ -13,19 +13,19 @@
   <ion-card-content>
     <div class="wrapform">
       <ion-item>
-        <ion-icon name="mail-outline"></ion-icon>
         <ion-input type="text" name="email" [(ngModle)]="email" placeholder="Email" required></ion-input>
+        <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-icon name="lock-closed-outline"></ion-icon>
         <ion-input type="password" name="password" [(ngModle)]="password" placeholder="**********" required></ion-input>
+        <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
     </div>
     <div class="password_forgot">
       <ion-button fill="clear" class="ion-no-padding">¿Olvidaste la contraseña?</ion-button>
     </div>
     <div class="sign-btn-wrap">
-      <ion-button shape="round" fill="solid" class="sign-btn" routerLink="/home">INICIAR SESIÓN</ion-button>
+      <ion-button shape="round" size="full" fill="solid" class="sign-btn" routerLink="/home">INICIAR SESIÓN</ion-button>
     </div>
     <div class="social-btns">
       <ion-button fill="clear" class ="googlebtn ion-no-padding">
@@ -40,6 +40,10 @@
     </div>
   </ion-card-content>
   </ion-card>
+
+  <div class="ion-card-footer">
+    <span>¿Aún no tienes cuenta?</span><button class="ion-no-padding" routerLink="/signup">Regístrate</button>
+  </div>
 
 
 </ion-content>
