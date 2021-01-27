@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="bg-color">
-  <ion-card>
+  <ion-card class="ion-no-margin">
     <ion-card-header>
       <ion-card-title>
         Regístrate
@@ -19,8 +19,13 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-input name="names" type="text" placeholder="Nombre">
+        <ion-input name="names" type="text" placeholder="Nombre completo">
           <ion-icon name="person-outline"></ion-icon>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input name="email" type="text" placeholder="Nº teléfono">
+          <ion-icon name="call-outline"></ion-icon>
         </ion-input>
       </ion-item>
       <ion-item>
@@ -28,6 +33,20 @@
           <ion-icon name="mail-outline"></ion-icon>
         </ion-input>
       </ion-item>
+      <div class="sign-btn-wrap">
+        <ion-button shape="round" size="full" fill="solid" class="sign-btn" routerLink="/home">CREAR CUENTA</ion-button>
+      </div>
+      <div class="text-tag">
+        <span>Registrarse con:</span>
+      </div>
+      <div class="social-btns">
+        <ion-button fill="clear" class ="googlebtn ion-no-padding">
+          <ion-img src="assets/icon/google.png"></ion-img>
+        </ion-button>
+        <ion-button fill="clear" class ="facebookbtn ion-no-padding">
+          <ion-img src="assets/icon/facebook.png"></ion-img>
+        </ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 

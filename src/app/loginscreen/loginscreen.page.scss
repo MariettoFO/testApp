@@ -39,7 +39,10 @@ ion-item {
 .password_forgot{
     text-align: right;
     ion-button {
-        font-size: 12px;
+        font-size: 15px;
+        height: 40px;
+        color: #040454;
+        text-transform: none;
     }
 }
 
@@ -47,7 +50,7 @@ ion-item {
     text-align: center;
     padding-top: 20px;
     .sign-btn {
-        --ion-color-primary: #040454;
+        --ion-primary-color: #040454;
         --background-activated: #E1EAF9;
         --background-focused: #E1EAF9;
         --background-hover: #647B9D;
@@ -63,13 +66,13 @@ ion-item {
     span {
         font-size: 13px;
         font-weight: normal;
-        color: #898585;
+        color: #334862;
     }
 }
 
 .social-btns {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 18px;
     ion-button {
         width: 40px;
         padding-left: 10px !important;
