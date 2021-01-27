@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-loginscreen',
@@ -7,9 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginscreenPage implements OnInit {
 
-  constructor() { }
+  validationUserMessage={
+    email:[
+      {type:"required", message:"Por favor, introduce tu email"},
+      {type:"pattern", message:"El Email introducido es incorecto. Prueba de nuevo"}
+    ],
+    password:[
+      {type:"required", message:"Por favor, introduce tu Contraseña"},
+      {type:"minlength", message:"La contraseña debe tener minimo 8 caracteres"}
+    ]
+  }
+
+  validationFormUser: FormGroup;
+
+  constructor(public formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.validationFormUser = this.formBuilder.group({
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('prueba@prueba.prb')
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ]))
+    })
   }
 
 }
