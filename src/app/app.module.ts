@@ -17,8 +17,10 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
+import { firebaseConfig } from 'src/environments/environment';
+
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -32,7 +34,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     IonicModule.forRoot(), 
     HttpClientModule, 
     AppRoutingModule, 
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
     AngularFirestoreModule,
     FormsModule,
     ReactiveFormsModule

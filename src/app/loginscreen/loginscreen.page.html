@@ -11,10 +11,10 @@
   <ion-card class="ion-no-margin">
     <ion-img src="assets/images/header1.png"></ion-img>
   <ion-card-content>
-    <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.valid)">
+    <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
       <div class="wrapform">
         <ion-item>
-          <ion-input type="text" name="email" formControlName="email" placeholder="Email" required></ion-input>
+          <ion-input type="text" name="email" formControlName="email" placeholder="Email"></ion-input>
           <ion-icon name="mail-outline"></ion-icon>
         </ion-item>
         <div>
@@ -26,7 +26,7 @@
         </div>
 
         <ion-item>
-          <ion-input type="password" name="password" formControlName="password" placeholder="**********" required></ion-input>
+          <ion-input type="password" name="password" formControlName="password" placeholder="**********"></ion-input>
           <ion-icon name="lock-closed-outline"></ion-icon>
         </ion-item>
         <div>
@@ -42,7 +42,7 @@
         <ion-button fill="clear" class="ion-no-padding">¿Olvidaste la contraseña?</ion-button>
       </div>
       <div class="sign-btn-wrap">
-        <ion-button shape="round" size="full" fill="solid" type="submit" class="sign-btn" routerLink="/home" [disabled]="validationFormUser.valid">INICIAR SESIÓN</ion-button>
+        <ion-button shape="round" size="full" fill="solid" type="submit" class="sign-btn" [disabled]="!validationFormUser.valid">INICIAR SESIÓN</ion-button>
       </div>
       <div class="social-btns">
         <ion-button fill="clear" class ="googlebtn ion-no-padding">
