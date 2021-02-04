@@ -48,6 +48,8 @@ ion-item{
     --highlight-color-focused: #040454;
     --padding-start: 0;
     --inner-padding-end: 0;
+    --highlight-color-invalid: #215AB7;
+    --highlight-color-valid: #215AB7;
     font-size: 13px;
     ion-input{
         color: #74787E;
@@ -94,4 +96,9 @@ ion-input:hover{
         width: 40px;
         padding-left: 10px !important;
     }
+}
+
+.error_message{
+    font-weight: 200;
+    color: red;
 }
