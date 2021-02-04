@@ -9,12 +9,22 @@ export class AuthService {
 
   constructor(public auth: AngularFireAuth) { }
 
-loginFireauth(value){
-  return new Promise<any> ( (resolve, reject)=>{
-    firebase.auth().signInWithEmailAndPassword(value.email, value.password).then(
-      res => resolve(res),
-      error=> reject(error)
-    )
-  })
+  loginFireauth(value){
+    return new Promise<any> ( (resolve, reject)=>{
+      firebase.auth().signInWithEmailAndPassword(value.email, value.password).then(
+        res => resolve(res),
+        error=> reject(error)
+      )
+    })
+  }
+
+  userRegistration(value){
+    return new Promise<any> ( (resolve, reject)=>{
+      firebase.auth().createUserWithEmailAndPassword(value.email, value.password).then(
+        res => resolve(res),
+        error => reject(error)
+      )
+    })
+  }
 }
-}
+
