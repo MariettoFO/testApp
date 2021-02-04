@@ -16,7 +16,7 @@ export class LoginscreenPage implements OnInit {
       {type:"pattern", message:"El Email introducido es incorecto. Prueba de nuevo"}
     ],
     password:[
-      {type:"required", message:"Por favor, introduce tu Contraseña"},
+      {type:"required", message:"Por favor, introduce tu contraseña"},
       {type:"minlength", message:"La contraseña debe tener minimo 8 caracteres"}
     ]
   }
