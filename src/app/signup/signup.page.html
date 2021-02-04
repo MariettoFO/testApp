@@ -17,24 +17,62 @@
         Crea tu cuenta rellenando el formulario
       </ion-card-subtitle>
     </ion-card-header>
+    <form [formGroup]="validationFormUser" (ngSubmit)="registerUser(validationFormUser.value)">
     <ion-card-content>
       <ion-item>
-        <ion-input name="names" type="text" placeholder="Nombre completo">
+        <ion-input name="names" type="text" placeholder="Nombre completo" formControlName="names">
           <ion-icon name="person-outline"></ion-icon>
         </ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationUserMessage.names">
+          <div class="error_message" *ngIf="validationFormUser.get('names').hasError(validation.type) && (validationFormUser.get('names').dirty || validationFormUser.get('names').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input name="email" type="text" placeholder="Nº teléfono">
+        <ion-input name="phone" type="number" placeholder="Nº teléfono" formControlName="phone">
           <ion-icon name="call-outline"></ion-icon>
         </ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationUserMessage.phone">
+          <div class="error_message" *ngIf="validationFormUser.get('phone').hasError(validation.type) && (validationFormUser.get('phone').dirty || validationFormUser.get('phone').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-input name="email" type="text" placeholder="Email">
+        <ion-input name="email" type="text" placeholder="Email" formControlName="email">
           <ion-icon name="mail-outline"></ion-icon>
         </ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationUserMessage.email">
+          <div class="error_message" *ngIf="validationFormUser.get('email').hasError(validation.type) && (validationFormUser.get('email').dirty || validationFormUser.get('email').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-input name="password" type="password" placeholder="**********" formControlName="password">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationUserMessage.password">
+          <div class="error_message" *ngIf="validationFormUser.get('password').hasError(validation.type) && (validationFormUser.get('password').dirty || validationFormUser.get('password').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
       <div class="sign-btn-wrap">
-        <ion-button shape="round" size="full" fill="solid" class="sign-btn" routerLink="/home">CREAR CUENTA</ion-button>
+        <ion-button shape="round" type="submit" size="full" fill="solid" class="sign-btn" [disabled]="!validationFormUser.valid">CREAR CUENTA</ion-button>
       </div>
       <div class="text-tag">
         <span>Registrarse con:</span>
@@ -48,6 +86,8 @@
         </ion-button>
       </div>
     </ion-card-content>
+  </form>
   </ion-card>
 
 </ion-content>
+
