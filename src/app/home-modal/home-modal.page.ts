@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import firebase from 'firebase/app';
 import { Equipo } from '../interfaces';
 import { FirebaseService } from '../services/firebase.service';
 
@@ -13,7 +14,7 @@ export class HomeModalPage implements OnInit {
   constructor(private modalCtrl: ModalController,
               public firebaseService: FirebaseService) {}
 
-
+// @Input() uid;
 @Input() equipo;
 @Input() icono;
 ngOnInit() {
@@ -25,15 +26,17 @@ salirSinGuardar(){
 
 salirGuardando(){
 
-  const path = 'equipos/'
+  const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/'
   const nuevoEquipo: Equipo = {
-    nombre: 'Real Madrid C. F.'
+    // uid: firebase.auth().currentUser.uid,
+    nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
   }
   this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
+  this.firebaseService.cargarEquipos()
 
   this.modalCtrl.dismiss({
-    equipo: 'CD San Roque',
-    icono: 'hola'
+    // uid: firebase.auth().currentUser.uid,
+    equipo: (document.getElementById("inputequipo") as HTMLInputElement).value
   });
 }
 }

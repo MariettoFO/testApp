@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { FirebaseService } from '../services/firebase.service';
+import { User } from '../interfaces';
+import firebase from 'firebase/app';
+
 
 @Component({
   selector: 'app-loginscreen',
@@ -23,7 +28,7 @@ export class LoginscreenPage implements OnInit {
 
   validationFormUser: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, public authService: AuthService, private router: Router) { }
+  constructor(public formBuilder: FormBuilder, public firebaseService: FirebaseService, public authService: AuthService, private router: Router, private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController) { }
 
   ngOnInit() {
     this.validationFormUser = this.formBuilder.group({
@@ -42,11 +47,33 @@ export class LoginscreenPage implements OnInit {
     try{
       this.authService.loginFireauth(value).then ( resp =>{
         console.log(resp);
-        this.router.navigate(['home'])
+        this.router.navigate(['home']);
+        // const path = "users/"
+        // const nuevoEquipo: User = {
+        //   uid: firebase.auth().currentUser.uid,
+        //   correo: (document.getElementById("email") as HTMLInputElement).value
+        // }
+        // this.firebaseService.crearEquipo<User>(nuevoEquipo, path);
+      }, error=>{
+        this.loadingCtrl.dismiss();
+        this.errorLoading(error.message);
       })
-    }catch(err){
-      console.log(err);
+    }catch(error){
+      console.log(error);
+      // this.errorLoading(err.message);
     }
   }
-
+  async errorLoading(message: any){
+    const loading = await this.alertCtrl.create({
+      header: "Error al iniciar sesión",
+      message: "Compruebe que los datos introducidos sean los correctos.",
+      buttons:[{
+        text:'ok',
+        handler:()=>{
+          this.navCtr.navigateBack(['loginscreen'])
+        }
+      }]
+    })
+    await loading.present();
+  }
 }

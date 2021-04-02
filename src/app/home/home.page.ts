@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseApp } from '@angular/fire';
 import { ModalController } from '@ionic/angular';
 import { HomeModalPage } from '../home-modal/home-modal.page';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-home',
@@ -9,7 +12,7 @@ import { HomeModalPage } from '../home-modal/home-modal.page';
 })
 export class HomePage {
 
-  constructor( private modalCtrl: ModalController) { }
+  constructor( private modalCtrl: ModalController, public cloud: FirebaseApp) { }
 
   ngOnInit() {
   }
@@ -33,5 +36,6 @@ export class HomePage {
 
     console.log('retorno del modal', data);
   }
+
 
 }

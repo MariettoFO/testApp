@@ -5,6 +5,9 @@ import { AlertController, LoadingController, NavController } from '@ionic/angula
 import { AuthService } from '../services/auth.service';
 import firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth'
+import { User } from '../interfaces';
+import { FirebaseService } from '../services/firebase.service';
+
 
 @Component({
   selector: 'app-signup',
@@ -32,7 +35,7 @@ export class SignupPage implements OnInit {
   validationFormUser: FormGroup;
   loading: any;
 
-  constructor(private nav: NavController,private router: Router, private navCtr: NavController, private formBuilder: FormBuilder, private authService: AuthService, public loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
+  constructor(private nav: NavController,private router: Router, public firebaseService: FirebaseService, private navCtr: NavController, private formBuilder: FormBuilder, private authService: AuthService, public loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.validationFormUser = this.formBuilder.group({
@@ -62,14 +65,21 @@ export class SignupPage implements OnInit {
     try{
       this.authService.userRegistration(value).then(response =>{
         console.log(response);
+        // const path = "users/firebase.auth().currentUser.uid"
+        // const nuevoUser: User = {
+        //   // uid: firebase.auth().currentUser.uid,
+        //   equip: (document.getElementById("email") as HTMLInputElement).value
+        // }
+      // this.firebaseService.crearEquipo<User>( nuevoUser, path); //Crea campo del usuario en la bbdd
         if(response.user){
           response.user.updateProfile({
             displayName: value.names,
             email: value.email,
             phoneNumber: value.phone
           });
-          this.loadingCtrl.dismiss();
           this.router.navigate(['loginscreen']);
+          this.loadingCtrl.dismiss();
+          // this.router.navigate(['loginscreen']);
         }
       }, error=>{
         this.loadingCtrl.dismiss();
