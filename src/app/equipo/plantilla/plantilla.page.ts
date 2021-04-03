@@ -3,6 +3,8 @@ import { IonSegment, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
+import firebase from 'firebase/app';
+import { HomePage } from 'src/app/home/home.page';
 
 
 @Component({
@@ -13,12 +15,14 @@ import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
 export class PlantillaPage implements OnInit {
 
   @ViewChild(IonSegment) segment: IonSegment;
-  jugadores: Observable<any>;
 
-  constructor(private dataService: DataService, private modalCtrl: ModalController) { }
+  prueba: Observable<any>
+  jugadores: Array<string>;
+
+  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { }
 
   ngOnInit() {
-    this.jugadores = this.dataService.getJugadores();
+    this.prueba = this.dataService.getJugadores();
   }
 
   segmentChanged(event){
@@ -41,4 +45,20 @@ export class PlantillaPage implements OnInit {
     console.log('retorno del modal', data);
   }
 
+  cargarJugadores(){
+    this.jugadores=[]
+    const db = firebase.firestore();
+    const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/' + this.homePage.equipoSeleccionado()).get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        // console.log(doc.data().nombre),)
+        // this.insertarEquipos(doc))
+        
+        // document.getElementById('nombre').textContent = doc.data().nombre)
+
+        // this.equipos[(doc.data().nombre).length] = doc.data().nombre)
+
+        this.jugadores.push(doc.data().nombre))
+    })
+    // const equiposCollection: AngularFirestoreCollection = this.Firestore.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().get()
+  }
 }

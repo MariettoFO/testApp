@@ -13,6 +13,9 @@
   </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <!-- <ion-header collapse="condense">
   </ion-header> -->
   <!-- <ion-card routerLink="/tabs/equipo">  
@@ -27,10 +30,10 @@
   </div> -->
 
 <ion-list id="nombres">
-  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" routerLink="/tabs/equipo">  
+  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="equipoSeleccionado()" routerLink="/tabs/equipo">  
   <!-- *ngFor="let equipo of equipos" -->
   <!-- {{equipo.nombre}} -->
-    <ion-label><b id="nombre">{{equipo}}</b></ion-label>
+    <ion-label style="text-align: center;" id="nombre"><b >{{equipo}}</b></ion-label>
     <ion-thumbnail slot="start">
       <img src="../../assets/icon/escudoSanro.png">
     </ion-thumbnail>

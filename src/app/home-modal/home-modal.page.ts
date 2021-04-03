@@ -31,15 +31,14 @@ salirGuardando(){
 
   const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/'
   const nuevoEquipo: Equipo = {
-    // uid: firebase.auth().currentUser.uid,
     nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
   }
   this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
-  this.homePage.cargarEquipos()
+  this.homePage.cargarEquipos();
 
   this.modalCtrl.dismiss({
     // uid: firebase.auth().currentUser.uid,
-    equipo: (document.getElementById("inputequipo") as HTMLInputElement).value
+    // nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
   });
 }
 }

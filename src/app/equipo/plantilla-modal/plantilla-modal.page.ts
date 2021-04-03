@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import firebase from 'firebase/app';
+import { HomePage } from 'src/app/home/home.page';
+import { Jugador } from 'src/app/interfaces';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 
 @Component({
@@ -8,51 +12,12 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./plantilla-modal.page.scss'],
 })
 export class PlantillaModalPage implements OnInit {
- // uploadText: any;
-  // downloadText: any;
-  // fileTransfer: FileTransferObject;
 
-  // constructor(private modalCtrl: ModalController, private transfer: FileTransfer, 
-  //   private file: File, private filePath: FilePath, private fileChooser: FileChooser) { 
-  //     this.uploadText = "";
-  //     this.downloadText = "";
-  //   }
-  constructor(private modalCtrl: ModalController
-    //,private imagePicker: ImagePicker
+  constructor(private modalCtrl: ModalController, private homePage: HomePage, private firebaseService: FirebaseService
     ) { 
       
     }
-// UploadFile(){
-//   this.fileChooser.open().then((uri)=>{
-//     this.filePath.resolveNativePath(uri).then(
-//       (nativepath)=>{
-//         this.fileTransfer = this.transfer.create();
-//         let options : FileUploadOptions = {
-//           fileKey: 'videofile',
-//           fileName: 'video.mp4',
-//           chunkedMode: false,
-//           headers: {},
-//           mimeType: 'video/mp4'
-//         }
-//         this.uploadText = "Subiendo...";
-//         this.fileTransfer.upload(nativepath, 'tabs/partido', options).then((data)=>{
-//           alert("transfer done = "+ JSON.stringify(data));
-//           this.uploadText = "";
-//         },(err)=>{
-//           this.uploadText = "";
-//         })
-//       },(err)=>{
-//         alert(JSON.stringify(err));
-//       })
-//   },(err)=>{
-//     alert(JSON.stringify(err));
-//   })
-// }
 
-// AbortUpload(){
-//   this.fileTransfer.abort();
-//   alert("Subida de archivo cancelada");
-// }
 
 @Input() equipo;
 @Input() icono;
@@ -73,10 +38,22 @@ salirSinGuardar(){
 }
 
 salirGuardando(){
-  this.modalCtrl.dismiss({
-    equipo: 'CD San Roque',
-    icono: 'hola'
-  });
 
+  const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/' + firebase.firestore().collection().get(). + this.homePage.equipoSeleccionado()
+  const nuevoJugador: Jugador = {
+    // uid: firebase.auth().currentUser.uid,
+    nombre: (document.getElementById("nombre") as HTMLInputElement).value,
+    apellidos: (document.getElementById("apellidos") as HTMLInputElement).value,
+    apodo: (document.getElementById("apodo") as HTMLInputElement).value,
+    numero: (document.getElementById("numero") as HTMLInputElement).value,
+    posicion: (document.getElementById("posicion") as HTMLInputElement).value,
+    edad: (document.getElementById("edad") as HTMLInputElement).value
+  }
+  this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path);
+
+  this.modalCtrl.dismiss({
+    // uid: firebase.auth().currentUser.uid,
+    nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
+  });
 }
 }

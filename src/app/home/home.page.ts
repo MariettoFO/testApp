@@ -20,6 +20,11 @@ export class HomePage {
     // public firebaseService: FirebaseService
     ) { }
 
+    equipoSelect = ""
+    equipos: Array<string>;
+    idEquipos: Array<string>;
+
+
   ngOnInit() {
     this.cargarEquipos()
   }
@@ -40,32 +45,49 @@ export class HomePage {
     await modal.present();
 
     const {data} = await modal.onDidDismiss();
-
     console.log('retorno del modal', data);
   }
 
-  equipos: Array<string>;
-
-  // insertarEquipos(doc){
-  //   // var nombre = document.getElementById('nombre')
-  //   this.equipos = []
-
-  //   this.equipos = doc.data()
-
-  // }
-
   cargarEquipos(){
-    this.equipos=[]
-    let contador: number = 0
+    this.equipos = []
+    this.idEquipos = []
     const db = firebase.firestore();
+
     const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
-        // console.log(doc.data().nombre),)
-        // this.insertarEquipos(doc))
-        
-        // document.getElementById('nombre').textContent = doc.data().nombre)
-        this.equipos[(doc.data().nombre).length] = doc.data().nombre)
+              this.equipos.push(doc.data().nombre))
     })
-    // const equiposCollection: AngularFirestoreCollection = this.Firestore.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().get()
+
+    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        this.idEquipos.push(doc.id))
+    })
   }
+
+  equipoSeleccionado(){
+    this.equipoSelect = (document.getElementById("nombre") as HTMLLabelElement).textContent;
+    console.log(this.equipoSelect + " es el equipo seleccionado")
+
+    return this.equipoSelect
+  }
+
+  getIdEquipo(){
+    var idEquipo = ""
+    for(var i = 0; i < this.equipos.length; i++){
+      if(this.equipoSeleccionado() == this.equipos[i]){
+        //PENDIENTE para sacar el id exit del for
+        idEquipo=this.idEquipos[i]
+      }
+    }
+
+    return idEquipo
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      this.cargarEquipos()
+      event.target.complete();
+    }, 1500);
+  }
+
 }

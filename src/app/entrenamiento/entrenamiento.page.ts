@@ -7,7 +7,7 @@ import { EntrenamientoModalPage } from '../entrenamiento-modal/entrenamiento-mod
   templateUrl: './entrenamiento.page.html',
   styleUrls: ['./entrenamiento.page.scss'],
 })
-export class EntrenamientoPage implements OnInit {
+export class EntrenamientoPage {
 
   items: any[] = []
   constructor(private modalCtrl: ModalController) { }
