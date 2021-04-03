@@ -21,9 +21,10 @@ import { firebaseConfig } from 'src/environments/environment';
 
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HomePage } from './home/home.page';
 
 // import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
@@ -42,8 +43,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   ],
   providers: [
     StatusBar,
+    AngularFirestore,
     Title,
     SplashScreen,
+    HomePage,
     FileTransfer,
     FileChooser,
     FilePath,

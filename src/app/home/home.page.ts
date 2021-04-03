@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseApp } from '@angular/fire';
 import { ModalController } from '@ionic/angular';
 import { HomeModalPage } from '../home-modal/home-modal.page';
+import { FirebaseService} from '../services/firebase.service'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import firebase from 'firebase/app';
+import { MaxLengthValidator } from '@angular/forms';
 
 
 @Component({
@@ -12,9 +16,12 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 })
 export class HomePage {
 
-  constructor( private modalCtrl: ModalController, public cloud: FirebaseApp) { }
+  constructor( private modalCtrl: ModalController, 
+    // public firebaseService: FirebaseService
+    ) { }
 
   ngOnInit() {
+    this.cargarEquipos()
   }
 
   segmentChanged(event){
@@ -37,5 +44,28 @@ export class HomePage {
     console.log('retorno del modal', data);
   }
 
+  equipos: Array<string>;
 
+  // insertarEquipos(doc){
+  //   // var nombre = document.getElementById('nombre')
+  //   this.equipos = []
+
+  //   this.equipos = doc.data()
+
+  // }
+
+  cargarEquipos(){
+    this.equipos=[]
+    let contador: number = 0
+    const db = firebase.firestore();
+    const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        // console.log(doc.data().nombre),)
+        // this.insertarEquipos(doc))
+        
+        // document.getElementById('nombre').textContent = doc.data().nombre)
+        this.equipos[(doc.data().nombre).length] = doc.data().nombre)
+    })
+    // const equiposCollection: AngularFirestoreCollection = this.Firestore.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().get()
+  }
 }

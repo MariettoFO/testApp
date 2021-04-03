@@ -4,8 +4,8 @@
         <ion-menu-button auto-hide="false"></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="primary">
-        <ion-button>
-          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        <ion-button (click)="cargarEquipos()">
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" ></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-title>Football Coach</ion-title>
@@ -26,13 +26,18 @@
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div> -->
 
-  <ion-item detail="false" button vertical="center" lines="full" routerLink="/tabs/equipo">  
-    <ion-label><b>C.D. San Roque E.F.F.</b></ion-label>
+<ion-list id="nombres">
+  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" routerLink="/tabs/equipo">  
+  <!-- *ngFor="let equipo of equipos" -->
+  <!-- {{equipo.nombre}} -->
+    <ion-label><b id="nombre">{{equipo}}</b></ion-label>
     <ion-thumbnail slot="start">
       <img src="../../assets/icon/escudoSanro.png">
     </ion-thumbnail>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
   </ion-item>
+</ion-list>
+
   <!-- Red add button -->
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="danger">

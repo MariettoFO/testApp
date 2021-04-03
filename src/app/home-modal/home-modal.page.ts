@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import firebase from 'firebase/app';
+import { HomePage } from '../home/home.page';
 import { Equipo } from '../interfaces';
 import { FirebaseService } from '../services/firebase.service';
 
@@ -12,7 +13,9 @@ import { FirebaseService } from '../services/firebase.service';
 export class HomeModalPage implements OnInit {
 
   constructor(private modalCtrl: ModalController,
-              public firebaseService: FirebaseService) {}
+              private firebaseService: FirebaseService, 
+              private homePage: HomePage
+              ) {}
 
 // @Input() uid;
 @Input() equipo;
@@ -32,7 +35,7 @@ salirGuardando(){
     nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
   }
   this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
-  this.firebaseService.cargarEquipos()
+  this.homePage.cargarEquipos()
 
   this.modalCtrl.dismiss({
     // uid: firebase.auth().currentUser.uid,
