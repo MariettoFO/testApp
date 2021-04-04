@@ -29,11 +29,11 @@
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div> -->
 
-<ion-list id="nombres">
-  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="equipoSeleccionado()" routerLink="/tabs/equipo">  
+<ion-list>
+  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="equipoSeleccionado(equipo)" routerLink="/tabs/equipo">  
   <!-- *ngFor="let equipo of equipos" -->
   <!-- {{equipo.nombre}} -->
-    <ion-label style="text-align: center;" id="nombre"><b >{{equipo}}</b></ion-label>
+    <ion-label style="text-align: center;" id="nombre"><b>{{equipo}}</b></ion-label>
     <ion-thumbnail slot="start">
       <img src="../../assets/icon/escudoSanro.png">
     </ion-thumbnail>

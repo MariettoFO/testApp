@@ -46,9 +46,9 @@ export class PlantillaPage implements OnInit {
   }
 
   cargarJugadores(){
-    this.jugadores=[]
+    // this.jugadores=[]
     const db = firebase.firestore();
-    const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/' + this.homePage.equipoSeleccionado()).get().then((querySnapshot) => {
+    const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/' + this.homePage.equipoSeleccionado(this.homePage.equipoSelect)).get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
         // console.log(doc.data().nombre),)
         // this.insertarEquipos(doc))

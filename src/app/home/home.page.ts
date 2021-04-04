@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 import firebase from 'firebase/app';
 import { MaxLengthValidator } from '@angular/forms';
+import { SelectorMatcher } from '@angular/compiler';
 
 
 @Component({
@@ -14,19 +15,23 @@ import { MaxLengthValidator } from '@angular/forms';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
 
-  constructor( private modalCtrl: ModalController, 
+export class HomePage implements OnInit{
+
+  constructor( private modalCtrl: ModalController,
     // public firebaseService: FirebaseService
-    ) { }
+    ) { 
+      this.equipos = []
+      this.team = []
+    }
 
-    equipoSelect = ""
+    equipoSelect: string
     equipos: Array<string>;
+    team: Array<string>;
     idEquipos: Array<string>;
 
-
   ngOnInit() {
-    this.cargarEquipos()
+    this.cargarEquipos()    
   }
 
   segmentChanged(event){
@@ -48,35 +53,66 @@ export class HomePage {
     console.log('retorno del modal', data);
   }
 
+
   cargarEquipos(){
-    this.equipos = []
-    this.idEquipos = []
+    // this.equipos = []
+    // this.team = []
+    // this.idEquipos = []
     const db = firebase.firestore();
 
     const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
-              this.equipos.push(doc.data().nombre))
-    })
-
-    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        this.idEquipos.push(doc.id))
-    })
+        this.team.push(doc.data().nombre)),
+        this.equipos = this.team
+      })
+    console.log(this.equipos)
+    // this.equipos = team
+    // const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.idEquipos.push(doc.id))
+    // })
+    // this.team = this.equipos
+    return this.equipos
   }
 
-  equipoSeleccionado(){
-    this.equipoSelect = (document.getElementById("nombre") as HTMLLabelElement).textContent;
+  cargarId(){
+
+    this.idEquipos = []
+    var idteam: any[]
+    const db = firebase.firestore();
+    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        idteam.push(doc.id))
+    })
+
+    this.idEquipos = idteam
+
+    console.log(this.idEquipos)
+
+    return this.idEquipos
+
+  }
+
+  equipoSeleccionado(equipo){
+
+    // this.equipoSelect = (document.getElementById("nombre") as HTMLLabelElement).textContent;
+    this.equipoSelect = equipo
     console.log(this.equipoSelect + " es el equipo seleccionado")
 
     return this.equipoSelect
   }
 
-  getIdEquipo(){
+  getIdEquipo(team){
     var idEquipo = ""
-    for(var i = 0; i < this.equipos.length; i++){
-      if(this.equipoSeleccionado() == this.equipos[i]){
-        //PENDIENTE para sacar el id exit del for
-        idEquipo=this.idEquipos[i]
+    var x = false
+    var id = []
+
+    this.idEquipos = this.cargarId()
+    this.equipos=this.cargarEquipos()
+    for(var i = 0; (i <= this.equipos.length) && (x == false); i++){
+      if(team == this.equipos[i]){
+        idEquipo=this.idEquipos[i];
+        x = true;
       }
     }
 
@@ -89,5 +125,6 @@ export class HomePage {
       event.target.complete();
     }, 1500);
   }
+
 
 }

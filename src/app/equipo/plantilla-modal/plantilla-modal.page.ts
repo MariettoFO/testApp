@@ -18,7 +18,7 @@ export class PlantillaModalPage implements OnInit {
       
     }
 
-
+@Input() equipoSelect
 @Input() equipo;
 @Input() icono;
 ngOnInit() {
@@ -39,7 +39,7 @@ salirSinGuardar(){
 
 salirGuardando(){
 
-  const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/' + firebase.firestore().collection().get(). + this.homePage.equipoSeleccionado()
+  const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/' + this.homePage.getIdEquipo("Getafe") + "/" + this.homePage.equipoSeleccionado("Getafe")
   const nuevoJugador: Jugador = {
     // uid: firebase.auth().currentUser.uid,
     nombre: (document.getElementById("nombre") as HTMLInputElement).value,
