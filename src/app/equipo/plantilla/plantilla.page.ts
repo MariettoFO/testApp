@@ -5,6 +5,7 @@ import { DataService } from 'src/app/data.service';
 import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
 import firebase from 'firebase/app';
 import { HomePage } from 'src/app/home/home.page';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
 
 
 @Component({
@@ -17,12 +18,13 @@ export class PlantillaPage implements OnInit {
   @ViewChild(IonSegment) segment: IonSegment;
 
   prueba: Observable<any>
-  jugadores: Array<string>;
+  jugadores: Observable<string>;
+  Firestore: any;
 
-  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { }
+  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) {  }
 
   ngOnInit() {
-    this.prueba = this.dataService.getJugadores();
+    this.cargarJugadores();
   }
 
   segmentChanged(event){
@@ -48,17 +50,18 @@ export class PlantillaPage implements OnInit {
   cargarJugadores(){
     // this.jugadores=[]
     const db = firebase.firestore();
-    const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/' + this.homePage.equipoSeleccionado(this.homePage.equipoSelect)).get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        // console.log(doc.data().nombre),)
-        // this.insertarEquipos(doc))
+    // const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos').doc().collection('/jugadores').get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     // console.log(doc.data().nombre),)
+    //     // this.insertarEquipos(doc))
         
-        // document.getElementById('nombre').textContent = doc.data().nombre)
+    //     // document.getElementById('nombre').textContent = doc.data().nombre)
 
-        // this.equipos[(doc.data().nombre).length] = doc.data().nombre)
+    //     // this.equipos[(doc.data().nombre).length] = doc.data().nombre)
 
-        this.jugadores.push(doc.data().nombre))
-    })
-    // const equiposCollection: AngularFirestoreCollection = this.Firestore.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().get()
+    //     // this.jugadores.push(doc.data().nombre))
+    // })
+    const equiposCollection: AngularFirestoreCollection = db.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().collection('/jugadores').get()
+    console.log(equiposCollection)
   }
 }

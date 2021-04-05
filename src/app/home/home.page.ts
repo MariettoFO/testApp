@@ -65,7 +65,24 @@ export class HomePage implements OnInit{
         this.team.push(doc.data().nombre)),
         this.equipos = this.team
       })
-    console.log(this.equipos)
+
+      db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            var hola = true
+            if(hola == true){
+              this.team.push(doc.data().nombre);
+              this.idEquipos.push(doc.id);
+              console.log(this.team + "==>" + this.idEquipos);
+              return this.team;
+            }
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+
+    console.log(this.team + "==>" + this.idEquipos)
     // this.equipos = team
     // const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
     //   querySnapshot.docs.forEach(doc =>
