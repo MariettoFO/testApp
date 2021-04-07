@@ -10,7 +10,7 @@ export interface Jugador {
     nombre: string;
     apellidos: string;
     apodo: string;
-    numero: string;
+    dorsal: string;
     posicion: string;
     edad: string;
 }

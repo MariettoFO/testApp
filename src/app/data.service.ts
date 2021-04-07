@@ -4,8 +4,15 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/comm
   providedIn: 'root'
 })
 export class DataService {
+pathJugadores: string;
+  constructor(private http: HttpClient) { 
+    this.pathJugadores = ""
+  }
 
-  constructor(private http: HttpClient) { }
+
+  getPathJugadores(){
+    return this.pathJugadores
+  }
 
   getJugadores(){
     return this.http.get('/assets/data/jugadores.json');

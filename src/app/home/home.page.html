@@ -4,7 +4,7 @@
         <ion-menu-button auto-hide="false"></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="primary">
-        <ion-button (click)="cargarEquipos()">
+        <ion-button (click)="getEquipos()" (click)="getIdEquipos()">
           <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" ></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -30,7 +30,7 @@
   </div> -->
 
 <ion-list>
-  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="equipoSeleccionado(equipo)" routerLink="/tabs/equipo">  
+  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="getJugadores(equipo)" routerLink="/tabs/equipo">  
   <!-- *ngFor="let equipo of equipos" -->
   <!-- {{equipo.nombre}} -->
     <ion-label style="text-align: center;" id="nombre"><b>{{equipo}}</b></ion-label>

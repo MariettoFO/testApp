@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import firebase from 'firebase/app';
+import { DataService } from 'src/app/data.service';
 import { HomePage } from 'src/app/home/home.page';
 import { Jugador } from 'src/app/interfaces';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { async } from '@angular/core/testing';
+
 
 
 @Component({
@@ -13,7 +17,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class PlantillaModalPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private homePage: HomePage, private firebaseService: FirebaseService
+  constructor(private modalCtrl: ModalController,private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController, private dataService: DataService, private firebaseService: FirebaseService
     ) { 
       
     }
@@ -24,36 +28,56 @@ export class PlantillaModalPage implements OnInit {
 ngOnInit() {
 }
 
-// imagen(){
-  
-//   this.imagePicker.getPictures(options).then((results) => {
-//     for (var i = 0; i < results.length; i++) {
-//         console.log('Image URI: ' + results[i]);
-//     }
-//   }, (err) => { });
-// }
-
 salirSinGuardar(){
   this.modalCtrl.dismiss();
 }
 
 salirGuardando(){
-
-  const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/' + this.homePage.getIdEquipo("Getafe") + "/" + this.homePage.equipoSeleccionado("Getafe")
+  console.log(this.dataService.getPathJugadores())
+  const path = this.dataService.getPathJugadores()
   const nuevoJugador: Jugador = {
     // uid: firebase.auth().currentUser.uid,
-    nombre: (document.getElementById("nombre") as HTMLInputElement).value,
+    nombre: (document.getElementById("nombres") as HTMLInputElement).value,
     apellidos: (document.getElementById("apellidos") as HTMLInputElement).value,
     apodo: (document.getElementById("apodo") as HTMLInputElement).value,
-    numero: (document.getElementById("numero") as HTMLInputElement).value,
+    dorsal: (document.getElementById("dorsal") as HTMLInputElement).value,
     posicion: (document.getElementById("posicion") as HTMLInputElement).value,
     edad: (document.getElementById("edad") as HTMLInputElement).value
   }
-  this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path);
+  try{
+    this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
 
-  this.modalCtrl.dismiss({
-    // uid: firebase.auth().currentUser.uid,
-    nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
-  });
+      this.modalCtrl.dismiss({
+        // uid: firebase.auth().currentUser.uid,
+        nombre: (document.getElementById("nombres") as HTMLInputElement).value
+      });
+
+    
+  } catch(err){
+    this.alertCtrl.create({
+      header: "Error al crear",
+      message: "Compruebe que los datos introducidos sean correctos.",
+      buttons:[{
+        text:'ok',
+        handler:()=>{
+          this.navCtr.navigateBack(['plantilla-modal'])
+        }
+      }]
+    })  }
 }
+  // async errorUpdating (message: any) {
+  //   const updating = await this.alertCtrl.create({
+  //     header: "Error al crear",
+  //     message: "Compruebe que los datos introducidos sean correctos.",
+  //     buttons:[{
+  //       text:'ok',
+  //       handler:()=>{
+  //         this.navCtr.navigateBack(['plantilla-modal'])
+  //       }
+  //     }]
+  //   })
+  //   await updating.present();
+  // }
+
+  
 }

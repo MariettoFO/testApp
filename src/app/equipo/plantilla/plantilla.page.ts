@@ -6,6 +6,7 @@ import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
 import firebase from 'firebase/app';
 import { HomePage } from 'src/app/home/home.page';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Jugador } from 'src/app/interfaces';
 
 
 @Component({
@@ -17,11 +18,23 @@ export class PlantillaPage implements OnInit {
 
   @ViewChild(IonSegment) segment: IonSegment;
 
-  prueba: Observable<any>
-  jugadores: Observable<string>;
-  Firestore: any;
+  jugadores: Array<Jugador>;
+  apellidos: Array<string>;
+  apodo: Array<string>;
+  dorsal: Array<string>;
+  posicion: Array<string>;
+  edad: Array<string>;
+  idJugadores: Array<string>
 
-  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) {  }
+  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
+    this.jugadores = []
+    this.idJugadores = []
+    this.apellidos = []
+    this.apodo = []
+    this.dorsal = []
+    this.posicion = []
+    this.edad = []
+   }
 
   ngOnInit() {
     this.cargarJugadores();
@@ -48,20 +61,58 @@ export class PlantillaPage implements OnInit {
   }
 
   cargarJugadores(){
-    // this.jugadores=[]
+
     const db = firebase.firestore();
-    // const getJugadores = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos').doc().collection('/jugadores').get().then((querySnapshot) => {
+
+    const getIdJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        this.idJugadores.push(doc.id))
+      })
+
+    const getJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+      querySnapshot.docs.forEach(doc =>
+        this.jugadores.push({nombre: doc.data().nombre, 
+        apellidos: doc.data().apellidos, 
+        apodo: doc.data().apodo, 
+        dorsal: doc.data().dorsal, 
+        posicion: doc.data().posicion,
+        edad: doc.data().edad}))
+      })
+
+    // const getApellidos = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
     //   querySnapshot.docs.forEach(doc =>
-    //     // console.log(doc.data().nombre),)
-    //     // this.insertarEquipos(doc))
-        
-    //     // document.getElementById('nombre').textContent = doc.data().nombre)
+    //     this.apellidos.push(doc.id))
+    //   })
+    
+    // const getDorsal = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.dorsal.push(doc.data().dorsal))
+    //   })
 
-    //     // this.equipos[(doc.data().nombre).length] = doc.data().nombre)
+    // const getPosicion = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.posicion.push(doc.data().posicion))
+    //   })
 
-    //     // this.jugadores.push(doc.data().nombre))
-    // })
-    const equiposCollection: AngularFirestoreCollection = db.collection('users/' + firebase.auth().currentUser.uid + 'equipos/').doc().collection('/jugadores').get()
-    console.log(equiposCollection)
+    // const getEdad = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.edad.push(doc.data().edad))
+    //   })
+
   }
+
+  getJugadores(){
+    var db = firebase.firestore().collection(this.dataService.getPathJugadores()).onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push(doc.data().nombre)
+      });
+      console.log(jugact);
+      this.jugadores = jugact
+    })
+
+    console.log('actualizados equipos = '+ this.jugadores);
+    return this.jugadores
+  }
+
 }
