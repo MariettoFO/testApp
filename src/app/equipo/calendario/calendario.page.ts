@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CalendarComponentOptions, CalendarModule } from 'ion2-calendar';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-calendario',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarioPage implements OnInit {
 
-  constructor() { }
+  date: string;
+  type: 'string';
+  // dateMulti: string[];
+
+  constructor(public calendary: CalendarModule, public forms: FormsModule) {
+   }
 
   ngOnInit() {
+  }
+
+  // optionsMulti: CalendarComponentOptions = {
+  //   pickMode: 'multi'
+  // };
+
+  onChange($event) {
+    console.log($event);
   }
 
 }

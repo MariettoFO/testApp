@@ -26,6 +26,8 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestor
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomePage } from './home/home.page';
 
+import { CalendarModule, CalendarComponent  } from 'ion2-calendar';
+
 // import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @NgModule({
@@ -39,7 +41,9 @@ import { HomePage } from './home/home.page';
     AngularFireAuthModule,
     AngularFirestoreModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CalendarModule
+    // CalendarComponent
   ],
   providers: [
     StatusBar,
