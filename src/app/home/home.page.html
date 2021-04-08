@@ -30,7 +30,8 @@
   </div> -->
 
 <ion-list>
-  <ion-item detail="false" button vertical="center" lines="full" *ngFor="let equipo of equipos" (click)="getJugadores(equipo)" routerLink="/tabs/equipo">  
+  <ion-item-sliding *ngFor="let equipo of equipos">
+  <ion-item detail="false" button vertical="center" lines="full" (click)="getJugadores(equipo)" routerLink="/tabs/equipo">  
   <!-- *ngFor="let equipo of equipos" -->
   <!-- {{equipo.nombre}} -->
     <ion-label style="text-align: center;" id="nombre"><b>{{equipo}}</b></ion-label>
@@ -39,6 +40,13 @@
     </ion-thumbnail>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
   </ion-item>
+  <ion-item-options side="start">
+    <ion-item-option><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-item-option>
+  </ion-item-options>
+  <ion-item-options side="end">
+    <ion-item-option color="danger"><ion-icon slot="icon-only" name="trash-outline"></ion-icon></ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
 </ion-list>
 
   <!-- Red add button -->

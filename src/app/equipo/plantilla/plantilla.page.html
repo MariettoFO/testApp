@@ -33,28 +33,36 @@
 </ion-toolbar>
 <ion-content>
   <ion-list>
-
-    <ion-item lines="full" detail="false" button *ngFor="let jugador of jugadores">
-      <ion-text style="text-transform: uppercase;" id="positionId">
-      <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
-      'azul': jugador.posicion == 'DEF', 
-      'verde': jugador.posicion == 'MED',
-      'rojo': jugador.posicion == 'DEL'}" -->
-      <h2 text-left>
-        {{jugador.posicion}}
-      </h2></ion-text>
-      <ion-label>
-        <h2>{{jugador.nombre}} {{jugador.apellidos}}</h2>
-        <p>
-          <h2>"{{jugador.apodo}}"</h2>
-        <p>
-          <h2>Edad: {{jugador.edad}}</h2>
-      </ion-label>
-      <h2 text-right >
-        {{jugador.dorsal}}  
-      </h2>
-    </ion-item>
+    <ion-item-sliding *ngFor="let jugador of jugadores">
+      <ion-item lines="full" detail="false" button>
+        <ion-text style="text-transform: uppercase;" id="positionId">
+        <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
+        'azul': jugador.posicion == 'DEF', 
+        'verde': jugador.posicion == 'MED',
+        'rojo': jugador.posicion == 'DEL'}" -->
+        <h2 text-left>
+          {{jugador.posicion}}
+        </h2></ion-text>
+        <ion-label>
+          <h2>{{jugador.nombre}} {{jugador.apellidos}}</h2>
+          <p>
+            <h2>"{{jugador.apodo}}"</h2>
+          <p>
+            <h2>Edad: {{jugador.edad}}</h2>
+        </ion-label>
+        <h2 text-right >
+          {{jugador.dorsal}}  
+        </h2>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option color="danger"><ion-icon slot="icon-only" name="trash-outline"></ion-icon></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
+
   <!-- Red add button -->
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="danger">

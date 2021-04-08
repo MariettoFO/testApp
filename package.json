@@ -47,6 +47,7 @@
     "firebase": "^8.2.4",
     "ion2-calendar": "^3.0.0-rc.0",
     "ionic2-calendar": "^0.6.7",
+    "ionicons": "^5.2.3",
     "jetifier": "^1.6.6",
     "moment": "^2.29.1",
     "rxjs": "~6.5.5",
