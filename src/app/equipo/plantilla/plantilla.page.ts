@@ -16,9 +16,12 @@ import { Jugador } from 'src/app/interfaces';
 })
 export class PlantillaPage implements OnInit {
 
-  @ViewChild(IonSegment) segment: IonSegment;
-
+  selectSegment: string;
   jugadores: Array<Jugador>;
+  porteros: Array<Jugador>;
+  defensas: Array<Jugador>;
+  mediocentros: Array<Jugador>;
+  delanteros: Array<Jugador>;
   apellidos: Array<string>;
   apodo: Array<string>;
   dorsal: Array<string>;
@@ -27,7 +30,12 @@ export class PlantillaPage implements OnInit {
   idJugadores: Array<string>
 
   constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
+    this.selectSegment = 'todos'
     this.jugadores = []
+    this.porteros = []
+    this.defensas = []
+    this.mediocentros = []
+    this.delanteros = []
     this.idJugadores = []
     this.apellidos = []
     this.apodo = []
@@ -36,12 +44,14 @@ export class PlantillaPage implements OnInit {
     this.edad = []
    }
 
+   
+
   ngOnInit() {
     this.cargarJugadores();
   }
 
   segmentChanged(event){
-    const valorSegmento = event.detail.value;
+    this.selectSegment = event.detail.value.toLowerCase();
   }
 
   async abrirModalPlantilla(){
@@ -71,7 +81,8 @@ export class PlantillaPage implements OnInit {
 
     const getJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
-        this.jugadores.push({nombre: doc.data().nombre, 
+        this.jugadores.push({id: doc.id,
+        nombre: doc.data().nombre, 
         apellidos: doc.data().apellidos, 
         apodo: doc.data().apodo, 
         dorsal: doc.data().dorsal, 
@@ -79,40 +90,98 @@ export class PlantillaPage implements OnInit {
         edad: doc.data().edad}))
       })
 
-    // const getApellidos = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-    //   querySnapshot.docs.forEach(doc =>
-    //     this.apellidos.push(doc.id))
-    //   })
-    
-    // const getDorsal = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-    //   querySnapshot.docs.forEach(doc =>
-    //     this.dorsal.push(doc.data().dorsal))
-    //   })
-
-    // const getPosicion = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-    //   querySnapshot.docs.forEach(doc =>
-    //     this.posicion.push(doc.data().posicion))
-    //   })
-
-    // const getEdad = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-    //   querySnapshot.docs.forEach(doc =>
-    //     this.edad.push(doc.data().edad))
-    //   })
-
   }
 
   getJugadores(){
     var db = firebase.firestore().collection(this.dataService.getPathJugadores()).onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
-        jugact.push(doc.data().nombre)
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
       });
-      console.log(jugact);
       this.jugadores = jugact
+
+      this.getPosicion()
     })
 
-    console.log('actualizados equipos = '+ this.jugadores);
+    console.log('actualizados jugadores = '+ this.jugadores);
     return this.jugadores
+  }
+
+  getPosicion(){
+
+    for(var i = 0; this.jugadores.length > i; i++){
+      if(this.jugadores[i].posicion.toLowerCase() == 'por'){
+        for(var x = 0; this.porteros.length > x || x == 0; x++){
+          if(x > 0 && this.porteros[x] == undefined){
+            break
+          }
+          if(this.porteros[x] == undefined || this.porteros[x].id != this.jugadores[i].id){
+            this.porteros.push(this.jugadores[i])
+          }
+        }
+      }
+
+      if(this.jugadores[i].posicion.toLowerCase() == 'def'){
+        for(var x = 0; this.defensas.length > x || x == 0; x++){
+          if(x > 0 && this.defensas[x] == undefined){
+            break
+          }
+          if(this.defensas[x] == undefined || this.defensas[x].id != this.jugadores[i].id){
+            this.defensas.push(this.jugadores[i])
+          }
+        }
+      }
+
+      if(this.jugadores[i].posicion.toLowerCase() == 'med'){
+        for(var x = 0; this.mediocentros.length > x || x == 0; x++){
+          if(x > 0 && this.mediocentros[x] == undefined){
+            break
+          }
+          if(this.mediocentros[x] == undefined || this.mediocentros[x].id != this.jugadores[i].id){
+            this.mediocentros.push({id: this.jugadores[i].id,
+              nombre: this.jugadores[i].nombre, 
+              apellidos: this.jugadores[i].apellidos, 
+              apodo: this.jugadores[i].apodo, 
+              dorsal: this.jugadores[i].dorsal, 
+              posicion: this.jugadores[i].posicion,
+              edad: this.jugadores[i].edad})
+          }
+        }
+      }
+
+      if(this.jugadores[i].posicion.toLowerCase() == 'del'){
+        for(var x = 0; this.delanteros.length > x || x == 0; x++){
+          if(x > 0 && this.delanteros[x] == undefined){
+            break
+          }
+          if(this.delanteros[x] == undefined || this.delanteros[x].id != this.jugadores[i].id){
+            this.delanteros.push({id: this.jugadores[i].id,
+              nombre: this.jugadores[i].nombre, 
+              apellidos: this.jugadores[i].apellidos, 
+              apodo: this.jugadores[i].apodo, 
+              dorsal: this.jugadores[i].dorsal, 
+              posicion: this.jugadores[i].posicion,
+              edad: this.jugadores[i].edad})
+          }
+        }
+      }
+
+    }
+
+    console.log('POR =>' + this.porteros + ' DEF => ' +  this.defensas + ' MED => ' + this.mediocentros + ' DEL => ' +  this.delanteros)
+   }
+
+   doRefresh(event){
+    setTimeout(() => {
+      this.getJugadores()
+      event.target.complete();
+    }, 1500);
   }
 
 }

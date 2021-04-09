@@ -7,6 +7,7 @@ export interface Equipo {
 }
 
 export interface Jugador {
+    id: string;
     nombre: string;
     apellidos: string;
     apodo: string;
