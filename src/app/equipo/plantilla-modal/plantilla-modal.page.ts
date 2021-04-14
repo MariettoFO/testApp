@@ -7,6 +7,7 @@ import { Jugador } from 'src/app/interfaces';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { async } from '@angular/core/testing';
+// import { PlantillaPage } from '../plantilla/plantilla.page';
 
 
 
@@ -22,9 +23,9 @@ export class PlantillaModalPage implements OnInit {
       
     }
 
-@Input() equipoSelect
-@Input() equipo;
-@Input() icono;
+// @Input() equipoSelect
+// @Input() equipo;
+// @Input() icono;
 ngOnInit() {
 }
 
@@ -35,17 +36,36 @@ salirSinGuardar(){
 salirGuardando(){
   console.log(this.dataService.getPathJugadores())
   const path = this.dataService.getPathJugadores()
+  var pos = document.getElementById("posicion") as HTMLInputElement
+  var finalPos = ""
+
+  if(pos.value == 'POR'){
+    finalPos = "aPOR"
+  }
+  if(pos.value == 'DEF'){
+    finalPos = "bDEF"
+  }
+  if(pos.value == 'MED'){
+    finalPos = "cMED"
+  }
+  if(pos.value == 'DEL'){
+    finalPos = "dDEL"
+  }
+
   const nuevoJugador: Jugador = {
-    // uid: firebase.auth().currentUser.uid,
+    // id: firebase.auth().currentUser.uid,
     nombre: (document.getElementById("nombres") as HTMLInputElement).value,
     apellidos: (document.getElementById("apellidos") as HTMLInputElement).value,
     apodo: (document.getElementById("apodo") as HTMLInputElement).value,
     dorsal: (document.getElementById("dorsal") as HTMLInputElement).value,
-    posicion: (document.getElementById("posicion") as HTMLInputElement).value,
+
+    posicion: finalPos,
+
     edad: (document.getElementById("edad") as HTMLInputElement).value
   }
   try{
     this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
+    // this.plantillaPage.cargarJugadores();
 
       this.modalCtrl.dismiss({
         // uid: firebase.auth().currentUser.uid,
@@ -65,19 +85,5 @@ salirGuardando(){
       }]
     })  }
 }
-  // async errorUpdating (message: any) {
-  //   const updating = await this.alertCtrl.create({
-  //     header: "Error al crear",
-  //     message: "Compruebe que los datos introducidos sean correctos.",
-  //     buttons:[{
-  //       text:'ok',
-  //       handler:()=>{
-  //         this.navCtr.navigateBack(['plantilla-modal'])
-  //       }
-  //     }]
-  //   })
-  //   await updating.present();
-  // }
-
   
 }

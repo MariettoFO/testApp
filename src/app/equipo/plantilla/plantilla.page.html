@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-toolbar>
-  <ion-segment scrollable value="todos" ngModel="segmentSelected" (ionChange)="segmentChanged($event)">
+  <ion-segment scrollable value="todos" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="todos">
       <ion-label>TODOS</ion-label>
     </ion-segment-button>
@@ -36,9 +36,9 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="selectSegment == 'todos'">
-    <ion-item-sliding *ngFor="let jugador of jugadores">
+    <ion-item-sliding *ngFor="let jugador of jugadoresId">
       <ion-item lines="full" detail="false" button>
-        <ion-text [color]="jugador.posicion == 'por' ? 'primary' : 'secundary'" style="text-transform: uppercase;" color="orange" id="positionId">
+        <ion-text id="colorPosition" style="text-transform: uppercase;" [ngStyle]="{color: getPositionColor(jugador.posicion)}">
         <h2 text-left>
           {{jugador.posicion}}
         </h2></ion-text>
@@ -65,7 +65,7 @@
   <ion-list *ngIf="selectSegment == 'por'">
     <ion-item-sliding *ngFor="let portero of porteros">
       <ion-item lines="full" detail="false" button>
-        <ion-text style="text-transform: uppercase;" id="positionId">
+        <ion-text style="text-transform: uppercase;" id="colorPosition" [ngStyle]="{color: getPositionColor(portero.posicion)}">
         <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
         'azul': jugador.posicion == 'DEF', 
         'verde': jugador.posicion == 'MED',
@@ -96,7 +96,7 @@
   <ion-list *ngIf="selectSegment == 'def'">
     <ion-item-sliding *ngFor="let defensa of defensas">
       <ion-item lines="full" detail="false" button>
-        <ion-text style="text-transform: uppercase;" id="positionId">
+        <ion-text style="text-transform: uppercase;" id="colorPosition" [ngStyle]="{color: getPositionColor(defensa.posicion)}">
         <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
         'azul': jugador.posicion == 'DEF', 
         'verde': jugador.posicion == 'MED',
@@ -127,7 +127,7 @@
   <ion-list *ngIf="selectSegment == 'med'">
     <ion-item-sliding *ngFor="let mediocentro of mediocentros">
       <ion-item lines="full" detail="false" button>
-        <ion-text style="text-transform: uppercase;" id="positionId">
+        <ion-text style="text-transform: uppercase;" id="colorPosition" [ngStyle]="{color: getPositionColor(mediocentro.posicion)}">
         <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
         'azul': jugador.posicion == 'DEF', 
         'verde': jugador.posicion == 'MED',
@@ -158,7 +158,7 @@
   <ion-list *ngIf="selectSegment == 'del'">
     <ion-item-sliding *ngFor="let delantero of delanteros">
       <ion-item lines="full" detail="false" button>
-        <ion-text style="text-transform: uppercase;" id="positionId">
+        <ion-text style="text-transform: uppercase;" id="colorPosition" [ngStyle]="{color: getPositionColor(delantero.posicion)}">
         <!-- *ngClass="{'naranja': jugador.posicion == 'POR', 
         'azul': jugador.posicion == 'DEF', 
         'verde': jugador.posicion == 'MED',

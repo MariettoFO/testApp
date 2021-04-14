@@ -5,11 +5,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './equipo.page.html',
   styleUrls: ['./equipo.page.scss'],
 })
-export class EquipoPage implements OnInit {
+export class EquipoPage {
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  cargarPlantilla(){
+    // this.plantillaPage.getJugadores()
+  }
 }

@@ -22,6 +22,16 @@ export class FirebaseService {
     return itemsCollection.add(data);
   }
 
+  editarEquipo<tipo>(data: tipo, enlace: string) {
+    const itemsCollection: AngularFirestoreCollection<tipo> = this.Firestore.collection<tipo>(enlace);
+    return itemsCollection.add(data);
+  }
+
+  borrarEquipo<tipo>(data: tipo, enlace: string) {
+    const itemsCollection: AngularFirestoreCollection<tipo> = this.Firestore.collection<tipo>(enlace);
+    return itemsCollection.add(data);
+  }
+
   // cargarEquipos(){
   //   const db = firebase.firestore();
   //   const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((snapshot) => {

@@ -26,16 +26,22 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @font-face{
-    font-family: 'Lobster', cursive;
-    src: url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+    // font-family: 'Lobster', cursive;
+    // src: url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+    font-family: 'Poppins', sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
   }
   
   *{
-    font-family: 'Lobster', cursive !important;
+    font-family: 'Poppins', sans-serif !important;
   }
 
   ion-title{
     text-align: center;
     font-weight: bold;
     font-size: larger;
+}
+
+.borrar{
+  color: red !important;
 }

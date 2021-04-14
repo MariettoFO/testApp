@@ -10,7 +10,7 @@ import { FirebaseService } from '../services/firebase.service';
   templateUrl: './home-modal.page.html',
   styleUrls: ['./home-modal.page.scss'],
 })
-export class HomeModalPage {
+export class HomeModalPage implements OnInit{
 
   constructor(private modalCtrl: ModalController,
               private firebaseService: FirebaseService, 
@@ -20,6 +20,8 @@ export class HomeModalPage {
 // @Input() uid;
 @Input() equipo;
 @Input() icono;
+
+ngOnInit(){}
 
 
 salirSinGuardar(){

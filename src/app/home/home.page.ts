@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FirebaseApp } from '@angular/fire';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { HomeModalPage } from '../home-modal/home-modal.page';
 import { FirebaseService} from '../services/firebase.service'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -17,6 +17,8 @@ import { DataService } from '../data.service';
   styleUrls: ['home.page.scss'],
 })
 
+@Injectable({providedIn: 'root'})
+
 export class HomePage implements OnInit{
 
   equipoSelect: string
@@ -26,7 +28,7 @@ export class HomePage implements OnInit{
   idEquipos: Array<string>;
   pathJugadores: string;
 
-  constructor( private modalCtrl: ModalController, private dataService: DataService) { 
+  constructor( private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
       this.equipoSelect = ""
       this.pathJugadores = ""
       this.idSelect = ""
@@ -97,12 +99,12 @@ export class HomePage implements OnInit{
 
     const db = firebase.firestore();
 
-    const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+    const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
         this.equipos.push(doc.data().nombre))
       })
 
-    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').get().then((querySnapshot) => {
+    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
         this.idEquipos.push(doc.id))
       })
@@ -133,24 +135,95 @@ export class HomePage implements OnInit{
     // + this.equipoSelect + '/jugadores/'
     this.dataService.pathJugadores = this.pathJugadores
 
-    const getJugadores = db.collection(this.pathJugadores).get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        this.jugadores.push(doc.data().posicion, doc.data().nombre, doc.data().apellidos, doc.data().apodo, doc.data().edad, doc.data().numero))
-      })
-
-    // var db = firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/' + this.idSelect + '/jugadores/').onSnapshot((querySnapshot) => {
-    //   var jugact = [];
-    //   querySnapshot.forEach((doc) =>{
-    //     jugact.push(doc.id)
-    //   });
-    //   console.log(jugact);
-    //   this.jugadores = jugact;
-    // })
+    // const getJugadores = db.collection(this.pathJugadores).get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.jugadores.push(doc.data().posicion, doc.data().nombre, doc.data().apellidos, doc.data().apodo, doc.data().edad, doc.data().numero))
+    //   })
 
     console.log('actualizados final'+ this.jugadores);
 
-    return this.jugadores, this.pathJugadores
+    // return this.jugadores, this.pathJugadores
+    return this.pathJugadores
   }
+
+  async editarEquipo(equipo){
+    var id = ""
+
+    this.getEquipos()
+    this.getIdEquipos()
+
+    for(var i = 0; this.idEquipos.length > i; i++){
+      if(this.equipos[i] == equipo) {
+        id = this.idEquipos[i]
+        break
+      }
+    }
+    const alerta = await this.editAlert.create({
+      header: 'Alerta',
+      subHeader: 'Introduce el nuevo nombre para ' + equipo,
+      inputs: [{
+        name: 'txtNombre',
+        type: 'text',
+        placeholder: 'Nuevo nombre'
+      }],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'borrar',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Cambiar',
+          handler: (data) => {
+            firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').doc(id).update({nombre: data.txtNombre})
+            console.log('Confirm Okay');
+          }
+        }] 
+    })
+
+    await alerta.present()
+  }
+
+  async borrarEquipo(equipo){
+    var id = ""
+
+    this.getEquipos()
+    this.getIdEquipos()
+
+    for(var i = 0; this.idEquipos.length > i; i++){
+      if(this.equipos[i] == equipo) {
+        id = this.idEquipos[i]
+        break
+      }
+    }
+    const alerta = await this.deleteAlert.create({
+      header: 'Alerta',
+      subHeader: 'Ten cuidado',
+      message: 'Va a borrar ' + equipo + ', perderá todos sus datos de este equipo. ¿Desea continuar?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Borrar',
+          cssClass: 'borrar',
+          handler: () => {
+            firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').doc(id).delete()
+            console.log('Confirm Okay');
+          }
+        }] 
+    })
+
+    await alerta.present()
+  }
+
+
 
   
 

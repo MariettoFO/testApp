@@ -6,7 +6,7 @@ import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
 import firebase from 'firebase/app';
 import { HomePage } from 'src/app/home/home.page';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Jugador } from 'src/app/interfaces';
+import { Jugador, JugadorId } from 'src/app/interfaces';
 
 
 @Component({
@@ -18,10 +18,11 @@ export class PlantillaPage implements OnInit {
 
   selectSegment: string;
   jugadores: Array<Jugador>;
-  porteros: Array<Jugador>;
-  defensas: Array<Jugador>;
-  mediocentros: Array<Jugador>;
-  delanteros: Array<Jugador>;
+  jugadoresId: Array<JugadorId>;
+  porteros: Array<JugadorId>;
+  defensas: Array<JugadorId>;
+  mediocentros: Array<JugadorId>;
+  delanteros: Array<JugadorId>;
   apellidos: Array<string>;
   apodo: Array<string>;
   dorsal: Array<string>;
@@ -32,6 +33,7 @@ export class PlantillaPage implements OnInit {
   constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
     this.selectSegment = 'todos'
     this.jugadores = []
+    this.jugadoresId = []
     this.porteros = []
     this.defensas = []
     this.mediocentros = []
@@ -47,7 +49,8 @@ export class PlantillaPage implements OnInit {
    
 
   ngOnInit() {
-    this.cargarJugadores();
+    // this.cargarJugadores();
+    this.getJugadores();
   }
 
   segmentChanged(event){
@@ -70,30 +73,30 @@ export class PlantillaPage implements OnInit {
     console.log('retorno del modal', data);
   }
 
-  cargarJugadores(){
+  // cargarJugadores(){
 
-    const db = firebase.firestore();
+  //   const db = firebase.firestore();
 
-    const getIdJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        this.idJugadores.push(doc.id))
-      })
+  //   const getIdJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+  //     querySnapshot.docs.forEach(doc =>
+  //       this.idJugadores.push(doc.id))
+  //     })
 
-    const getJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        this.jugadores.push({id: doc.id,
-        nombre: doc.data().nombre, 
-        apellidos: doc.data().apellidos, 
-        apodo: doc.data().apodo, 
-        dorsal: doc.data().dorsal, 
-        posicion: doc.data().posicion,
-        edad: doc.data().edad}))
-      })
+  //   const getJugadores = db.collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+  //     querySnapshot.docs.forEach(doc =>
+  //       this.jugadores.push({
+  //       nombre: doc.data().nombre, 
+  //       apellidos: doc.data().apellidos, 
+  //       apodo: doc.data().apodo, 
+  //       dorsal: doc.data().dorsal, 
+  //       posicion: doc.data().posicion,
+  //       edad: doc.data().edad}))
+  //     })
 
-  }
+  // }
 
   getJugadores(){
-    var db = firebase.firestore().collection(this.dataService.getPathJugadores()).onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
         jugact.push({id: doc.id,
@@ -104,78 +107,174 @@ export class PlantillaPage implements OnInit {
           posicion: doc.data().posicion,
           edad: doc.data().edad})
       });
-      this.jugadores = jugact
 
-      this.getPosicion()
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.jugadoresId = jugact
+
+
     })
 
-    console.log('actualizados jugadores = '+ this.jugadores);
-    return this.jugadores
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "aPOR").orderBy("dorsal").onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
+      });
+
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.porteros = jugact
+
+    })
+
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "bDEF").orderBy("dorsal").onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
+      });
+
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.defensas = jugact
+
+    })
+
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "cMED").orderBy("dorsal").onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
+      });
+
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.mediocentros = jugact
+
+    })
+
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "dDEL").orderBy("dorsal").onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
+      });
+
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.delanteros = jugact
+
+    })
+
+    console.log('actualizados jugadores = '+ this.jugadoresId);
+    return this.jugadoresId
   }
 
-  getPosicion(){
+  getPositionColor(posicion){
+    
+    switch(posicion.toLowerCase()){
+      case 'por':
+        return 'orange'
 
-    for(var i = 0; this.jugadores.length > i; i++){
-      if(this.jugadores[i].posicion.toLowerCase() == 'por'){
-        for(var x = 0; this.porteros.length > x || x == 0; x++){
-          if(x > 0 && this.porteros[x] == undefined){
-            break
-          }
-          if(this.porteros[x] == undefined || this.porteros[x].id != this.jugadores[i].id){
-            this.porteros.push(this.jugadores[i])
-          }
-        }
-      }
+      case 'def':
+        return 'blue'
 
-      if(this.jugadores[i].posicion.toLowerCase() == 'def'){
-        for(var x = 0; this.defensas.length > x || x == 0; x++){
-          if(x > 0 && this.defensas[x] == undefined){
-            break
-          }
-          if(this.defensas[x] == undefined || this.defensas[x].id != this.jugadores[i].id){
-            this.defensas.push(this.jugadores[i])
-          }
-        }
-      }
+      case 'med':
+        return 'green'
 
-      if(this.jugadores[i].posicion.toLowerCase() == 'med'){
-        for(var x = 0; this.mediocentros.length > x || x == 0; x++){
-          if(x > 0 && this.mediocentros[x] == undefined){
-            break
-          }
-          if(this.mediocentros[x] == undefined || this.mediocentros[x].id != this.jugadores[i].id){
-            this.mediocentros.push({id: this.jugadores[i].id,
-              nombre: this.jugadores[i].nombre, 
-              apellidos: this.jugadores[i].apellidos, 
-              apodo: this.jugadores[i].apodo, 
-              dorsal: this.jugadores[i].dorsal, 
-              posicion: this.jugadores[i].posicion,
-              edad: this.jugadores[i].edad})
-          }
-        }
-      }
-
-      if(this.jugadores[i].posicion.toLowerCase() == 'del'){
-        for(var x = 0; this.delanteros.length > x || x == 0; x++){
-          if(x > 0 && this.delanteros[x] == undefined){
-            break
-          }
-          if(this.delanteros[x] == undefined || this.delanteros[x].id != this.jugadores[i].id){
-            this.delanteros.push({id: this.jugadores[i].id,
-              nombre: this.jugadores[i].nombre, 
-              apellidos: this.jugadores[i].apellidos, 
-              apodo: this.jugadores[i].apodo, 
-              dorsal: this.jugadores[i].dorsal, 
-              posicion: this.jugadores[i].posicion,
-              edad: this.jugadores[i].edad})
-          }
-        }
-      }
+      case 'del':
+        return 'red'
 
     }
 
-    console.log('POR =>' + this.porteros + ' DEF => ' +  this.defensas + ' MED => ' + this.mediocentros + ' DEL => ' +  this.delanteros)
-   }
+  }
+
 
    doRefresh(event){
     setTimeout(() => {
