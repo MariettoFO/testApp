@@ -10,10 +10,11 @@ import { PartidoModalPage } from '../partido-modal/partido-modal.page';
   styleUrls: ['./partido.page.scss'],
 })
 export class PartidoPage implements OnInit {
+  selectSegment: string;
 
 
   constructor(private modalCtrl: ModalController) { 
-      
+      this.selectSegment = 'todos'
     }
 
 
@@ -36,6 +37,17 @@ export class PartidoPage implements OnInit {
     const {data} = await modal.onDidDismiss();
 
     console.log('retorno del modal', data);
+  }
+
+  segmentChanged(event){
+    this.selectSegment = event.detail.value.toLowerCase();
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      // this.getJugadores()
+      event.target.complete();
+    }, 1500);
   }
 
 }
