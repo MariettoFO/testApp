@@ -23,7 +23,7 @@ export class AppComponent {
 
 
   initializeApp() {
-    this.AppTitle="Nombre App"
+    this.AppTitle="Football Staff"
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

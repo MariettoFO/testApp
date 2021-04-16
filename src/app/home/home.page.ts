@@ -48,11 +48,12 @@ export class HomePage implements OnInit{
 
   async abrirModalEquipo(){
     const modal = await this.modalCtrl.create({
-      component: HomeModalPage,
-      componentProps:{
-        equipo: 'CD San Roque EFF',
-        icono: '../../assets/icon/favicon.png'
-      }
+      component: HomeModalPage
+      // ,
+      // componentProps:{
+      //   equipo: 'CD San Roque EFF',
+      //   icono: '../../assets/icon/favicon.png'
+      // }
     });
 
     await modal.present();

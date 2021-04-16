@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSegment, ModalController } from '@ionic/angular';
+import { AlertController, IonSegment, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { PlantillaModalPage } from '../plantilla-modal/plantilla-modal.page';
@@ -30,7 +30,7 @@ export class PlantillaPage implements OnInit {
   edad: Array<string>;
   idJugadores: Array<string>
 
-  constructor(private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
+  constructor(public editAlert: AlertController, public deleteAlert: AlertController, private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
     this.selectSegment = 'todos'
     this.jugadores = []
     this.jugadoresId = []
@@ -128,7 +128,7 @@ export class PlantillaPage implements OnInit {
 
     })
 
-    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "aPOR").orderBy("dorsal").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "aPOR").orderBy("dorsal", "asc").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
         jugact.push({id: doc.id,
@@ -159,7 +159,7 @@ export class PlantillaPage implements OnInit {
 
     })
 
-    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "bDEF").orderBy("dorsal").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "bDEF").orderBy("dorsal", "asc").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
         jugact.push({id: doc.id,
@@ -190,7 +190,7 @@ export class PlantillaPage implements OnInit {
 
     })
 
-    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "cMED").orderBy("dorsal").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "cMED").orderBy("dorsal", "asc").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
         jugact.push({id: doc.id,
@@ -221,7 +221,7 @@ export class PlantillaPage implements OnInit {
 
     })
 
-    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "dDEL").orderBy("dorsal").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "dDEL").orderBy("dorsal", "asc").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
         jugact.push({id: doc.id,
@@ -275,6 +275,145 @@ export class PlantillaPage implements OnInit {
 
   }
 
+  async editarJugador(idJugador){
+    var id = ""
+    var i = 0
+
+    this.getJugadores()
+
+    for(i = 0; this.jugadoresId.length > i; i++){
+      if(this.jugadoresId[i].id == idJugador) {
+        id = this.jugadoresId[i].id
+        break
+      }
+    }
+    const alerta = await this.editAlert.create({
+      header: 'Alerta',
+      subHeader: 'Introduce los cambios de ' + this.jugadoresId[i].nombre + ' ' + this.jugadoresId[i].apellidos,
+      message: 'En el campo posición introducir: POR, DEF, MED o DEL',
+      inputs: [{
+        name: 'txtNombre',
+        type: 'text',
+        value: this.jugadoresId[i].nombre,
+        placeholder: 'Nombre'
+        },
+        {
+          name: 'txtApellidos',
+          type: 'text',
+          value: this.jugadoresId[i].apellidos,
+          placeholder: 'Apellidos'
+        },
+        {
+          name: 'txtApodo',
+          type: 'text',
+          value: this.jugadoresId[i].apodo,
+          placeholder: 'Apodo'
+        },
+        {
+          name: 'txtDorsal',
+          type: 'number',
+          value: this.jugadoresId[i].dorsal,
+          placeholder: 'Dorsal'
+        },
+        {
+          name: 'txtPosicion',
+          type: 'text',
+          value: this.jugadoresId[i].posicion,
+          placeholder: 'Posicion'
+        },
+        {
+          name: 'txtEdad',
+          type: 'number',
+          value: this.jugadoresId[i].edad,
+          placeholder: 'Edad'
+        }
+        // {
+        //   // name: 'txtPortero',
+        //   type: 'checkbox',
+        //   label: 'PORTERO',
+        //   value: 'POR',
+        //   // placeholder: 'Portero'
+        // },
+        // {
+        //   // name: 'txtDefensa',
+        //   type: 'radio',
+        //   label: 'DEFENSA',
+        //   value: 'DEF',
+        //   // placeholder: 'Defensa'
+        // },
+        // {
+        //   // name: 'txtMediocentro',
+        //   type: 'radio',
+        //   label: 'MEDIOCENTRO',
+        //   value: 'MED',
+        //   // placeholder: 'Mediocentro'
+        // },
+        // {
+        //   // name: 'txtDefensa',
+        //   type: 'radio',
+        //   label: 'DELANTERO',
+        //   value: 'DEL',
+        //   // placeholder: 'Delantero'
+        // },
+
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'borrar',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Cambiar',
+          handler: (data) => {
+            if(data.txtPosicion == 'POR' || data.txtPosicion == 'DEF' || data.txtPosicion == 'MED' || data.txtPosicion == 'DEL'){
+            firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, posicion: data.txtPosicion, edad: data.txtEdad })
+            console.log('Confirm Okay');
+            }
+          }
+        }] 
+    })
+
+    await alerta.present()
+  }
+
+  async borrarJugador(idJugador){
+    var id = ""
+    var i = 0
+    this.getJugadores()
+
+    for(i = 0; this.jugadoresId.length > i; i++){
+      if(this.jugadoresId[i].id == idJugador) {
+        id = this.jugadoresId[i].id
+        break
+      }
+    }
+    const alerta = await this.deleteAlert.create({
+      header: 'Alerta',
+      subHeader: 'Ten cuidado',
+      message: 'Va a borrar ' + this.jugadoresId[i].nombre + ' ' + this.jugadoresId[i].apellidos + ', perderá todos sus datos de este equipo. ¿Desea continuar?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Borrar',
+          cssClass: 'borrar',
+          handler: () => {
+            firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).delete()
+            console.log('Confirm Okay');
+          }
+        }] 
+    })
+
+    await alerta.present()
+  }
 
    doRefresh(event){
     setTimeout(() => {
