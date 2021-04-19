@@ -288,9 +288,9 @@ export class PlantillaPage implements OnInit {
       }
     }
     const alerta = await this.editAlert.create({
-      header: 'Alerta',
+      header: 'Editar jugador',
       subHeader: 'Introduce los cambios de ' + this.jugadoresId[i].nombre + ' ' + this.jugadoresId[i].apellidos,
-      message: 'En el campo posición introducir: POR, DEF, MED o DEL',
+      message: 'IMPORTANTE: En el campo posición introducir: POR, DEF, MED o DEL',
       inputs: [{
         name: 'txtNombre',
         type: 'text',
@@ -327,35 +327,7 @@ export class PlantillaPage implements OnInit {
           value: this.jugadoresId[i].edad,
           placeholder: 'Edad'
         }
-        // {
-        //   // name: 'txtPortero',
-        //   type: 'checkbox',
-        //   label: 'PORTERO',
-        //   value: 'POR',
-        //   // placeholder: 'Portero'
-        // },
-        // {
-        //   // name: 'txtDefensa',
-        //   type: 'radio',
-        //   label: 'DEFENSA',
-        //   value: 'DEF',
-        //   // placeholder: 'Defensa'
-        // },
-        // {
-        //   // name: 'txtMediocentro',
-        //   type: 'radio',
-        //   label: 'MEDIOCENTRO',
-        //   value: 'MED',
-        //   // placeholder: 'Mediocentro'
-        // },
-        // {
-        //   // name: 'txtDefensa',
-        //   type: 'radio',
-        //   label: 'DELANTERO',
-        //   value: 'DEL',
-        //   // placeholder: 'Delantero'
-        // },
-
+        
       ],
       buttons: [
         {
@@ -368,15 +340,30 @@ export class PlantillaPage implements OnInit {
         }, {
           text: 'Cambiar',
           handler: (data) => {
-            if(data.txtPosicion == 'POR' || data.txtPosicion == 'DEF' || data.txtPosicion == 'MED' || data.txtPosicion == 'DEL'){
+            if((data.txtPosicion).toUpperCase() == 'POR' || (data.txtPosicion).toUpperCase() == 'DEF' || (data.txtPosicion).toUpperCase() == 'MED' || (data.txtPosicion).toUpperCase() == 'DEL'){
+              if((data.txtPosicion).toUpperCase() == 'POR'){
+                data.txtPosicion = 'aPOR'
+              }
+              if((data.txtPosicion).toUpperCase() == 'DEF'){
+                data.txtPosicion = 'bDEF'
+              }
+              if((data.txtPosicion).toUpperCase() == 'MED'){
+                data.txtPosicion = 'cMED'
+              }
+              if((data.txtPosicion).toUpperCase() == 'DEL'){
+                data.txtPosicion = 'dDEL'
+              }
             firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, posicion: data.txtPosicion, edad: data.txtEdad })
             console.log('Confirm Okay');
+            } else {
+              firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, edad: data.txtEdad })
             }
           }
         }] 
     })
 
     await alerta.present()
+    
   }
 
   async borrarJugador(idJugador){
