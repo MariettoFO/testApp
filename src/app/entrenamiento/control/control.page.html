@@ -9,10 +9,43 @@
         <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Control de entrenamiento</ion-title>
+    <ion-title>Control de entrenamiento {{numEntrenamiento}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-item lines="full">
+    <ion-label>Entrenamiento finalizado</ion-label>
+    <ion-toggle color="primary"></ion-toggle>
+  </ion-item>
+  <ion-item-divider>Asistencia</ion-item-divider>
+  <ion-item lines="full">
+    <ion-label>Ver jugadores</ion-label>
+    <ion-icon slot="end" name="checkmark-circle-outline" (click)="listaJugadores()"></ion-icon>
+  </ion-item>
+  
+  <ion-list id="listaAsistencia" style="visibility: hidden;">
+    <ion-item lines="full" detail="false">
+      <ion-label>Mario Fernández Osorio</ion-label>
+      <ion-radio-group>
+        <ion-label>
+          Asiste
+        </ion-label>
+        <ion-radio slot="start" color="primary" value="asiste"></ion-radio>
+        <ion-label>
+          Falta
+        </ion-label>
+        <ion-radio slot="end" color="danger" value="falta"></ion-radio>
+      </ion-radio-group>
+      <!-- <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
+      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox> -->
+    </ion-item>
+    <ion-item *ngFor="let jugador of jugadoresId"  lines="full" detail="false">
+      <ion-label>
+        <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
+      </ion-label>
+      <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
+      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
 </ion-content>

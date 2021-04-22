@@ -23,9 +23,6 @@ export class PlantillaModalPage implements OnInit {
       
     }
 
-// @Input() equipoSelect
-// @Input() equipo;
-// @Input() icono;
 ngOnInit() {
 }
 
@@ -69,7 +66,7 @@ salirGuardando(){
 
       this.modalCtrl.dismiss({
         // uid: firebase.auth().currentUser.uid,
-        nombre: (document.getElementById("nombres") as HTMLInputElement).value
+        // nombre: (document.getElementById("nombres") as HTMLInputElement).value
       });
 
     

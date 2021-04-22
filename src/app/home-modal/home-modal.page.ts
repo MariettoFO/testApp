@@ -35,7 +35,7 @@ salirGuardando(){
     nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
   }
   this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
-  this.homePage.cargarEquipos();
+  this.homePage.getEquipos();
 
   this.modalCtrl.dismiss({
     // uid: firebase.auth().currentUser.uid,

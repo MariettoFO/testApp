@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { PlantillaModalPageRoutingModule } from './plantilla-modal-routing.module';
 
 import { PlantillaModalPage } from './plantilla-modal.page';
-// import { PlantillaPage } from '../plantilla/plantilla.page';
 
 @NgModule({
   imports: [

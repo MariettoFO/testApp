@@ -27,10 +27,14 @@ export class HomePage implements OnInit{
   jugadores: Array<string>;
   idEquipos: Array<string>;
   pathJugadores: string;
+  pathEntrenamientos: string;
+  pathPartidos: string;
 
   constructor( private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
       this.equipoSelect = ""
       this.pathJugadores = ""
+      this.pathEntrenamientos = ""
+      this.pathPartidos = ""
       this.idSelect = ""
       this.equipos = []
       this.idEquipos = []
@@ -76,10 +80,6 @@ export class HomePage implements OnInit{
     return this.equipos
   }
 
-  // getPath(){
-  //   console.log(this.pathJugadores)
-  //   return this.pathJugadores
-  // }
 
   getIdEquipos(){
     var db = firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').onSnapshot((querySnapshot) => {
@@ -132,18 +132,14 @@ export class HomePage implements OnInit{
     }
 
     this.pathJugadores = 'users/' + firebase.auth().currentUser.uid + '/equipos/' + this.idSelect + '/jugadores/'
-    // + this.idSelect + '/' 
-    // + this.equipoSelect + '/jugadores/'
     this.dataService.pathJugadores = this.pathJugadores
 
-    // const getJugadores = db.collection(this.pathJugadores).get().then((querySnapshot) => {
-    //   querySnapshot.docs.forEach(doc =>
-    //     this.jugadores.push(doc.data().posicion, doc.data().nombre, doc.data().apellidos, doc.data().apodo, doc.data().edad, doc.data().numero))
-    //   })
+    this.pathEntrenamientos = 'users/' + firebase.auth().currentUser.uid + '/equipos/' + this.idSelect + '/entrenamientos/'
+    this.dataService.pathEntrenamientos = this.pathEntrenamientos
+    
+    this.pathPartidos = 'users/' + firebase.auth().currentUser.uid + '/equipos/' + this.idSelect + '/partidos/'
+    this.dataService.pathPartidos = this.pathPartidos
 
-    console.log('actualizados final'+ this.jugadores);
-
-    // return this.jugadores, this.pathJugadores
     return this.pathJugadores
   }
 

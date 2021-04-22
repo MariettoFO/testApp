@@ -14,20 +14,20 @@
   <ion-item-divider>Datos del entrenamiento</ion-item-divider>
   <ion-item>
     <ion-label position="stacked">Nº de entrenamiento</ion-label>
-    <ion-input required placeholder="Introducir" type="number" value="0"></ion-input>
+    <ion-input required id="numero" placeholder="Introducir" type="number" value="0"></ion-input>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item>
     <ion-label position="stacked">Nº de semana</ion-label>
     <ion-input required placeholder="Introducir" type="number" value="0"></ion-input>
-  </ion-item>
+  </ion-item> -->
   <ion-item-divider>Fecha y hora</ion-item-divider>
   <ion-item>
     <ion-label>Seleccionar fecha</ion-label>
-    <ion-datetime dayNames="Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo" displayFormat="DDDD DD/MM/YYYY" placeholder="Elegir"></ion-datetime>
+    <ion-datetime id="fecha" dayNames="Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo" displayFormat="DDDD DD/MM/YYYY" placeholder="Elegir"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>Seleccionar hora</ion-label>
-    <ion-datetime display-format="HH:mm" picker-format="HH:mm" placeholder="Elegir"></ion-datetime>
+    <ion-datetime id="hora" display-format="HH:mm" picker-format="HH:mm" placeholder="Elegir"></ion-datetime>
   </ion-item>
 
   

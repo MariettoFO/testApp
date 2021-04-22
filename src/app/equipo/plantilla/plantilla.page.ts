@@ -125,7 +125,6 @@ export class PlantillaPage implements OnInit {
 
       this.jugadoresId = jugact
 
-
     })
 
     firebase.firestore().collection(this.dataService.getPathJugadores()).where("posicion", "==", "aPOR").orderBy("dorsal", "asc").onSnapshot((querySnapshot) => {
