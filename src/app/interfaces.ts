@@ -16,6 +16,20 @@ export interface Jugador {
     edad: string;
 }
 
+export interface JugadorEstadistica {
+
+    asiste: number;
+    falta: number;
+    convocado: number;
+    desconvocado: number;
+    goles: number;
+    asistencias: number;
+    minutos: number;
+    amarillas: number;
+    rojas: number;
+    
+}
+
 export interface JugadorId {
     id: string;
     nombre: string;

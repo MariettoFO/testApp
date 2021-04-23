@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="tabs/entrenamiento">
+      <ion-back-button text="" (click)="guardarCambios()" defaultHref="tabs/entrenamiento">
       </ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
@@ -16,15 +16,15 @@
 <ion-content>
   <ion-item lines="full">
     <ion-label>Entrenamiento finalizado</ion-label>
-    <ion-toggle color="primary"></ion-toggle>
+    <ion-toggle checked="{{entFinalizado}}" color="primary" id="entFinalizado"></ion-toggle>
   </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
-  <ion-item lines="full">
+  <ion-item lines="full" (click)="listaJugadores()">
     <ion-label>Ver jugadores</ion-label>
-    <ion-icon slot="end" name="checkmark-circle-outline" (click)="listaJugadores()"></ion-icon>
+    <ion-icon id="iconAsistencia" slot="end" name="chevron-forward-outline"></ion-icon>
   </ion-item>
   
-  <ion-list id="listaAsistencia" style="visibility: hidden;">
+  <ion-list id="listaAsistencia" style="visibility: hidden; transition: visibility 0.5s;">
     <ion-item lines="full" detail="false">
       <ion-label>Mario Fernández Osorio</ion-label>
       <ion-radio-group>
@@ -44,8 +44,8 @@
       <ion-label>
         <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
       </ion-label>
-      <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
-      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox>
+      <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox>
+      <ion-checkbox slot="end" color="primary" id="asiste{{jugador.id}}" (click)="cambiarTickAsiste(jugador.id)"></ion-checkbox>
     </ion-item>
   </ion-list>
 </ion-content>

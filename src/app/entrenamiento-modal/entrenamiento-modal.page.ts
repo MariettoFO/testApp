@@ -89,18 +89,6 @@ ordenarFecha(fecha){
 salirGuardando(){
   console.log(this.dataService.getPathEntrenamientos())
   const path = this.dataService.getPathEntrenamientos()
-  // var finalNum = 0
-  // var fechaInicial = ''
-  // var fechaFinal = ''
-  // var horaInicial = ''
-  // var horaFinal = ''
-  // var x = 0
-
-  // var entrenamientoId = []
-
-  // entrenamientoId = this.entrenamientoPage.getEntrenamientos()
-
-  // finalNum = (entrenamientoId).length + 1
 
   const nuevoEntrenamiento: Entrenamiento = {
     numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),

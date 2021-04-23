@@ -14,15 +14,27 @@ export class ControlPage implements OnInit {
 
   numEntrenamiento: string;
   jugadoresId: Array<JugadorId>;
+  idEntrenamiento: string;
+  entFinalizado: string;
 
 
   constructor(private dataService: DataService) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
+    this.idEntrenamiento = this.dataService.idEntrenamiento
+    this.entFinalizado = this.dataService.finEntrenamiento
   }
 
   listaJugadores(){
 
+//Cambiar icono
+    if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
+      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
+    } else {
+      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
+    }
+
+//Mostrar lista de jugadores
     if(document.getElementById('listaAsistencia').style.visibility == 'hidden'){
       document.getElementById('listaAsistencia').style.visibility = 'visible'
     } else {
@@ -31,7 +43,16 @@ export class ControlPage implements OnInit {
 
   }
 
+  cambiarIcono(){
+    if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
+      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
+    } else {
+      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
+    }
+  }
+
   cargarJugadores(){
+
     firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
       var jugact = [];
       querySnapshot.forEach((doc) =>{
@@ -62,23 +83,50 @@ export class ControlPage implements OnInit {
       this.jugadoresId = jugact
 
     })
-  }
-
-  cambiarTickAsiste(){
-
-    (document.getElementById('falta') as HTMLIonCheckboxElement).checked = false
 
   }
 
-  cambiarTickFalta(){
+  cambiarTickAsiste(id){
 
-    (document.getElementById('asiste') as HTMLIonCheckboxElement).checked = false
+    (document.getElementById('falta' + id) as HTMLIonCheckboxElement).checked = false
+
+  }
+
+  cambiarTickFalta(id){
+
+    (document.getElementById('asiste' + id) as HTMLIonCheckboxElement).checked = false
 
   }
   ngOnInit() {
     this.cargarJugadores()
   }
 
-  
+  guardarCambios(){
+    //EntrenamientoFinalizado
+    var entFinalizado = false
+    var miBool = Boolean(this.entFinalizado)
+
+    if((document.getElementById('entFinalizado') as HTMLIonToggleElement).checked == true && miBool == false){
+      entFinalizado = true
+      firebase.firestore().collection(this.dataService.getPathEntrenamientos()).doc(this.idEntrenamiento).update({finalizado: entFinalizado})
+    } 
+    if((document.getElementById('entFinalizado') as HTMLIonToggleElement).checked == false && miBool == true){
+      firebase.firestore().collection(this.dataService.getPathEntrenamientos()).doc(this.idEntrenamiento).update({finalizado: entFinalizado})
+    } 
+
+
+    //Campo Asistencia
+
+    for(var i = 0; i < this.jugadoresId.length; i++){
+      if((document.getElementById('asiste' + this.jugadoresId[i].id) as HTMLIonCheckboxElement).checked){
+        this.dataService.pathJugadoresEstadistica = this.dataService.pathJugadores + this.jugadoresId[i].id
+        firebase.firestore().collection(this.dataService.getPathJugadores()).doc(this.jugadoresId[i].id).update({asiste: entFinalizado})
+      }
+      if((document.getElementById('falta' + this.jugadoresId[i].id) as HTMLIonCheckboxElement).checked){
+        firebase.firestore().collection(this.dataService.getPathJugadores()+this.jugadoresId[i].id+'/estadisticas').doc(idEstadistica).update({falta: entFinalizado})
+      }
+    }
+
+  }
 
 }

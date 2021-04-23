@@ -40,7 +40,7 @@
   </ion-item> -->
   <ion-list *ngIf="selectSegment == 'todos'">
     <ion-item-sliding *ngFor="let entrenamiento of entrenamientoId">
-      <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero)" routerLink="control"> 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero, entrenamiento.id, entrenamiento.finalizado)" routerLink="control"> 
         <ion-icon color="dark" name="barbell-outline" slot="start"></ion-icon> 
         <ion-label>
           <p><h2 [ngStyle]="{color: getFinalizadoColor(entrenamiento.finalizado)}">Entrenamiento {{entrenamiento.numero}}</h2>
@@ -60,7 +60,7 @@
 
 <ion-list *ngIf="selectSegment == 'finalizado'">
   <ion-item-sliding *ngFor="let entrenamiento of finalizados">
-    <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero)" routerLink="control"> 
+    <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero, entrenamiento.id, entrenamiento.finalizado)" routerLink="control"> 
       <ion-icon color="dark" name="barbell-outline" slot="start"></ion-icon> 
       <ion-label>
         <p><h2 [ngStyle]="{color: getFinalizadoColor(entrenamiento.finalizado)}">Entrenamiento {{entrenamiento.numero}}</h2>
@@ -80,7 +80,7 @@
 
 <ion-list *ngIf="selectSegment == 'programado'">
   <ion-item-sliding *ngFor="let entrenamiento of programados">
-    <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero)" routerLink="control"> 
+    <ion-item detail="false" button vertical="center" lines="full" (click)="getEntrenamientoSelect(entrenamiento.numero, entrenamiento.id, entrenamiento.finalizado)" routerLink="control"> 
       <ion-icon color="dark" name="barbell-outline" slot="start"></ion-icon> 
       <ion-label>
         <p><h2 [ngStyle]="{color: getFinalizadoColor(entrenamiento.finalizado)}">Entrenamiento {{entrenamiento.numero}}</h2>

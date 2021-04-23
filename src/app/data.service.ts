@@ -6,17 +6,23 @@ import { JugadorId } from './interfaces';
 })
 export class DataService {
 pathJugadores: string;
+pathJugadoresEstadistica: string;
 jugadoresId: Array<JugadorId>
 pathPartidos: string;
 pathEntrenamientos: string;
 numEntrenamiento: string; 
+idEntrenamiento: string;
+finEntrenamiento: string;
 
   constructor(private http: HttpClient) { 
     this.pathJugadores = ""
+    this.pathJugadoresEstadistica = ""
     this.pathPartidos = ""
     this.pathEntrenamientos = ""
     this.numEntrenamiento = ""
     this.jugadoresId = []
+    this.idEntrenamiento = ""
+    this.finEntrenamiento = ""
   }
 
 
@@ -26,6 +32,10 @@ numEntrenamiento: string;
 
   getPathJugadores(){
     return this.pathJugadores
+  }
+
+  getPathJugadoresEstadistica(){
+    return this.pathJugadoresEstadistica
   }
 
   // getJugadores(){
