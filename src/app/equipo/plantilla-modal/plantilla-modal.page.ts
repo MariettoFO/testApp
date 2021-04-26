@@ -54,10 +54,16 @@ calcularId(idAntiguo, idNuevo){
       this.id = idNuevo[i].id
       break
     }
-    if(idAntiguo[i].id != idNuevo[i].id ){
+
+    if(idAntiguo.length == i){
       this.id = idNuevo[i].id
       break
     }
+
+    if(idAntiguo.length <  i || idAntiguo[i].id != idNuevo[i].id ){
+      this.id = idNuevo[i].id
+      break
+    } 
 
   }
 
@@ -163,16 +169,18 @@ async salirGuardando(){
 
     
   } catch(err){
-    this.alertCtrl.create({
-      header: "Error al crear",
-      message: "Compruebe que los datos introducidos sean correctos.",
-      buttons:[{
-        text:'ok',
-        handler:()=>{
-          this.navCtr.navigateBack(['plantilla-modal'])
-        }
-      }]
-    })  }
+    // this.alertCtrl.create({
+    //   header: "Error al crear",
+    //   message: "Compruebe que los datos introducidos sean correctos.",
+    //   buttons:[{
+    //     text:'ok',
+    //     handler:()=>{
+    //       this.navCtr.navigateBack(['plantilla-modal'])
+    //     }
+    //   }]
+    // })  
+    console.log(err)
+  }
 }
   
 }

@@ -3,6 +3,7 @@ export interface User {
 }
 
 export interface Equipo {
+    id: string;
     nombre: string;
 }
 

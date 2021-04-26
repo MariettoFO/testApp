@@ -32,7 +32,8 @@ salirGuardando(){
 
   const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/'
   const nuevoEquipo: Equipo = {
-    nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
+    nombre: (document.getElementById("inputequipo") as HTMLInputElement).value,
+    id: '' //arreglar
   }
   this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
   this.homePage.getEquipos();

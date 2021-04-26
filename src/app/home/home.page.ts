@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 import { MaxLengthValidator } from '@angular/forms';
 import { SelectorMatcher } from '@angular/compiler';
 import { DataService } from '../data.service';
+import { Equipo } from '../interfaces';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HomePage implements OnInit{
 
   equipoSelect: string
   idSelect: string
-  equipos: Array<string>;
+  equipos: Array<Equipo>;
   jugadores: Array<string>;
   idEquipos: Array<string>;
   pathJugadores: string;
@@ -70,7 +71,7 @@ export class HomePage implements OnInit{
     var db = firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').onSnapshot((querySnapshot) => {
       var equiposact = [];
       querySnapshot.forEach((doc) =>{
-        equiposact.push(doc.data().nombre)
+        equiposact.push({id: doc.id, nombre: doc.data().nombre})
       });
       console.log(equiposact);
       this.equipos = equiposact
@@ -102,16 +103,16 @@ export class HomePage implements OnInit{
 
     const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
-        this.equipos.push(doc.data().nombre))
+        this.equipos.push({id: doc.id, nombre: doc.data().nombre}))
       })
 
-    const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
-        this.idEquipos.push(doc.id))
-      })
+    // const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {
+    //   querySnapshot.docs.forEach(doc =>
+    //     this.idEquipos.push(doc.id))
+    //   })
   }
 
-  getJugadores(equipo){
+  async getJugadores(equipo){
 
     var idTeam = ""
     var db = firebase.firestore()
@@ -119,12 +120,20 @@ export class HomePage implements OnInit{
     this.equipoSelect = equipo
     console.log(this.equipoSelect + " es el equipo seleccionado")
 
-    this.getEquipos()
-    this.getIdEquipos()
+    await this.getEquipos()
+    await this.getIdEquipos()
+    // await firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').onSnapshot((querySnapshot) => {
+    //   var idact = [];
+    //   querySnapshot.forEach((doc) =>{
+    //     idact.push(doc.id)
+    //   });
+    //   console.log(idact);
+    //   this.idEquipos = idact
+    // })
     
     for(var i = 0, x = false; (i < this.equipos.length) && (x == false); i++) {
-      if(this.equipos[i] == equipo){
-        idTeam = this.idEquipos[i]
+      if(this.equipos[i].nombre == equipo){
+        idTeam = this.equipos[i].id
         this.idSelect = idTeam
         console.log(idTeam+ ' = ' + this.idSelect)
         x = true
@@ -149,9 +158,9 @@ export class HomePage implements OnInit{
     this.getEquipos()
     this.getIdEquipos()
 
-    for(var i = 0; this.idEquipos.length > i; i++){
-      if(this.equipos[i] == equipo) {
-        id = this.idEquipos[i]
+    for(var i = 0; this.equipos.length > i; i++){
+      if(this.equipos[i].nombre == equipo) {
+        id = this.equipos[i].id
         break
       }
     }
@@ -189,9 +198,9 @@ export class HomePage implements OnInit{
     this.getEquipos()
     this.getIdEquipos()
 
-    for(var i = 0; this.idEquipos.length > i; i++){
-      if(this.equipos[i] == equipo) {
-        id = this.idEquipos[i]
+    for(var i = 0; this.equipos.length > i; i++){
+      if(this.equipos[i].nombre == equipo) {
+        id = this.equipos[i].id
         break
       }
     }

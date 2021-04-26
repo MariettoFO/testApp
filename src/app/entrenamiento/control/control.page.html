@@ -25,7 +25,15 @@
   </ion-item>
   
   <ion-list id="listaAsistencia" style="visibility: hidden; transition: visibility 0.5s;">
-    <ion-item lines="full" detail="false">
+    <ion-item detail="false">
+      <ion-label>
+        <h2>Confirmar asistencia</h2>
+      </ion-label>
+      <ion-icon color="danger" id="denegacion" slot="end" name="close-outline">No</ion-icon>
+      <ion-icon color="primary" id="confirmacion" slot="end" name="checkmark-outline"></ion-icon>
+    </ion-item>
+
+    <!-- <ion-item lines="full" detail="false">
       <ion-label>Mario Fernández Osorio</ion-label>
       <ion-radio-group>
         <ion-label>
@@ -37,10 +45,10 @@
         </ion-label>
         <ion-radio slot="end" color="danger" value="falta"></ion-radio>
       </ion-radio-group>
-      <!-- <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
-      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox> -->
-    </ion-item>
-    <ion-item *ngFor="let jugador of jugadoresId"  lines="full" detail="false">
+       <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
+      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox> 
+    </ion-item> -->
+    <ion-item *ngFor="let jugador of jugadoresId" detail="false">
       <ion-label>
         <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
       </ion-label>
