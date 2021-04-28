@@ -13,6 +13,8 @@ pathEntrenamientos: string;
 numEntrenamiento: string; 
 idEntrenamiento: string;
 finEntrenamiento: string;
+fechaEntrenamiento: string;
+
 
   constructor(private http: HttpClient) { 
     this.pathJugadores = ""
@@ -23,6 +25,7 @@ finEntrenamiento: string;
     this.jugadoresId = []
     this.idEntrenamiento = ""
     this.finEntrenamiento = ""
+    this.fechaEntrenamiento = ""
   }
 
 

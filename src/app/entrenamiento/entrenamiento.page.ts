@@ -70,12 +70,13 @@ export class EntrenamientoPage implements OnInit {
     console.log('retorno del modal', data);
   }
 
-  getEntrenamientoSelect(entrenamiento, id, finalizado){
+  getEntrenamientoSelect(entrenamiento, id, finalizado, fecha){
     this.dataService.numEntrenamiento = entrenamiento
     this.dataService.idEntrenamiento = id
     this.dataService.finEntrenamiento = finalizado
+    this.dataService.fechaEntrenamiento = fecha
 
-    return this.dataService.numEntrenamiento, this.dataService.idEntrenamiento, this.dataService.finEntrenamiento
+    return this.dataService.numEntrenamiento, this.dataService.idEntrenamiento, this.dataService.finEntrenamiento, this.dataService.fechaEntrenamiento
   }
 
   getEntrenamientos(){

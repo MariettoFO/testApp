@@ -103,8 +103,8 @@ async salirGuardando(){
   }
 
   const nuevoJugadorEstadistica: JugadorEstadistica = {
-    asiste: 0,
-    falta: 0,
+    asiste: [],
+    falta: [],
     convocado: 0,
     desconvocado: 0,
     goles: 0,

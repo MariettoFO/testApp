@@ -19,8 +19,8 @@ export interface Jugador {
 
 export interface JugadorEstadistica {
 
-    asiste: number;
-    falta: number;
+    asiste: Array<string>;
+    falta: Array<string>;
     convocado: number;
     desconvocado: number;
     goles: number;

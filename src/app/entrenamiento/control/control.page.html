@@ -18,6 +18,9 @@
     <ion-label>Entrenamiento finalizado</ion-label>
     <ion-toggle checked="{{entFinalizado}}" color="primary" id="entFinalizado"></ion-toggle>
   </ion-item>
+  <ion-item button (click)="elegirArchivo()" lines="full">
+    <ion-label>Cargar Entrenamiento</ion-label>
+  </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
   <ion-item lines="full" (click)="listaJugadores()">
     <ion-label>Ver jugadores</ion-label>
@@ -52,8 +55,8 @@
       <ion-label>
         <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
       </ion-label>
-      <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox>
-      <ion-checkbox slot="end" color="primary" id="asiste{{jugador.id}}" (click)="cambiarTickAsiste(jugador.id)"></ion-checkbox>
+      <!-- <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox> -->
+      <ion-checkbox slot="end" color="primary" id="asiste{{jugador.id}}" (click)="updateAsistencia(jugador.id)"></ion-checkbox>
     </ion-item>
   </ion-list>
 </ion-content>
