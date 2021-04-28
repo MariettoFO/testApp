@@ -28,13 +28,13 @@
   </ion-item>
   
   <ion-list id="listaAsistencia" style="visibility: hidden; transition: visibility 0.5s;">
-    <ion-item detail="false">
+    <!-- <ion-item detail="false">
       <ion-label>
         <h2>Confirmar asistencia</h2>
       </ion-label>
       <ion-icon color="danger" id="denegacion" slot="end" name="close-outline">No</ion-icon>
       <ion-icon color="primary" id="confirmacion" slot="end" name="checkmark-outline"></ion-icon>
-    </ion-item>
+    </ion-item> -->
 
     <!-- <ion-item lines="full" detail="false">
       <ion-label>Mario Fernández Osorio</ion-label>
@@ -56,7 +56,10 @@
         <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
       </ion-label>
       <!-- <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox> -->
-      <ion-checkbox slot="end" color="primary" id="asiste{{jugador.id}}" (click)="updateAsistencia(jugador.id)"></ion-checkbox>
+      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id)" slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox> -->
+      <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox>
+
+      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id) == 'false'" slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox> -->
     </ion-item>
   </ion-list>
 </ion-content>
