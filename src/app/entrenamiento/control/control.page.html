@@ -22,7 +22,7 @@
     <ion-label>Cargar Entrenamiento</ion-label>
   </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
-  <ion-item lines="full" (click)="listaJugadores()">
+  <ion-item lines="full" (click)="listaJugadores()" (click)="checkearAsistencia()">
     <ion-label>Ver jugadores</ion-label>
     <ion-icon id="iconAsistencia" slot="end" name="chevron-forward-outline"></ion-icon>
   </ion-item>
@@ -57,9 +57,13 @@
       </ion-label>
       <!-- <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox> -->
       <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id)" slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox> -->
-      <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox>
+      
+      <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox>
+      <!-- <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox> -->
 
-      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id) == 'false'" slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox> -->
+      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id) else elseBlock" slot="end" color="success" id="asiste{{jugador.id}}" checked></ion-checkbox>
+      <ion-checkbox #elseBlock slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox> -->
+
     </ion-item>
   </ion-list>
 </ion-content>

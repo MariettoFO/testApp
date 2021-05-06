@@ -30,31 +30,36 @@ export class ControlPage implements OnInit {
     this.checkAsistencia = false
   }
 
+  ngOnInit() {
+    this.cargarJugadores()
+  }
+
   listaJugadores(){
 
-//Cambiar icono
+    //Cambiar icono
     if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
       (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
     } else {
       (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
     }
 
-//Mostrar lista de jugadores
+    //Mostrar lista de jugadores
     if(document.getElementById('listaAsistencia').style.visibility == 'hidden'){
       document.getElementById('listaAsistencia').style.visibility = 'visible'
+
     } else {
       document.getElementById('listaAsistencia').style.visibility = 'hidden'
     }
 
   }
 
-  cambiarIcono(){
-    if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
-      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
-    } else {
-      (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
-    }
-  }
+  // cambiarIcono(){
+  //   if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
+  //     (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
+  //   } else {
+  //     (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
+  //   }
+  // }
 
   cargarJugadores(){
 
@@ -87,26 +92,23 @@ export class ControlPage implements OnInit {
 
       this.jugadoresId = jugact
 
-      
+      this.dataService.asistencia = []
+
+      for(var x = 0; x<this.jugadoresId.length; x++){
+        firebase.firestore().collection(this.dataService.pathJugadores + this.jugadoresId[x].id + '/estadisticas').get().then((querySnapshot) => {
+          var estact = [];
+          querySnapshot.forEach((doc) =>{
+            this.dataService.asistencia.push({id: doc.id, asiste: doc.data().asiste, falta: doc.data().falta})
+  
+          })
+  
+          console.log(this.dataService.asistencia)
+  
+        })
+      }
 
     })
 
-
-  }
-
-  cambiarTickAsiste(id){
-
-    (document.getElementById('falta' + id) as HTMLIonCheckboxElement).checked = false
-
-  }
-
-  cambiarTickFalta(id){
-
-    (document.getElementById('asiste' + id) as HTMLIonCheckboxElement).checked = false
-
-  }
-  ngOnInit() {
-    this.cargarJugadores()
   }
 
   guardarCambios(){
@@ -125,26 +127,12 @@ export class ControlPage implements OnInit {
       firebase.firestore().collection(this.dataService.getPathEntrenamientos()).doc(this.idEntrenamiento).update({finalizado: entFinalizado})
     } 
 
-
-
-
     //Campo Asistencia
 
-    for(var i = 0; this.jugadoresId.length; i++){
+    for(var i = 0; this.jugadoresId.length > i; i++){
       this.updateAsistencia(this.jugadoresId[i].id)
     }
 
-    // this.updateAsistencia()
-
-    // for(var i = 0; i < this.jugadoresId.length; i++){
-    //   if((document.getElementById('asiste' + this.jugadoresId[i].id) as HTMLIonCheckboxElement).checked){
-    //     this.dataService.pathJugadoresEstadistica = this.dataService.pathJugadores + this.jugadoresId[i].id
-    //     firebase.firestore().collection(this.dataService.getPathJugadores()).doc(this.jugadoresId[i].id).update({asiste: entFinalizado})
-    //   }
-    //   if((document.getElementById('falta' + this.jugadoresId[i].id) as HTMLIonCheckboxElement).checked){
-    //     firebase.firestore().collection(this.dataService.getPathJugadores()+this.jugadoresId[i].id+'/estadisticas').doc(idEstadistica).update({falta: entFinalizado})
-    //   }
-    // }
   }catch(err){
     console.log(err)
   }
@@ -158,35 +146,42 @@ export class ControlPage implements OnInit {
   async updateAsistencia(jugadorId) {
 
     var docId = ""
+    var num = 0
     var asistencia = []
     var falta = []
     var checkedAsist = ""
     var bool = false
 
-    await firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').onSnapshot((querySnapshot) => {
-      var jugact = [];
-      querySnapshot.forEach((doc) =>{
-        jugact.push({id: doc.id,
-        asiste: doc.data().asiste,
-        falta: doc.data().falta})
-      });
+    // await firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').onSnapshot((querySnapshot) => {
+    //   var jugact = [];
+    //   querySnapshot.forEach((doc) =>{
+    //     jugact.push({id: doc.id,
+    //     asiste: doc.data().asiste,
+    //     falta: doc.data().falta})
+    //   });
 
-      docId = jugact[0].id
-      asistencia = jugact[0].asiste
-      falta = jugact[0].falta
+    //   docId = jugact[0].id
+    //   asistencia = jugact[0].asiste
+    //   falta = jugact[0].falta
 
-      console.log('docid ==> ' + docId + 'asistencia ==> ' + asistencia + 'falta ==> ' + falta)
+    //   console.log('docid ==> ' + docId + 'asistencia ==> ' + asistencia + 'falta ==> ' + falta)
 
+    //Para saber posicion del array de asistencia
+    for(var i = 0; i<this.jugadoresId.length; i++){
+      if(this.jugadoresId[i].id == jugadorId){
+        num = i
+      }
+    }
       //Comprobar si existe la fecha en asiste
-      for(var i = 0; i<asistencia.length; i++){
-        if(asistencia[i] == this.fechaEntrenamiento){
+      for(var i = 0; i<this.dataService.asistencia[num].asiste.length; i++){
+        if(this.dataService.asistencia[num].asiste[i] == this.fechaEntrenamiento){
           checkedAsist = "asiste"
         }
       }
 
       //Comprobar si existe la fecha en falta
-      for(var i = 0; i<falta.length; i++){
-        if(falta[i] == this.fechaEntrenamiento){
+      for(var i = 0; i<this.dataService.asistencia[num].falta.length; i++){
+        if(this.dataService.asistencia[num].falta[i] == this.fechaEntrenamiento){
           checkedAsist = "falta"
         }
       }
@@ -196,10 +191,10 @@ export class ControlPage implements OnInit {
 
         //Si no está marcado...
         if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false && bool == false) {
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             falta: firebase.firestore.FieldValue.arrayUnion(this.fechaEntrenamiento)
           });
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             asiste: firebase.firestore.FieldValue.arrayRemove(this.fechaEntrenamiento)
           });
           bool = true
@@ -207,10 +202,10 @@ export class ControlPage implements OnInit {
     
         //Si está marcado...
         if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true && bool == false) {
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             asiste: firebase.firestore.FieldValue.arrayUnion(this.fechaEntrenamiento)
           });
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             falta: firebase.firestore.FieldValue.arrayRemove(this.fechaEntrenamiento)
           });
           bool = true
@@ -222,10 +217,10 @@ export class ControlPage implements OnInit {
 
         //Si no está marcado...
         if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false) {
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             falta: firebase.firestore.FieldValue.arrayUnion(this.fechaEntrenamiento)
           });
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             asiste: firebase.firestore.FieldValue.arrayRemove(this.fechaEntrenamiento)
           });
           bool = true
@@ -237,61 +232,33 @@ export class ControlPage implements OnInit {
     
         //Si está marcado...
         if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true) {
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             asiste: firebase.firestore.FieldValue.arrayUnion(this.fechaEntrenamiento)
           });
-          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(docId).update({
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             falta: firebase.firestore.FieldValue.arrayRemove(this.fechaEntrenamiento)
           });
           bool = true
         }
       }
 
-    })
     
   }
 
-  async checkearAsistencia(jugadorId){
-    var asistencia = []
-    var idDoc = ""
-    // this.checkAsistencia = false
+  checkearAsistencia(){
 
     //Bucle para coger asistencia de estadisticas y saber si checkear el checkbox
-    await firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').onSnapshot((querySnapshot) => {
-      var jugact = [];
-      querySnapshot.forEach((doc) =>{
-        jugact.push({id: doc.id, asiste: doc.data().asiste})
-      });
+    if(this.checkAsistencia == false){
+      this.checkAsistencia = true
+      for(var x = 0; x<this.dataService.asistencia.length; x++){
+            for(var i = 0; i<this.dataService.asistencia[x].asiste.length; i++){
+              if(this.dataService.asistencia[x].asiste[i] == this.fechaEntrenamiento){
+                (document.getElementById('asiste' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked = true
+              }
+            }
 
-      idDoc = jugact[0].id
-      asistencia = jugact[0].asiste
-
-      console.log('asistencia ==> ' + asistencia)
-
-      
-
-    })
-
-    for(var i = 0; i<asistencia.length; i++){
-      if(asistencia[i] == this.fechaEntrenamiento){
-        this.checkAsistencia = true
-        break
-      } else {
-        this.checkAsistencia = false
       }
     }
-
-    // for(var i = 0; i<asistencia.length; i++){
-    //   if(asistencia[i] == this.fechaEntrenamiento){
-    //     miBool = true
-    //   }
-    // }
-
-    return this.checkAsistencia
   }
-
-  // for(var i = 0; i<this.jugadoresId.length; i++){
-  //   (document.getElementById('asiste' + this.jugadoresId[i].id) as HTMLIonCheckboxElement).checked = this.checkearAsistencia(this.jugadoresId[i].id)
-  // }
 
 }

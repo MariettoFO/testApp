@@ -91,6 +91,7 @@ export class EntrenamientoPage implements OnInit {
       });
 
       this.entrenamientoId = entact
+      this.dataService.entrenamientos = entact
     })
 
     firebase.firestore().collection(this.dataService.getPathEntrenamientos()).where('finalizado', '==', true).orderBy('numero').onSnapshot((querySnapshot) => {

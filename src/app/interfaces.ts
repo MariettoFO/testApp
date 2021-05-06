@@ -31,6 +31,12 @@ export interface JugadorEstadistica {
     
 }
 
+export interface Asistencia{
+    id: string;
+    asiste: Array<string>
+    falta: Array<string>
+}
+
 export interface JugadorId {
     id: string;
     nombre: string;

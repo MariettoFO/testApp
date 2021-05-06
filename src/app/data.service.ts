@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { JugadorId } from './interfaces';
+import { Asistencia, Entrenamiento, JugadorId } from './interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +14,8 @@ numEntrenamiento: string;
 idEntrenamiento: string;
 finEntrenamiento: string;
 fechaEntrenamiento: string;
+asistencia: Array<Asistencia>;
+entrenamientos: Array<any>
 
 
   constructor(private http: HttpClient) { 
@@ -26,6 +28,8 @@ fechaEntrenamiento: string;
     this.idEntrenamiento = ""
     this.finEntrenamiento = ""
     this.fechaEntrenamiento = ""
+    this.asistencia = []
+    this.entrenamientos = []
   }
 
 
