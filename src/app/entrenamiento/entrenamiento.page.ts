@@ -120,6 +120,52 @@ export class EntrenamientoPage implements OnInit {
       this.programados = entact
     })
 
+    firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
+      var jugact = [];
+      querySnapshot.forEach((doc) =>{
+        jugact.push({id: doc.id,
+          nombre: doc.data().nombre, 
+          apellidos: doc.data().apellidos, 
+          apodo: doc.data().apodo, 
+          dorsal: doc.data().dorsal, 
+          posicion: doc.data().posicion,
+          edad: doc.data().edad})
+      });
+
+      for(var i = 0; jugact.length > i; i++){
+        if(jugact[i].posicion == 'aPOR'){
+          jugact[i].posicion = "POR"
+        }
+        if(jugact[i].posicion == 'bDEF'){
+          jugact[i].posicion = "DEF"
+        }
+        if(jugact[i].posicion == 'cMED'){
+          jugact[i].posicion = "MED"
+        }
+        if(jugact[i].posicion == 'dDEL'){
+          jugact[i].posicion = "DEL"
+        }
+      }
+
+      this.dataService.jugadoresId = jugact
+
+      this.dataService.asistencia = []
+
+      for(var x = 0; x<this.dataService.jugadoresId.length; x++){
+        firebase.firestore().collection(this.dataService.pathJugadores + this.dataService.jugadoresId[x].id + '/estadisticas').get().then((querySnapshot) => {
+          var estact = [];
+          querySnapshot.forEach((doc) =>{
+            this.dataService.asistencia.push({id: doc.id, asiste: doc.data().asiste, falta: doc.data().falta})
+  
+          })
+  
+          console.log(this.dataService.asistencia)
+  
+        })
+      }
+
+    })
+
     return this.entrenamientoId
 
   }
@@ -151,6 +197,9 @@ export class EntrenamientoPage implements OnInit {
           text: 'Borrar',
           cssClass: 'borrar',
           handler: () => {
+            for(var x = 0; this.dataService.jugadoresId.length > x; x++){
+              this.borrarEntrenamientoJugador(this.dataService.jugadoresId[x].id, this.entrenamientoId[i].fecha)
+            }
             firebase.firestore().collection(this.dataService.getPathEntrenamientos()).doc(id).delete()
             console.log('Confirm Okay');
           }
@@ -158,6 +207,100 @@ export class EntrenamientoPage implements OnInit {
     })
 
     await alerta.present()
+  }
+
+  borrarEntrenamientoJugador(jugadorId, fechaEntrenamiento){
+    // for(var i = 0; this.dataService.jugadoresId.length > i; i++){
+    //   var path = this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas' + idEntrenamiento
+    //   firebase.firestore().collection(this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+    //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
+    //   });
+    // }
+
+    // var docId = ""
+    var num = 0
+    // var asistencia = []
+    // var falta = []
+    var checkedAsist = ""
+    var bool = false
+
+    //Para saber posicion del array de asistencia
+    for(var i = 0; i<this.dataService.jugadoresId.length; i++){
+      if(this.dataService.jugadoresId[i].id == jugadorId){
+        num = i
+      }
+    }
+      //Comprobar si existe la fecha en asiste
+      for(var i = 0; i<this.dataService.asistencia[num].asiste.length; i++){
+        if(this.dataService.asistencia[num].asiste[i] == fechaEntrenamiento){
+          checkedAsist = "asiste"
+        }
+      }
+
+      //Comprobar si existe la fecha en falta
+      for(var i = 0; i<this.dataService.asistencia[num].falta.length; i++){
+        if(this.dataService.asistencia[num].falta[i] == fechaEntrenamiento){
+          checkedAsist = "falta"
+        }
+      }
+
+      //Si no se ha registrado aun esta fecha
+      // if (checkedAsist != 'asiste' && checkedAsist != 'falta') {
+
+      //   //Si no está marcado...
+      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false && bool == false) {
+      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+      //   //     falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
+      //   //   });
+      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+      //   //     asiste: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
+      //   //   });
+      //   //   bool = true
+      //   // }
+    
+      //   // //Si está marcado...
+      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true && bool == false) {
+      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+      //   //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
+      //   //   });
+      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+      //   //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
+      //   //   });
+      //   //   bool = true
+      //   // }
+      // }
+
+      //Si se ha registrado esta fecha en asistencia se elimina de asistencia y se añade en falta
+      if (checkedAsist == 'asiste' && bool == false) {
+
+        //Si no está marcado...
+        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false) {
+          // firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+          //   falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
+          // });
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+            asiste: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
+          });
+          bool = true
+        // }
+      }
+
+      //Si se ha registrado esta fecha en falta se elimina de falta y se añade en asistencia
+      if (checkedAsist == 'falta' && bool == false) {
+    
+        //Si está marcado...
+        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true) {
+        //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+        //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
+        //   });
+          firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
+            falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
+          });
+          bool = true
+        }
+      // }
+
+    
   }
 
 
