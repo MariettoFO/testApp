@@ -116,57 +116,55 @@ async salirGuardando(){
   try{
     var idAntiguo = []
     var idNuevo = []
+    if(nuevoJugador.nombre.length > 0 && nuevoJugador.apellidos.length > 0 && nuevoJugador.dorsal.length > 0 && nuevoJugador.posicion.length > 0 && nuevoJugador.edad.length > 0){
 
-    await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-      var jugact = [];
-      querySnapshot.forEach((doc) =>{
-        jugact.push({id: doc.id})
-      });
+      await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+        var jugact = [];
+        querySnapshot.forEach((doc) =>{
+          jugact.push({id: doc.id})
+        });
 
-      console.log(idAntiguo + 'first')
+        console.log(idAntiguo + 'first')
 
-      idAntiguo = jugact
-      console.log(idAntiguo + 'before')
-    })
-   
+        idAntiguo = jugact
+        console.log(idAntiguo + 'before')
+      })
+    
 
-    console.log(idAntiguo + 'after')
+      console.log(idAntiguo + 'after')
 
-    await this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
+      await this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
 
-    await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-      idNuevo = [];
-      querySnapshot.forEach((doc) =>{
-        idNuevo.push({id: doc.id})
-      });
-    })
-
-    // for(var i = 0, b = false; i<idAntiguo.length; i++){
-    //   for(var x = 0; x<idNuevo.length; x++){
-    //     if(idAntiguo[i].id !=idNuevo[x].id ){
-    //       id = idNuevo[x].id
-    //       b = true
-    //       break
-    //     }
-    //   }
-    //   if(b = true){
-    //     break
-    //   }
-    // }
-
-    await this.calcularId(idAntiguo, idNuevo)
-
-    // this.dataService.pathJugadoresEstadistica = path + this.id + '/estadisticas'
+      await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+        idNuevo = [];
+        querySnapshot.forEach((doc) =>{
+          idNuevo.push({id: doc.id})
+        });
+      })
 
 
-    await this.firebaseService.crearEquipo<JugadorEstadistica>(nuevoJugadorEstadistica, this.dataService.pathJugadoresEstadistica)
-    // this.plantillaPage.cargarJugadores();
+      await this.calcularId(idAntiguo, idNuevo)
 
-      this.modalCtrl.dismiss({
-        // uid: firebase.auth().currentUser.uid,
-        // nombre: (document.getElementById("nombres") as HTMLInputElement).value
-      });
 
+
+      await this.firebaseService.crearEquipo<JugadorEstadistica>(nuevoJugadorEstadistica, this.dataService.pathJugadoresEstadistica)
+
+        this.modalCtrl.dismiss({
+          // uid: firebase.auth().currentUser.uid,
+          // nombre: (document.getElementById("nombres") as HTMLInputElement).value
+        });
+    } else {
+      this.alertCtrl.create({
+        header: "Error al crear",
+        message: "Por favor, no deje campos vacíos.",
+        buttons:[{
+          text:'ok',
+          // handler:()=>{
+          //   this.navCtr.navigateBack(['entrenamiento-modal'])
+          // }
+        }]
+      }).then(alert => alert.present())
+    }
     
   } catch(err){
     // this.alertCtrl.create({

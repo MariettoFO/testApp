@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import firebase from 'firebase/app';
 import { HomePage } from '../home/home.page';
 import { Equipo } from '../interfaces';
@@ -14,7 +14,8 @@ export class HomeModalPage implements OnInit{
 
   constructor(private modalCtrl: ModalController,
               private firebaseService: FirebaseService, 
-              private homePage: HomePage
+              private homePage: HomePage,
+              private alertCtrl: AlertController
               ) {}
 
 // @Input() uid;
@@ -35,12 +36,26 @@ salirGuardando(){
     nombre: (document.getElementById("inputequipo") as HTMLInputElement).value,
     id: '' //arreglar
   }
-  this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
-  this.homePage.getEquipos();
-
-  this.modalCtrl.dismiss({
-    // uid: firebase.auth().currentUser.uid,
-    // nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
-  });
+  if(nuevoEquipo.nombre.length > 0){
+    this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);
+    // this.homePage.getEquipos();
+  
+    this.modalCtrl.dismiss({
+      // uid: firebase.auth().currentUser.uid,
+      // nombre: (document.getElementById("inputequipo") as HTMLInputElement).value
+    });
+  } else {
+    this.alertCtrl.create({
+      header: "Error al crear",
+      message: "Por favor, introduzca el nombre del equipo.",
+      buttons:[{
+        text:'ok',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
+  }
+  
 }
 }

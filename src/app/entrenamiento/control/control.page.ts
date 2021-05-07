@@ -145,26 +145,9 @@ export class ControlPage implements OnInit {
 
   async updateAsistencia(jugadorId) {
 
-    var docId = ""
     var num = 0
-    var asistencia = []
-    var falta = []
     var checkedAsist = ""
     var bool = false
-
-    // await firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').onSnapshot((querySnapshot) => {
-    //   var jugact = [];
-    //   querySnapshot.forEach((doc) =>{
-    //     jugact.push({id: doc.id,
-    //     asiste: doc.data().asiste,
-    //     falta: doc.data().falta})
-    //   });
-
-    //   docId = jugact[0].id
-    //   asistencia = jugact[0].asiste
-    //   falta = jugact[0].falta
-
-    //   console.log('docid ==> ' + docId + 'asistencia ==> ' + asistencia + 'falta ==> ' + falta)
 
     //Para saber posicion del array de asistencia
     for(var i = 0; i<this.jugadoresId.length; i++){

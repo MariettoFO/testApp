@@ -95,13 +95,31 @@ salirGuardando(){
   var boolFecha = false 
   var boolFechaHoraMal = false
   var nuevoEntrenamiento: Entrenamiento
+  var numero = 0
+  var boolNumVacio = false
 
   if((document.getElementById("hora") as HTMLIonDatetimeElement).value != undefined
   && (document.getElementById("hora") as HTMLIonDatetimeElement).value != null && (document.getElementById("hora") as HTMLIonDatetimeElement).value != ""
   && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != undefined && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != null 
   && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""){
+
+
+    if(this.dataService.entrenamientos.length > 0 && ((document.getElementById("numero") as HTMLInputElement).value == "0" 
+    || (document.getElementById("numero") as HTMLInputElement).value == undefined 
+    || (document.getElementById("numero") as HTMLInputElement).value == null)){
+      for(var i = 0; this.dataService.entrenamientos.length > i; i++){
+        if(numero < this.dataService.entrenamientos[i].numero){
+          numero = this.dataService.entrenamientos[i].numero
+        }
+      }
+      numero++
+    }else{
+      boolNumVacio = true
+    }
+
     nuevoEntrenamiento = {
-      numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),
+      // numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),
+      numero: numero,
       fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
       hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
       finalizado: false
@@ -110,12 +128,6 @@ salirGuardando(){
     boolFechaHoraMal = true
   }
 
-  // const nuevoEntrenamiento: Entrenamiento = {
-  //   numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),
-  //   fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
-  //   hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
-  //   finalizado: false
-  // }
 
     for( var i = 0; i<this.dataService.entrenamientos.length; i++){
       if(nuevoEntrenamiento != undefined){
@@ -128,7 +140,7 @@ salirGuardando(){
       }
     }
 
-    if(boolNum == false && boolFecha == false && boolFechaHoraMal == false){
+    if(boolNum == false && boolFecha == false && boolFechaHoraMal == false && boolNumVacio == false){
       this.firebaseService.crearEquipo<Entrenamiento>(nuevoEntrenamiento, path)
       this.modalCtrl.dismiss({
       });
@@ -169,11 +181,24 @@ salirGuardando(){
           }]
         }).then(alert => alert.present())
       }
+      if(boolNumVacio == true){
+        this.alertCtrl.create({
+          header: "Error al crear",
+          message: "Por favor, introduce un número de entrenamiento.",
+          buttons:[{
+            text:'ok',
+            // handler:()=>{
+            //   this.navCtr.navigateBack(['entrenamiento-modal'])
+            // }
+          }]
+        }).then(alert => alert.present())
+      }
      
     }
 
     
   } catch(err){
+    console.log(err)
     this.alertCtrl.create({
       header: "Error al crear",
       message: "Compruebe que los datos introducidos sean correctos.",
