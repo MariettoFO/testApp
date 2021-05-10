@@ -12,9 +12,9 @@
 
 <ion-content [fullscreen]="true">
   <ion-item-divider>Datos del entrenamiento</ion-item-divider>
-  <ion-item>
-    <ion-label position="stacked">Nº de entrenamiento</ion-label>
-    <ion-input required id="numero" placeholder="Introducir" type="number" value="0"></ion-input>
+  <ion-item lines="full">
+    <h5>Nº de entrenamiento {{calcularNumero()}}</h5>
+    <!-- <ion-input required id="numero" placeholder="Introducir" type="number" value="0"></ion-input> -->
   </ion-item>
   <!-- <ion-item>
     <ion-label position="stacked">Nº de semana</ion-label>

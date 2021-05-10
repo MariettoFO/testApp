@@ -14,13 +14,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { File } from '@ionic-native/file/ngx';
 import { HttpClientModule } from '@angular/common/http';
+
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { firebaseConfig } from 'src/environments/environment';
 
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -29,7 +32,7 @@ import { HomePage } from './home/home.page';
 import { CalendarModule, CalendarComponent  } from 'ion2-calendar';
 import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
 
-// import { ImagePicker } from '@ionic-native/image-picker/ngx';
+// import { ImagePicker } from '@ionic-native/image-picker/ngx'; 
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,9 +44,11 @@ import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     FormsModule,
     ReactiveFormsModule,
     CalendarModule
+    
     // CalendarComponent
   ],
   providers: [
@@ -58,7 +63,8 @@ import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
     FilePath,
     HttpClientModule,
     // ImagePicker,
-    // File,
+    File,
+    FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

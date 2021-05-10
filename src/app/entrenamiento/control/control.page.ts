@@ -4,6 +4,8 @@ import { JugadorId } from 'src/app/interfaces';
 import { EntrenamientoPage } from '../entrenamiento.page';
 import firebase from 'firebase/app';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class ControlPage implements OnInit {
   checkAsistencia: boolean;
 
 
-  constructor(private dataService: DataService, private fileChooser: FileChooser) {
+  constructor(private dataService: DataService, private fileChooser: FileChooser, private fileOpener: FileOpener, private fireStorage: AngularFireStorage) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
     this.idEntrenamiento = this.dataService.idEntrenamiento
@@ -32,6 +34,10 @@ export class ControlPage implements OnInit {
 
   ngOnInit() {
     this.cargarJugadores()
+  }
+
+  inputCambiado(e){
+    console.log('hola', e.target.files[0])
   }
 
   listaJugadores(){
@@ -53,13 +59,7 @@ export class ControlPage implements OnInit {
 
   }
 
-  // cambiarIcono(){
-  //   if((document.getElementById('iconAsistencia') as HTMLIonIconElement).name == 'chevron-forward-outline'){
-  //     (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-down-outline'
-  //   } else {
-  //     (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline'
-  //   }
-  // }
+
 
   cargarJugadores(){
 
@@ -140,7 +140,14 @@ export class ControlPage implements OnInit {
   }
 
   elegirArchivo(){
-    this.fileChooser.open()
+    // this.fileChooser.open().then(uri => console.log(uri)).catch(e => console.log(e));
+    this.fileOpener.open('path/to/file.pdf', 'application/pdf')
+  .then(() => console.log('File is opened'))
+  .catch(e => console.log('Error opening file', e));
+
+// this.fileOpener.showOpenWithDialog('path/to/file.pdf', 'application/pdf')
+//   .then(() => console.log('File is opened'))
+//   .catch(e => console.log('Error opening file', e));
   }
 
   async updateAsistencia(jugadorId) {

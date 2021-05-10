@@ -18,8 +18,10 @@
     <ion-label>Entrenamiento finalizado</ion-label>
     <ion-toggle checked="{{entFinalizado}}" color="primary" id="entFinalizado"></ion-toggle>
   </ion-item>
-  <ion-item button (click)="elegirArchivo()" lines="full">
-    <ion-label>Cargar Entrenamiento</ion-label>
+  <ion-item-divider><ion-label>Cargar Entrenamiento</ion-label></ion-item-divider>
+  <ion-item lines="full">
+    <!-- <ion-label>Cargar Entrenamiento</ion-label> -->
+    <ion-input type="file" accept=".pdf" (change)="inputCambiado($event)"></ion-input>
   </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
   <ion-item lines="full" (click)="listaJugadores()" (click)="checkearAsistencia()">

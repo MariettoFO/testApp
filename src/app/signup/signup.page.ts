@@ -9,6 +9,7 @@ import { User } from '../interfaces';
 import { FirebaseService } from '../services/firebase.service';
 
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -65,12 +66,18 @@ export class SignupPage implements OnInit {
     try{
       this.authService.userRegistration(value).then(response =>{
         console.log(response);
-        // const path = "users/firebase.auth().currentUser.uid"
+        // const path = "users/" + firebase.auth().currentUser.uid
         // const nuevoUser: User = {
-        //   // uid: firebase.auth().currentUser.uid,
-        //   equip: (document.getElementById("email") as HTMLInputElement).value
+        //   nombre: (document.getElementById("nombre") as HTMLInputElement).value,
+        //   telefono: (document.getElementById("apellidos") as HTMLInputElement).value,
+        //   correo: (document.getElementById("email") as HTMLInputElement).value
         // }
       // this.firebaseService.crearEquipo<User>( nuevoUser, path); //Crea campo del usuario en la bbdd
+        firebase.firestore().collection('users').doc(response.user.uid).set({
+          nombre: (document.getElementById("nombre") as HTMLInputElement).value,
+          telefono: (document.getElementById("telefono") as HTMLInputElement).value,
+          correo: (document.getElementById("email") as HTMLInputElement).value
+        })
         if(response.user){
           response.user.updateProfile({
             displayName: value.names,

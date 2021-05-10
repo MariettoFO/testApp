@@ -1,5 +1,8 @@
 export interface User {
-    equipos: string;
+    nombre: string;
+    telefono: string;
+    correo: string;
+    // equipos: string;
 }
 
 export interface Equipo {

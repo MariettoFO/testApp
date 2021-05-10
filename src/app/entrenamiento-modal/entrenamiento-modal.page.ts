@@ -87,6 +87,22 @@ ordenarFecha(fecha){
 //   return numero
 // }
 
+calcularNumero(){
+  var numero = 0
+  if(this.dataService.entrenamientos.length > 0){
+      for(var i = 0; this.dataService.entrenamientos.length > i; i++){
+        if(numero < this.dataService.entrenamientos[i].numero){
+          numero = this.dataService.entrenamientos[i].numero
+        }
+      }
+      numero++
+    }else{
+      numero = 1
+    }
+
+    return numero
+}
+
 salirGuardando(){
   try{
   console.log(this.dataService.getPathEntrenamientos())
@@ -104,22 +120,22 @@ salirGuardando(){
   && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""){
 
 
-    if(this.dataService.entrenamientos.length > 0 && ((document.getElementById("numero") as HTMLInputElement).value == "0" 
-    || (document.getElementById("numero") as HTMLInputElement).value == undefined 
-    || (document.getElementById("numero") as HTMLInputElement).value == null)){
-      for(var i = 0; this.dataService.entrenamientos.length > i; i++){
-        if(numero < this.dataService.entrenamientos[i].numero){
-          numero = this.dataService.entrenamientos[i].numero
-        }
-      }
-      numero++
-    }else{
-      boolNumVacio = true
-    }
+    // if(this.dataService.entrenamientos.length > 0 && ((document.getElementById("numero") as HTMLInputElement).value == "0" 
+    // || (document.getElementById("numero") as HTMLInputElement).value == undefined 
+    // || (document.getElementById("numero") as HTMLInputElement).value == null)){
+    //   for(var i = 0; this.dataService.entrenamientos.length > i; i++){
+    //     if(numero < this.dataService.entrenamientos[i].numero){
+    //       numero = this.dataService.entrenamientos[i].numero
+    //     }
+    //   }
+    //   numero++
+    // }else{
+    //   boolNumVacio = true
+    // }
 
     nuevoEntrenamiento = {
       // numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),
-      numero: numero,
+      numero: this.calcularNumero(),
       fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
       hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
       finalizado: false
@@ -181,18 +197,18 @@ salirGuardando(){
           }]
         }).then(alert => alert.present())
       }
-      if(boolNumVacio == true){
-        this.alertCtrl.create({
-          header: "Error al crear",
-          message: "Por favor, introduce un número de entrenamiento.",
-          buttons:[{
-            text:'ok',
-            // handler:()=>{
-            //   this.navCtr.navigateBack(['entrenamiento-modal'])
-            // }
-          }]
-        }).then(alert => alert.present())
-      }
+      // if(boolNumVacio == true){
+      //   this.alertCtrl.create({
+      //     header: "Error al crear",
+      //     message: "Por favor, introduce un número de entrenamiento.",
+      //     buttons:[{
+      //       text:'ok',
+      //       // handler:()=>{
+      //       //   this.navCtr.navigateBack(['entrenamiento-modal'])
+      //       // }
+      //     }]
+      //   }).then(alert => alert.present())
+      // }
      
     }
 

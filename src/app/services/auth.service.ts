@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(public auth: AngularFireAuth, private routerCtrl: Router) { }
 
   loginFireauth(value){
     return new Promise<any> ( (resolve, reject)=>{
@@ -16,6 +17,13 @@ export class AuthService {
         error=> reject(error),
       )
     })
+  }
+
+  logoutFireauth(){
+    firebase.auth().signOut().then(() => {
+      this.routerCtrl.navigate(['/login'])
+    })
+     
   }
 
   userRegistration(value){

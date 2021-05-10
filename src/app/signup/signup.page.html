@@ -20,7 +20,7 @@
     <form [formGroup]="validationFormUser" (ngSubmit)="registerUser(validationFormUser.value)">
     <ion-card-content>
       <ion-item>
-        <ion-input name="names" type="text" placeholder="Nombre completo" formControlName="names">
+        <ion-input name="names" type="text" placeholder="Nombre completo" formControlName="names" id="nombre">
           <ion-icon name="person-outline"></ion-icon>
         </ion-input>
       </ion-item>
@@ -33,7 +33,7 @@
       </div>
 
       <ion-item>
-        <ion-input name="phone" type="number" placeholder="Nº teléfono" formControlName="phone">
+        <ion-input name="phone" type="number" placeholder="Nº teléfono" formControlName="phone" id="telefono"> 
           <ion-icon name="call-outline"></ion-icon>
         </ion-input>
       </ion-item>
