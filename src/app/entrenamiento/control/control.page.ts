@@ -21,6 +21,7 @@ export class ControlPage implements OnInit {
   entFinalizado: string;
   fechaEntrenamiento: string;
   checkAsistencia: boolean;
+  equipoSelect: string
 
 
   constructor(private dataService: DataService, private fileChooser: FileChooser, private fileOpener: FileOpener, private fireStorage: AngularFireStorage) {
@@ -30,6 +31,7 @@ export class ControlPage implements OnInit {
     this.entFinalizado = this.dataService.finEntrenamiento
     this.fechaEntrenamiento = this.dataService.fechaEntrenamiento
     this.checkAsistencia = false
+    this.equipoSelect = this.dataService.equipoSelect
   }
 
   ngOnInit() {
@@ -38,6 +40,11 @@ export class ControlPage implements OnInit {
 
   inputCambiado(e){
     console.log('hola', e.target.files[0])
+    const id = Math.random().toString(36).substring(2)
+    const file = e.target.files[0]
+    const filePath = firebase.auth().currentUser.uid + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+    const ref = this.fireStorage.ref(filePath)
+    const task = this.fireStorage.upload(filePath, file)
   }
 
   listaJugadores(){

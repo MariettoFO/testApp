@@ -16,6 +16,7 @@ finEntrenamiento: string;
 fechaEntrenamiento: string;
 asistencia: Array<Asistencia>;
 entrenamientos: Array<any>
+equipoSelect: string
 
 
   constructor(private http: HttpClient) { 
@@ -30,6 +31,7 @@ entrenamientos: Array<any>
     this.fechaEntrenamiento = ""
     this.asistencia = []
     this.entrenamientos = []
+    this.equipoSelect = ""
   }
 
 

@@ -118,6 +118,7 @@ export class HomePage implements OnInit{
     var db = firebase.firestore()
 
     this.equipoSelect = equipo
+    this.dataService.equipoSelect = equipo
     console.log(this.equipoSelect + " es el equipo seleccionado")
 
     await this.getEquipos()
