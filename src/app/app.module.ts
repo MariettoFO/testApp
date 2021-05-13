@@ -32,6 +32,7 @@ import { HomePage } from './home/home.page';
 import { CalendarModule, CalendarComponent  } from 'ion2-calendar';
 import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
 
+
 // import { ImagePicker } from '@ionic-native/image-picker/ngx'; 
 
 @NgModule({

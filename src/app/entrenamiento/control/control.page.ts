@@ -6,6 +6,11 @@ import firebase from 'firebase/app';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { IonLabel } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+
+const { Device } = Plugins;
+
 
 
 @Component({
@@ -21,10 +26,12 @@ export class ControlPage implements OnInit {
   entFinalizado: string;
   fechaEntrenamiento: string;
   checkAsistencia: boolean;
-  equipoSelect: string
+  equipoSelect: string;
+  enlaceDescarga: string;
+  textoDescarga: string;
 
 
-  constructor(private dataService: DataService, private fileChooser: FileChooser, private fileOpener: FileOpener, private fireStorage: AngularFireStorage) {
+  constructor(public dataService: DataService, private fileChooser: FileChooser, private fileOpener: FileOpener, private fireStorage: AngularFireStorage) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
     this.idEntrenamiento = this.dataService.idEntrenamiento
@@ -32,19 +39,62 @@ export class ControlPage implements OnInit {
     this.fechaEntrenamiento = this.dataService.fechaEntrenamiento
     this.checkAsistencia = false
     this.equipoSelect = this.dataService.equipoSelect
+    this.enlaceDescarga = ""
+    this.textoDescarga = ""
   }
 
   ngOnInit() {
     this.cargarJugadores()
   }
 
-  inputCambiado(e){
+  abrirDocumento(){
+    try{
+      window.open(this.enlaceDescarga)
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  async borrarDocumento(){
+    if(this.equipoSelect != "" && this.numEntrenamiento != ""){
+      // const archivo = e.target.files[0]
+      const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+      // const refStorage = this.fireStorage.ref(rutaArchivo)
+      // const subirArchivo = 
+      await firebase.storage().ref(rutaArchivo).delete().then((doc) => {
+        this.enlaceDescarga = ""
+      })
+      // firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+      //   this.enlaceDescarga = url;
+      //   this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      //   // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      // })
+    } else {
+      //alerta para que reinicie la aplicación
+    }
+  }
+
+  async inputCambiado(e){
     console.log('hola', e.target.files[0])
-    const id = Math.random().toString(36).substring(2)
-    const file = e.target.files[0]
-    const filePath = firebase.auth().currentUser.uid + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-    const ref = this.fireStorage.ref(filePath)
-    const task = this.fireStorage.upload(filePath, file)
+    // const id = Math.random().toString(36).substring(2)
+    if(this.equipoSelect != "" && this.numEntrenamiento != ""){
+      const archivo = e.target.files[0]
+      const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+      // const refStorage = this.fireStorage.ref(rutaArchivo)
+      // const subirArchivo = 
+      await this.fireStorage.upload(rutaArchivo, archivo)
+      firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+        this.enlaceDescarga = url;
+        this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+        // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      })
+    } else {
+      //alerta para que reinicie la aplicación
+    }
+    
+    // this.fireStorage.ref(rutaArchivo).getDownloadURL().then((url) => {
+    //   this.enlaceDescarga = url
+    // })
   }
 
   listaJugadores(){
@@ -59,9 +109,11 @@ export class ControlPage implements OnInit {
     //Mostrar lista de jugadores
     if(document.getElementById('listaAsistencia').style.visibility == 'hidden'){
       document.getElementById('listaAsistencia').style.visibility = 'visible'
+      document.getElementById('listaAsistencia').style.display = ''
 
     } else {
       document.getElementById('listaAsistencia').style.visibility = 'hidden'
+      document.getElementById('listaAsistencia').style.display = 'none'
     }
 
   }
@@ -70,52 +122,63 @@ export class ControlPage implements OnInit {
 
   cargarJugadores(){
 
-    firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
-      var jugact = [];
-      querySnapshot.forEach((doc) =>{
-        jugact.push({id: doc.id,
-          nombre: doc.data().nombre, 
-          apellidos: doc.data().apellidos, 
-          apodo: doc.data().apodo, 
-          dorsal: doc.data().dorsal, 
-          posicion: doc.data().posicion,
-          edad: doc.data().edad})
-      });
 
-      for(var i = 0; jugact.length > i; i++){
-        if(jugact[i].posicion == 'aPOR'){
-          jugact[i].posicion = "POR"
-        }
-        if(jugact[i].posicion == 'bDEF'){
-          jugact[i].posicion = "DEF"
-        }
-        if(jugact[i].posicion == 'cMED'){
-          jugact[i].posicion = "MED"
-        }
-        if(jugact[i].posicion == 'dDEL'){
-          jugact[i].posicion = "DEL"
-        }
-      }
+      firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
+        var jugact = [];
+        querySnapshot.forEach((doc) =>{
+          jugact.push({id: doc.id,
+            nombre: doc.data().nombre, 
+            apellidos: doc.data().apellidos, 
+            apodo: doc.data().apodo, 
+            dorsal: doc.data().dorsal, 
+            posicion: doc.data().posicion,
+            edad: doc.data().edad})
+        });
 
-      this.jugadoresId = jugact
+        for(var i = 0; jugact.length > i; i++){
+          if(jugact[i].posicion == 'aPOR'){
+            jugact[i].posicion = "POR"
+          }
+          if(jugact[i].posicion == 'bDEF'){
+            jugact[i].posicion = "DEF"
+          }
+          if(jugact[i].posicion == 'cMED'){
+            jugact[i].posicion = "MED"
+          }
+          if(jugact[i].posicion == 'dDEL'){
+            jugact[i].posicion = "DEL"
+          }
+        }
 
-      this.dataService.asistencia = []
+        this.jugadoresId = jugact
 
-      for(var x = 0; x<this.jugadoresId.length; x++){
-        firebase.firestore().collection(this.dataService.pathJugadores + this.jugadoresId[x].id + '/estadisticas').get().then((querySnapshot) => {
-          var estact = [];
-          querySnapshot.forEach((doc) =>{
-            this.dataService.asistencia.push({id: doc.id, asiste: doc.data().asiste, falta: doc.data().falta})
-  
+        this.dataService.asistencia = []
+
+        for(var x = 0; x<this.jugadoresId.length; x++){
+          firebase.firestore().collection(this.dataService.pathJugadores + this.jugadoresId[x].id + '/estadisticas').get().then((querySnapshot) => {
+            var estact = [];
+            querySnapshot.forEach((doc) =>{
+              this.dataService.asistencia.push({id: doc.id, asiste: doc.data().asiste, falta: doc.data().falta})
+    
+            })
+    
+            console.log(this.dataService.asistencia)
+    
           })
-  
-          console.log(this.dataService.asistencia)
-  
+        }
+
+      })
+      const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+
+        firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+          this.enlaceDescarga = url;
+          this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+          // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+        }).catch((error) =>{ //se puede borrar el contenido del catch
+          console.log(error)
         })
-      }
-
-    })
-
+      
+    
   }
 
   guardarCambios(){

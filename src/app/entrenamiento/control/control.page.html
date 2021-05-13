@@ -19,9 +19,15 @@
     <ion-toggle checked="{{entFinalizado}}" color="primary" id="entFinalizado"></ion-toggle>
   </ion-item>
   <ion-item-divider><ion-label>Cargar Entrenamiento</ion-label></ion-item-divider>
-  <ion-item lines="full">
+  <ion-item *ngIf="enlaceDescarga == '' && this.dataService.plataforma == 'web'" lines="full">
     <!-- <ion-label>Cargar Entrenamiento</ion-label> -->
-    <ion-input type="file" accept=".pdf, .docx, .xlsx" (change)="inputCambiado($event)"></ion-input>
+    <ion-input type="file" accept=".pdf" (change)="inputCambiado($event)"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="enlaceDescarga == '' && this.dataService.plataforma == 'android'" lines="full">
+    <ion-input type="file" accept=".pdf" (change)="inputCambiado($event)"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="enlaceDescarga != '' " lines = "full" id="documento" style="color: blue; text-decoration: underline;">
+    <ion-label button (click)="abrirDocumento()">{{textoDescarga}}</ion-label><ion-icon button (click)="borrarDocumento()" color="danger" slot="end" name="trash-outline"></ion-icon>
   </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
   <ion-item lines="full" (click)="listaJugadores()" (click)="checkearAsistencia()">
@@ -29,7 +35,7 @@
     <ion-icon id="iconAsistencia" slot="end" name="chevron-forward-outline"></ion-icon>
   </ion-item>
   
-  <ion-list id="listaAsistencia" style="visibility: hidden; transition: visibility 0.5s;">
+  <ion-list id="listaAsistencia" style="visibility: hidden; display: none; transition: visibility 0.5s;">
     <!-- <ion-item detail="false">
       <ion-label>
         <h2>Confirmar asistencia</h2>
