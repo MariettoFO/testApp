@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-
+import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Capacitor } from '@capacitor/core';
 import { AuthService } from './services/auth.service';
+import { DataService } from './data.service';
+const { Device } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private dataService: DataService
   ) {
     this.initializeApp();
   }
@@ -30,6 +33,8 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    const info = Device.getInfo();
+    info.then((obj) => this.dataService.plataforma = obj.platform); //devuelve ios, android, electron o web
   }
 
   cerrarSesion(){
