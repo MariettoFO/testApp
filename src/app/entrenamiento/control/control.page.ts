@@ -225,7 +225,7 @@ export class ControlPage implements OnInit {
       // const refStorage = this.fireStorage.ref(rutaArchivo)
       // const subirArchivo = 
       // this.archivo.data.toString().substring(5)
-      await this.fireStorage.upload(rutaArchivo, this.archivo.data.toString().substring(5))
+      await this.fireStorage.upload(rutaArchivo, this.archivo.uri.toString().substring(8))
       firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
         this.enlaceDescarga = url;
         this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'

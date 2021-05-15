@@ -30,7 +30,7 @@
     <ion-label button (click)="abrirDocumento()">{{textoDescarga}}</ion-label><ion-icon button (click)="borrarDocumento()" color="danger" slot="end" name="trash-outline"></ion-icon>
   </ion-item>
   <ion-item *ngIf="archivo != undefined">
-    <ion-label>{{archivo.uri}} <br> {{archivo.dataURI}} <br> {{archivo.data.toString().substring(5)}} <br> {{archivo.name}} <br> {{archivo.mediaType}}</ion-label>
+    <ion-label>{{archivo.uri.toString().substring(8)}} <br> {{archivo.dataURI}} <br> {{archivo.data}} <br> {{archivo.name}} <br> {{archivo.mediaType}}</ion-label>
   </ion-item>
   <ion-item-divider>Asistencia</ion-item-divider>
   <ion-item lines="full" (click)="listaJugadores()" (click)="checkearAsistencia()">
