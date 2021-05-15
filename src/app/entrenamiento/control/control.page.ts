@@ -6,8 +6,10 @@ import firebase from 'firebase/app';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { IonLabel } from '@ionic/angular';
+// import { IonLabel } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
+
 
 const { Device } = Plugins;
 
@@ -29,9 +31,12 @@ export class ControlPage implements OnInit {
   equipoSelect: string;
   enlaceDescarga: string;
   textoDescarga: string;
+  archivo: ChooserResult;
 
 
-  constructor(public dataService: DataService, private fileChooser: FileChooser, private fileOpener: FileOpener, private fireStorage: AngularFireStorage) {
+
+  constructor(public dataService: DataService, private fileChooser: FileChooser, 
+    private fileOpener: FileOpener, private fireStorage: AngularFireStorage, private chooser: Chooser) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
     this.idEntrenamiento = this.dataService.idEntrenamiento
@@ -209,11 +214,30 @@ export class ControlPage implements OnInit {
 
   }
 
-  elegirArchivo(){
+  async elegirArchivo(){
+    
+//Para android e iOS
+    if(this.equipoSelect != "" && this.numEntrenamiento != ""){
+      this.chooser.getFile("application/pdf").then((obj: ChooserResult) => {
+        this.archivo = obj
+      })      
+      const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+      // const refStorage = this.fireStorage.ref(rutaArchivo)
+      // const subirArchivo = 
+      this.archivo.data.toString().substring(5)
+      await this.fireStorage.upload(rutaArchivo, this.archivo.data)
+      firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+        this.enlaceDescarga = url;
+        this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+        // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      })
+    } else {
+      //alerta para que reinicie la aplicación
+    }
     // this.fileChooser.open().then(uri => console.log(uri)).catch(e => console.log(e));
-    this.fileOpener.open('path/to/file.pdf', 'application/pdf')
-  .then(() => console.log('File is opened'))
-  .catch(e => console.log('Error opening file', e));
+  //   this.fileOpener.open('path/to/file.pdf', 'application/pdf')
+  // .then(() => console.log('File is opened'))
+  // .catch(e => console.log('Error opening file', e));
 
 // this.fileOpener.showOpenWithDialog('path/to/file.pdf', 'application/pdf')
 //   .then(() => console.log('File is opened'))

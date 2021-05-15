@@ -32,7 +32,7 @@ import { HomePage } from './home/home.page';
 import { CalendarModule, CalendarComponent  } from 'ion2-calendar';
 import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
 
-
+import { Chooser } from '@ionic-native/chooser/ngx';
 // import { ImagePicker } from '@ionic-native/image-picker/ngx'; 
 
 @NgModule({
@@ -66,6 +66,7 @@ import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
     // ImagePicker,
     File,
     FileOpener,
+    Chooser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
