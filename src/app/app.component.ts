@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Capacitor } from '@capacitor/core';
 import { AuthService } from './services/auth.service';
 import { DataService } from './data.service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 const { Device } = Plugins;
 
 @Component({
@@ -21,7 +22,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private dataService: DataService
+    private dataService: DataService,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
   }
@@ -29,6 +31,7 @@ export class AppComponent {
 
   initializeApp() {
     this.AppTitle="Football Staff"
+    this.bloquearOrientacion()
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -39,5 +42,9 @@ export class AppComponent {
 
   cerrarSesion(){
     this.authService.logoutFireauth()
+  }
+
+  bloquearOrientacion(){
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
 }

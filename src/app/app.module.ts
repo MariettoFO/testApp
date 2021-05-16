@@ -33,6 +33,7 @@ import { CalendarModule, CalendarComponent  } from 'ion2-calendar';
 import { EntrenamientoPage } from './entrenamiento/entrenamiento.page';
 
 import { Chooser } from '@ionic-native/chooser/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 // import { ImagePicker } from '@ionic-native/image-picker/ngx'; 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { Chooser } from '@ionic-native/chooser/ngx';
     File,
     FileOpener,
     Chooser,
+    ScreenOrientation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

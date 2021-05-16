@@ -12,13 +12,74 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> 
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size=6>
+        <ion-card button routerLink="plantilla">
+          <ion-img src="../../assets/icon/plantilla.png"></ion-img>
+          <ion-card-header>
+            <ion-card-title style="text-align: center;">Plantilla</ion-card-title>
+          </ion-card-header>
+        </ion-card>      
+      </ion-col>
+      <ion-col size=6>
+        <ion-card button routerLink="estadisticas">
+          <ion-img src="../../assets/icon/estadistica.png"></ion-img>
+          <ion-card-header>
+            <ion-card-title style="text-align: center;">Estadísticas</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size=6>
+        <ion-card button routerLink="calendario">
+          <ion-img src="../../assets/icon/calendario.png"></ion-img>
+          <ion-card-header>
+            <ion-card-title style="text-align: center;">Calendario</ion-card-title>
+          </ion-card-header>
+        </ion-card>      
+      </ion-col>
+      <ion-col size=6>
+        <ion-card button>
+          <ion-img src="../../assets/icon/configuracion.png"></ion-img>
+          <ion-card-header>
+            <ion-card-title style="text-align: center;">Ajustes</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>  
+  </ion-grid>
 
-  <ion-card style="width: 90%; margin-left: 5%; margin-right: 5%;">
-    <img src="../../assets/icon/plantilla.png">
+  <!-- <ion-card vertical = "center" style="width: 44%; height: 25%; display: inline-block;">
+    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
     <ion-card-header>
       <ion-card-title>Plantilla</ion-card-title>
     </ion-card-header>
+  </ion-card>
+  <ion-card vertical = "center" style="width: 44%; height: 25%; display: inline-block;">
+    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>Plantilla</ion-card-title>
+    </ion-card-header>
+  </ion-card> -->
+
+
+
+
+
+  <!-- <ion-card vertical = "center" style="width: 90%; height: 25%; margin-left: 5%; margin-right: 5%;">
+    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>Plantilla</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card vertical = "center" style="width: 90%; margin-left: 5%; margin-right: 5%;">
+    <ion-item>
+      <ion-img src="../../assets/icon/plantilla.png"></ion-img>
+      <ion-label>Plantilla</ion-label>
+    </ion-item>
   </ion-card>
   <ion-card style="width: 90%; margin-left: 5%; margin-right: 5%;">
     <ion-icon slot="start" color="dark" name="people-outline"></ion-icon>
@@ -30,7 +91,7 @@
     <ion-card-header>
       <ion-card-title>Calendario</ion-card-title>
     </ion-card-header>
-  </ion-card>
+  </ion-card> -->
 
   <ion-item detail="false" button vertical="center" lines="full" routerLink="plantilla">
     <ion-icon slot="start" color="dark" name="people-outline"></ion-icon>
