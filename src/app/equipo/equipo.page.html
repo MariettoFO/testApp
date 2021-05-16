@@ -8,7 +8,7 @@
         <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Equipo</ion-title>
+    <ion-title>{{this.dataService.equipoSelect}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size=6>
-        <ion-card button routerLink="plantilla">
+        <ion-card mode="md" button routerLink="plantilla">
           <ion-img src="../../assets/icon/plantilla.png"></ion-img>
           <ion-card-header>
             <ion-card-title style="text-align: center;">Plantilla</ion-card-title>
@@ -24,7 +24,7 @@
         </ion-card>      
       </ion-col>
       <ion-col size=6>
-        <ion-card button routerLink="estadisticas">
+        <ion-card mode="md" button routerLink="estadisticas">
           <ion-img src="../../assets/icon/estadistica.png"></ion-img>
           <ion-card-header>
             <ion-card-title style="text-align: center;">Estadísticas</ion-card-title>
@@ -34,7 +34,7 @@
     </ion-row>
     <ion-row>
       <ion-col size=6>
-        <ion-card button routerLink="calendario">
+        <ion-card mode="md" button routerLink="calendario">
           <ion-img src="../../assets/icon/calendario.png"></ion-img>
           <ion-card-header>
             <ion-card-title style="text-align: center;">Calendario</ion-card-title>
@@ -42,7 +42,7 @@
         </ion-card>      
       </ion-col>
       <ion-col size=6>
-        <ion-card button>
+        <ion-card mode="md" button>
           <ion-img src="../../assets/icon/configuracion.png"></ion-img>
           <ion-card-header>
             <ion-card-title style="text-align: center;">Ajustes</ion-card-title>
@@ -52,48 +52,7 @@
     </ion-row>  
   </ion-grid>
 
-  <!-- <ion-card vertical = "center" style="width: 44%; height: 25%; display: inline-block;">
-    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
-    <ion-card-header>
-      <ion-card-title>Plantilla</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-  <ion-card vertical = "center" style="width: 44%; height: 25%; display: inline-block;">
-    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
-    <ion-card-header>
-      <ion-card-title>Plantilla</ion-card-title>
-    </ion-card-header>
-  </ion-card> -->
-
-
-
-
-
-  <!-- <ion-card vertical = "center" style="width: 90%; height: 25%; margin-left: 5%; margin-right: 5%;">
-    <ion-img style="width: 90%; height: 25%;" src="../../assets/icon/plantilla.png"></ion-img>
-    <ion-card-header>
-      <ion-card-title>Plantilla</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-  <ion-card vertical = "center" style="width: 90%; margin-left: 5%; margin-right: 5%;">
-    <ion-item>
-      <ion-img src="../../assets/icon/plantilla.png"></ion-img>
-      <ion-label>Plantilla</ion-label>
-    </ion-item>
-  </ion-card>
-  <ion-card style="width: 90%; margin-left: 5%; margin-right: 5%;">
-    <ion-icon slot="start" color="dark" name="people-outline"></ion-icon>
-    <ion-card-header>
-      <ion-card-title>Estadísticas</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-  <ion-card style="width: 90%; margin-left: 5%; margin-right: 5%;">
-    <ion-card-header>
-      <ion-card-title>Calendario</ion-card-title>
-    </ion-card-header>
-  </ion-card> -->
-
-  <ion-item detail="false" button vertical="center" lines="full" routerLink="plantilla">
+  <!-- <ion-item detail="false" button vertical="center" lines="full" routerLink="plantilla">
     <ion-icon slot="start" color="dark" name="people-outline"></ion-icon>
       <ion-label>Plantilla</ion-label>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>  
@@ -109,6 +68,6 @@
     <ion-icon slot="start" color="dark" name="calendar-outline"></ion-icon>
       <ion-label>Calendario</ion-label>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
-  </ion-item>
+  </ion-item> -->
 
 </ion-content>

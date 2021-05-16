@@ -18,7 +18,7 @@ export class EntrenamientoPage implements OnInit {
   finalizados: Array<EntrenamientoId>
   programados: Array<EntrenamientoId>
 
-  constructor(private modalCtrl: ModalController, public deleteAlert: AlertController,private dataService: DataService) {
+  constructor(private modalCtrl: ModalController, public deleteAlert: AlertController, private dataService: DataService) {
     this.selectSegment = 'todos'
     this.entrenamientoSelect = ''
     this.entrenamientoId = []

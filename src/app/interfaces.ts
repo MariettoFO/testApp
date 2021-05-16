@@ -65,12 +65,21 @@ export interface EntrenamientoId {
     finalizado: boolean;
 }
 
-export interface Partido {
+export interface PartidoId {
     id: string;
-    nombre: string;
-    apellidos: string;
-    apodo: string;
-    dorsal: string;
-    posicion: string;
-    edad: string;
+    jornada: number;
+    rival: string;
+    campo: string;
+    fecha: string;
+    hora: string;
+    finalizado: boolean;
+}
+
+export interface Partido {
+    jornada: number;
+    rival: string;
+    campo: string;
+    fecha: string;
+    hora: string;
+    finalizado: boolean;
 }

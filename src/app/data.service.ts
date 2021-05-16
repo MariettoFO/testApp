@@ -18,7 +18,7 @@ asistencia: Array<Asistencia>;
 entrenamientos: Array<any>
 equipoSelect: string;
 plataforma: string;
-
+partidos: Array<any>
 
   constructor(private http: HttpClient) { 
     this.pathJugadores = ""
@@ -34,6 +34,7 @@ plataforma: string;
     this.entrenamientos = []
     this.equipoSelect = ""
     this.plataforma = ""
+    this.partidos = []
   }
 
 

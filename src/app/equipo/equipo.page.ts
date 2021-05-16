@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-equipo',
@@ -8,7 +9,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 })
 export class EquipoPage {
 
-  constructor() { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {
   }

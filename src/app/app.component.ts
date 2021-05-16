@@ -31,13 +31,18 @@ export class AppComponent {
 
   initializeApp() {
     this.AppTitle="Football Staff"
-    this.bloquearOrientacion()
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
     const info = Device.getInfo();
-    info.then((obj) => this.dataService.plataforma = obj.platform); //devuelve ios, android, electron o web
+    info.then((obj) => {
+      this.dataService.plataforma = obj.platform
+      if(this.dataService.plataforma != 'web'){
+        this.bloquearOrientacion()
+      }
+    }); //devuelve ios, android, electron o web
+    
   }
 
   cerrarSesion(){
@@ -45,6 +50,6 @@ export class AppComponent {
   }
 
   bloquearOrientacion(){
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
 }

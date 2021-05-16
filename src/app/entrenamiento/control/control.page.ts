@@ -10,6 +10,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Plugins } from '@capacitor/core';
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 import {File} from '@ionic-native/file/ngx'
+import { FilePath } from '@ionic-native/file-path/ngx';
 
 
 const { Device } = Plugins;
@@ -38,7 +39,7 @@ export class ControlPage implements OnInit {
 
 
 
-  constructor(public dataService: DataService, private fileChooser: FileChooser, private file: File,
+  constructor(public dataService: DataService, private fileChooser: FileChooser, private file: File, private filePath: FilePath,
     private fileOpener: FileOpener, private fireStorage: AngularFireStorage, private chooser: Chooser) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
@@ -219,12 +220,57 @@ export class ControlPage implements OnInit {
   }
 
   async elegirArchivo(){
-    var blob: Blob
-//Para android e iOS
-    if(this.equipoSelect != "" && this.numEntrenamiento != ""){
-      await this.fileChooser.open({"mime": "application/pdf"}).then(uri => {
-        uri = this.archivo
-        console.log(uri)}).catch(e => console.log(e));
+
+      this.fileChooser.open().then( uri => {
+        this.filePath.resolveNativePath(uri).then(async url => {
+          console.log(url)
+          // url is path of selected file
+          this.archivo = url.substring(url.lastIndexOf("/") + 1)
+          const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+          await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>{
+            firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+              this.enlaceDescarga = url;
+              this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+            })
+
+
+
+
+          // fileName is selected file name
+          }).catch(err => console.log(err));
+      }).catch(error => {
+          console.log(error)
+        });
+    })
+  }
+      
+
+
+
+
+// //Para android e iOS
+//     if(this.equipoSelect != "" && this.numEntrenamiento != ""){
+//       await this.fileChooser.open({"mime": "application/pdf"}).then(async uri => {
+//         uri = this.archivo
+//         console.log(uri)
+//         const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+//         if(this.archivo.length > 0){
+//           await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>{
+//           firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+//             this.enlaceDescarga = url;
+//             this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+//             // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+//           })
+//       }).catch(e => console.log(e));
+//     }
+//      else {
+//       //alerta para que reinicie la aplicación
+//     }
+//   })}
+
+
+
+
       // await this.chooser.getFile("application/pdf").then(async (obj: ChooserResult) => {
       //   this.archivo = obj
       //   var blob1 = new Blob([obj.data.buffer], {type: 'application/pdf'})
@@ -232,22 +278,31 @@ export class ControlPage implements OnInit {
       //   blob = blob1
         
       // })  
-      const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-      if(this.archivo.length > 0){
-        await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>
-        firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-          this.enlaceDescarga = url;
-          this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-          // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-        })    )}
+
+
+
+
+      // const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
+      // if(this.archivo.length > 0){
+      //   await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>
+      //   firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
+      //     this.enlaceDescarga = url;
+      //     this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      //     // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
+      //   })    
+        
+        // )}
+
+
+
       // const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
       // const refStorage = this.fireStorage.ref(rutaArchivo)
       // const subirArchivo = 
       // this.archivo.data.toString().substring(5)
       
-    } else {
-      //alerta para que reinicie la aplicación
-    }
+    // } else {
+    //   //alerta para que reinicie la aplicación
+    // }
     // this.fileChooser.open().then(uri => console.log(uri)).catch(e => console.log(e));
   //   this.fileOpener.open('path/to/file.pdf', 'application/pdf')
   // .then(() => console.log('File is opened'))
@@ -256,7 +311,7 @@ export class ControlPage implements OnInit {
 // this.fileOpener.showOpenWithDialog('path/to/file.pdf', 'application/pdf')
 //   .then(() => console.log('File is opened'))
 //   .catch(e => console.log('Error opening file', e));
-  }
+  
 
   async updateAsistencia(jugadorId) {
 

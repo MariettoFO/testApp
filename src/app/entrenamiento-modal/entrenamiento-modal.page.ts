@@ -105,125 +105,94 @@ calcularNumero(){
 
 salirGuardando(){
   try{
-  console.log(this.dataService.getPathEntrenamientos())
-  const path = this.dataService.getPathEntrenamientos()
-  var boolNum = false
-  var boolFecha = false 
-  var boolFechaHoraMal = false
-  var nuevoEntrenamiento: Entrenamiento
-  var numero = 0
-  var boolNumVacio = false
+    console.log(this.dataService.getPathEntrenamientos())
+    const path = this.dataService.getPathEntrenamientos()
+    var boolNum = false
+    var boolFecha = false 
+    var boolFechaHoraMal = false
+    var nuevoEntrenamiento: Entrenamiento
+    var boolNumVacio = false
 
-  if((document.getElementById("hora") as HTMLIonDatetimeElement).value != undefined
-  && (document.getElementById("hora") as HTMLIonDatetimeElement).value != null && (document.getElementById("hora") as HTMLIonDatetimeElement).value != ""
-  && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != undefined && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != null 
-  && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""){
+    if((document.getElementById("hora") as HTMLIonDatetimeElement).value != undefined
+    && (document.getElementById("hora") as HTMLIonDatetimeElement).value != null && (document.getElementById("hora") as HTMLIonDatetimeElement).value != ""
+    && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != undefined && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != null 
+    && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""){
 
-
-    // if(this.dataService.entrenamientos.length > 0 && ((document.getElementById("numero") as HTMLInputElement).value == "0" 
-    // || (document.getElementById("numero") as HTMLInputElement).value == undefined 
-    // || (document.getElementById("numero") as HTMLInputElement).value == null)){
-    //   for(var i = 0; this.dataService.entrenamientos.length > i; i++){
-    //     if(numero < this.dataService.entrenamientos[i].numero){
-    //       numero = this.dataService.entrenamientos[i].numero
-    //     }
-    //   }
-    //   numero++
-    // }else{
-    //   boolNumVacio = true
-    // }
-
-    nuevoEntrenamiento = {
-      // numero: parseInt((document.getElementById("numero") as HTMLInputElement).value),
-      numero: this.calcularNumero(),
-      fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
-      hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
-      finalizado: false
-    }  
-  } else {
-    boolFechaHoraMal = true
-  }
-
-
-    for( var i = 0; i<this.dataService.entrenamientos.length; i++){
-      if(nuevoEntrenamiento != undefined){
-        if(nuevoEntrenamiento.numero == this.dataService.entrenamientos[i].numero){
-          boolNum = true
-        }
-        if(nuevoEntrenamiento.fecha == this.dataService.entrenamientos[i].fecha){
-          boolFecha = true
-        }
-      }
-    }
-
-    if(boolNum == false && boolFecha == false && boolFechaHoraMal == false && boolNumVacio == false){
-      this.firebaseService.crearEquipo<Entrenamiento>(nuevoEntrenamiento, path)
-      this.modalCtrl.dismiss({
-      });
+      nuevoEntrenamiento = {
+        numero: this.calcularNumero(),
+        fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
+        hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
+        finalizado: false
+      }  
     } else {
-      if(boolNum == true){
-        this.alertCtrl.create({
-          header: "Error al crear",
-          message: "El número de entrenamiento introducido ya existe.",
-          buttons:[{
-            text:'ok',
-            // handler:()=>{
-            //   this.navCtr.navigateBack(['entrenamiento-modal'])
-            // }
-          }]
-        }).then(alert => alert.present())
-      }
-      if(boolFecha == true){
-        this.alertCtrl.create({
-          header: "Error al crear",
-          message: "Ya existe un entrenamiento programado en la fecha seleccionada.",
-          buttons:[{
-            text:'ok',
-            // handler:()=>{
-            //   this.navCtr.navigateBack(['entrenamiento-modal'])
-            // }
-          }]
-        }).then(alert => alert.present())
-      }
-      if(boolFechaHoraMal == true){
-        this.alertCtrl.create({
-          header: "Error al crear",
-          message: "Por favor, introduce la fecha y hora.",
-          buttons:[{
-            text:'ok',
-            // handler:()=>{
-            //   this.navCtr.navigateBack(['entrenamiento-modal'])
-            // }
-          }]
-        }).then(alert => alert.present())
-      }
-      // if(boolNumVacio == true){
-      //   this.alertCtrl.create({
-      //     header: "Error al crear",
-      //     message: "Por favor, introduce un número de entrenamiento.",
-      //     buttons:[{
-      //       text:'ok',
-      //       // handler:()=>{
-      //       //   this.navCtr.navigateBack(['entrenamiento-modal'])
-      //       // }
-      //     }]
-      //   }).then(alert => alert.present())
-      // }
-     
+      boolFechaHoraMal = true
     }
 
-    
-  } catch(err){
-    console.log(err)
-    this.alertCtrl.create({
-      header: "Error al crear",
-      message: "Compruebe que los datos introducidos sean correctos.",
-      buttons:[{
-        text:'ok',
-        // handler:()=>{
-        //   this.navCtr.navigateBack(['entrenamiento-modal'])
-        // }
-      }]
-    })  }
-}
+
+      for( var i = 0; i<this.dataService.entrenamientos.length; i++){
+        if(nuevoEntrenamiento != undefined){
+          if(nuevoEntrenamiento.numero == this.dataService.entrenamientos[i].numero){
+            boolNum = true
+          }
+          if(nuevoEntrenamiento.fecha == this.dataService.entrenamientos[i].fecha){
+            boolFecha = true
+          }
+        }
+      }
+
+      if(boolNum == false && boolFecha == false && boolFechaHoraMal == false && boolNumVacio == false){
+        this.firebaseService.crearEquipo<Entrenamiento>(nuevoEntrenamiento, path)
+        this.modalCtrl.dismiss({
+        });
+      } else {
+        if(boolNum == true){
+          this.alertCtrl.create({
+            header: "Error al crear",
+            message: "El número de entrenamiento introducido ya existe.",
+            buttons:[{
+              text:'ok',
+              // handler:()=>{
+              //   this.navCtr.navigateBack(['entrenamiento-modal'])
+              // }
+            }]
+          }).then(alert => alert.present())
+        }
+        if(boolFecha == true){
+          this.alertCtrl.create({
+            header: "Error al crear",
+            message: "Ya existe un entrenamiento programado en la fecha seleccionada.",
+            buttons:[{
+              text:'ok',
+              // handler:()=>{
+              //   this.navCtr.navigateBack(['entrenamiento-modal'])
+              // }
+            }]
+          }).then(alert => alert.present())
+        }
+        if(boolFechaHoraMal == true){
+          this.alertCtrl.create({
+            header: "Error al crear",
+            message: "Por favor, introduce la fecha y hora.",
+            buttons:[{
+              text:'ok',
+            }]
+          }).then(alert => alert.present())
+        }
+      
+      }
+
+      
+    } catch(err){
+      console.log(err)
+      this.alertCtrl.create({
+        header: "Error al crear",
+        message: "Compruebe que los datos introducidos sean correctos.",
+        buttons:[{
+          text:'ok',
+          // handler:()=>{
+          //   this.navCtr.navigateBack(['entrenamiento-modal'])
+          // }
+        }]
+      })  }
+  }
 }
