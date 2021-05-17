@@ -20,19 +20,22 @@
 
 <ion-content [fullscreen]="true" padding>
   <ion-item-divider>Datos del partido</ion-item-divider>
+  <ion-item lines="full">
+    <h5>Jornada {{calcularJornada()}}</h5>
+  </ion-item>
   <ion-item>
     <ion-label position="floating">Nombre del equipo</ion-label>
-    <ion-input></ion-input>
+    <ion-input id="rival"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Local o visitante</ion-label>
     <!-- <ion-select value="local"> -->
-    <ion-select>
+    <ion-select id="campo">
       <ion-select-option value="local">Local</ion-select-option>
       <ion-select-option value="visitante">Visitante</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item>
     <ion-label>Jornada</ion-label>
     <ion-select>
       <ion-select-option value="1">1</ion-select-option>
@@ -82,8 +85,8 @@
       <ion-select-option value="45">45</ion-select-option>
       <ion-select-option value="46">46</ion-select-option>
     </ion-select>
-  </ion-item>
-  <ion-item>
+  </ion-item> -->
+  <!-- <ion-item>
     <ion-label>Clasificación del rival</ion-label>
     <ion-select>
       <ion-select-option value="1">1º</ion-select-option>
@@ -140,20 +143,14 @@
       <ion-select-option value="23">23º</ion-select-option>
       <ion-select-option value="24">24º</ion-select-option>
     </ion-select>
-  </ion-item>
+  </ion-item> -->
   <ion-item-divider>Fecha y hora</ion-item-divider>
   <ion-item>
     <ion-label>Seleccionar fecha</ion-label>
-    <ion-datetime dayNames="Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo" displayFormat="DDDD DD/MM/YYYY" placeholder="Elegir"></ion-datetime>
+    <ion-datetime id="fecha" dayNames="Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo" displayFormat="DDDD DD/MM/YYYY" placeholder="Elegir"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>Seleccionar hora</ion-label>
-    <ion-datetime display-format="HH:mm" picker-format="HH:mm" placeholder="Elegir"></ion-datetime>
+    <ion-datetime id="hora" display-format="HH:mm" picker-format="HH:mm" placeholder="Elegir"></ion-datetime>
   </ion-item>
-
-  
-  <!-- <ion-button (click)="UploadFile()">Subir imagen</ion-button>
-  <ion-label><b>{{UploadText}}</b></ion-label> 
-  <br/><br/>
-  <ion-button (click)="AbortUpload()">Cancelar subida</ion-button> -->
 </ion-content>

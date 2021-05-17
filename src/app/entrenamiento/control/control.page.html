@@ -41,42 +41,11 @@
   </ion-item>
   
   <ion-list id="listaAsistencia" style="visibility: hidden; display: none; transition: visibility 0.5s;">
-    <!-- <ion-item detail="false">
-      <ion-label>
-        <h2>Confirmar asistencia</h2>
-      </ion-label>
-      <ion-icon color="danger" id="denegacion" slot="end" name="close-outline">No</ion-icon>
-      <ion-icon color="primary" id="confirmacion" slot="end" name="checkmark-outline"></ion-icon>
-    </ion-item> -->
-
-    <!-- <ion-item lines="full" detail="false">
-      <ion-label>Mario Fernández Osorio</ion-label>
-      <ion-radio-group>
-        <ion-label>
-          Asiste
-        </ion-label>
-        <ion-radio slot="start" color="primary" value="asiste"></ion-radio>
-        <ion-label>
-          Falta
-        </ion-label>
-        <ion-radio slot="end" color="danger" value="falta"></ion-radio>
-      </ion-radio-group>
-       <ion-checkbox slot="end" color="danger" id="falta" (click)="cambiarTickFalta()"></ion-checkbox>
-      <ion-checkbox slot="end" color="primary" id="asiste" (click)="cambiarTickAsiste()"></ion-checkbox> 
-    </ion-item> -->
     <ion-item *ngFor="let jugador of jugadoresId" detail="false">
       <ion-label>
         <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
       </ion-label>
-      <!-- <ion-checkbox slot="end" color="danger" id="falta{{jugador.id}}" (click)="cambiarTickFalta(jugador.id)"></ion-checkbox> -->
-      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id)" slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox> -->
-      
       <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox>
-      <!-- <ion-checkbox slot="end" color="success" id="asiste{{jugador.id}}" checked="{{checkearAsistencia(jugador.id)}}"></ion-checkbox> -->
-
-      <!-- <ion-checkbox *ngIf="checkearAsistencia(jugador.id) else elseBlock" slot="end" color="success" id="asiste{{jugador.id}}" checked></ion-checkbox>
-      <ion-checkbox #elseBlock slot="end" color="success" id="asiste{{jugador.id}}"></ion-checkbox> -->
-
     </ion-item>
   </ion-list>
 </ion-content>

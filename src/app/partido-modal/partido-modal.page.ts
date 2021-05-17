@@ -69,7 +69,11 @@ export class PartidoModalPage implements OnInit {
     if((document.getElementById("hora") as HTMLIonDatetimeElement).value != undefined
     && (document.getElementById("hora") as HTMLIonDatetimeElement).value != null && (document.getElementById("hora") as HTMLIonDatetimeElement).value != ""
     && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != undefined && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != null 
-    && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""){
+    && (document.getElementById("fecha") as HTMLIonDatetimeElement).value != ""
+    && (document.getElementById("rival") as HTMLInputElement).value != undefined && (document.getElementById("rival") as HTMLInputElement).value != null 
+    && (document.getElementById("rival") as HTMLInputElement).value != ""
+    && (document.getElementById("campo") as HTMLIonSelectElement).value != undefined && (document.getElementById("campo") as HTMLIonSelectElement).value != null 
+    && (document.getElementById("campo") as HTMLIonSelectElement).value != ""){
 
       nuevoPartido = {
         jornada: this.calcularJornada(),
@@ -77,7 +81,8 @@ export class PartidoModalPage implements OnInit {
         campo: (document.getElementById("campo") as HTMLIonSelectElement).value,
         fecha: this.ordenarFecha((document.getElementById("fecha") as HTMLIonDatetimeElement).value.toString().substring(0,10)),
         hora: (document.getElementById("hora") as HTMLIonDatetimeElement).value.toString().substring(11,16),
-        finalizado: false
+        finalizado: false,
+        resultado: ""
       }  
     } else {
       boolFechaHoraMal = true
@@ -127,7 +132,7 @@ export class PartidoModalPage implements OnInit {
         if(boolFechaHoraMal == true){
           this.alertCtrl.create({
             header: "Error al crear",
-            message: "Por favor, introduce la fecha y hora.",
+            message: "Por favor, asegúrese de rellenar todos los campos.",
             buttons:[{
               text:'ok',
             }]

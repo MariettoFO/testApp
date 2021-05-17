@@ -24,8 +24,9 @@ export interface JugadorEstadistica {
 
     asiste: Array<string>;
     falta: Array<string>;
-    convocado: number;
-    desconvocado: number;
+    convocado: Array<string>;
+    desconvocado: Array<string>;
+    titular: Array<string>;
     goles: number;
     asistencias: number;
     minutos: number;
@@ -38,6 +39,13 @@ export interface Asistencia{
     id: string;
     asiste: Array<string>
     falta: Array<string>
+}
+
+export interface Convocatoria{
+    id: string;
+    convocado: Array<string>
+    desconvocado: Array<string>
+    titular: Array<string>
 }
 
 export interface JugadorId {
@@ -82,4 +90,5 @@ export interface Partido {
     fecha: string;
     hora: string;
     finalizado: boolean;
+    resultado: string;
 }

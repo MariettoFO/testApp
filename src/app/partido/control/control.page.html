@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="tabs/partido">
+      <ion-back-button text="" (click)="guardarCambios()" defaultHref="tabs/partido">
       </ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
@@ -9,10 +9,41 @@
         <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Control de partido</ion-title>
+    <ion-title>Control de partido {{numPartido}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item lines="full">
+    <ion-label>Partido finalizado</ion-label>
+    <ion-toggle checked="{{parFinalizado}}" color="primary" id="parFinalizado"></ion-toggle>
+  </ion-item>
+  <ion-item-divider>Convocatoria</ion-item-divider>
+  <ion-item lines="full" (click)="listaJugadores()" (click)="checkearConvocatoria()">
+    <ion-label>Ver jugadores</ion-label>
+    <ion-icon id="iconConvocatoria" slot="end" name="chevron-forward-outline"></ion-icon>
+  </ion-item>
+  
+  <ion-list id="listaConvocatoria" style="visibility: hidden; display: none; transition: visibility 0.5s;">
+    <ion-item *ngFor="let jugador of jugadoresId" detail="false">
+      <ion-label>
+        <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
+      </ion-label>
+      <ion-checkbox slot="end" color="success" id="convocado{{jugador.id}}"></ion-checkbox>
+    </ion-item>
+  </ion-list>
 
+  <ion-item-divider>Titulares</ion-item-divider>
+  <ion-item lines="full" (click)="listaJugadoresTitulares()" (click)="checkearTitulares()">
+    <ion-label>Ver jugadores</ion-label>
+    <ion-icon id="iconTitulares" slot="end" name="chevron-forward-outline"></ion-icon>
+  </ion-item>
+  <ion-list id="listaTitulares" style="visibility: hidden; display: none; transition: visibility 0.5s;">
+    <ion-item *ngFor="let jugador of jugadoresId" id="itemTit{{jugador.id}}" style="visibility: hidden; display: none" detail="false">
+      <ion-label>
+        <h2>{{jugador.nombre}} {{jugador.apellidos}} </h2>
+      </ion-label>
+      <ion-checkbox slot="end" color="success" id="titular{{jugador.id}}"></ion-checkbox>
+    </ion-item>
+  </ion-list>
 </ion-content>

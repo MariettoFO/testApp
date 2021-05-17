@@ -105,8 +105,9 @@ async salirGuardando(){
   const nuevoJugadorEstadistica: JugadorEstadistica = {
     asiste: [],
     falta: [],
-    convocado: 0,
-    desconvocado: 0,
+    convocado: [],
+    desconvocado: [],
+    titular: [],
     goles: 0,
     asistencias: 0,
     minutos: 0,
@@ -129,7 +130,7 @@ async salirGuardando(){
         idAntiguo = jugact
         console.log(idAntiguo + 'before')
       })
-    
+     
 
       console.log(idAntiguo + 'after')
 

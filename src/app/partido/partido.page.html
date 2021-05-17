@@ -45,14 +45,79 @@
 
       </ion-item> -->
 
-      <ion-item detail="false" button vertical="center" lines="full" routerLink="control"> 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha)" routerLink="control"> 
         <ion-label>
-          <p><b>Jornada 1</b>
-          <h2>Getafe C.F vs C.D. San Roque E.F.F.</h2>
+          <p><b>Jornada {{partido.jornada}}</b>
+          <p><h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
+          <p><h2 *ngIf="partido.campo == 'visitante'">{{partido.rival}} vs {{this.dataService.equipoSelect}}</h2>
+          <p>{{partido.fecha}} - {{partido.hora}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option color="danger"><ion-icon slot="icon-only" name="trash-outline">ELIMINAR</ion-icon></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="selectSegment == 'jugados'">
+    <ion-item-sliding *ngFor="let partido of jugados">
+      <!-- <ion-item detail="false" button vertical="center" lines="full" routerLink="control"> 
+        <ion-label>
+          <p><h2>Jornada 1</h2>
+          <b>Getafe C.F<br/>vs<br/>C.D. San Roque E.F.F.</b>
           <p>19/05/2020 - 12:00</p>
         </ion-label>
+        <ion-thumbnail slot="start">
+          <img src="../../assets/icon/GETAFE.png">
+        </ion-thumbnail>
+        <ion-thumbnail slot="end">
+          <img src="../../assets/icon/escudoSanro.png">
+        </ion-thumbnail>
 
+      </ion-item> -->
 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha)" routerLink="control"> 
+        <ion-label>
+          <p><b>Jornada {{partido.jornada}}</b>
+          <h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
+          <h2 *ngIf="partido.campo == 'visitante'">{{partido.rival}} vs {{this.dataService.equipoSelect}}</h2>
+          <p>{{partido.fecha}} - {{partido.hora}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option color="danger"><ion-icon slot="icon-only" name="trash-outline">ELIMINAR</ion-icon></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="selectSegment == 'pendientes'">
+    <ion-item-sliding *ngFor="let partido of programados">
+      <!-- <ion-item detail="false" button vertical="center" lines="full" routerLink="control"> 
+        <ion-label>
+          <p><h2>Jornada 1</h2>
+          <b>Getafe C.F<br/>vs<br/>C.D. San Roque E.F.F.</b>
+          <p>19/05/2020 - 12:00</p>
+        </ion-label>
+        <ion-thumbnail slot="start">
+          <img src="../../assets/icon/GETAFE.png">
+        </ion-thumbnail>
+        <ion-thumbnail slot="end">
+          <img src="../../assets/icon/escudoSanro.png">
+        </ion-thumbnail>
+
+      </ion-item> -->
+
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha)" routerLink="control"> 
+        <ion-label>
+          <p><b>Jornada {{partido.jornada}}</b>
+          <h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
+          <h2 *ngIf="partido.campo == 'visitante'">{{partido.rival}} vs {{this.dataService.equipoSelect}}</h2>
+          <p>{{partido.fecha}} - {{partido.hora}}</p>
+        </ion-label>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-item-option>

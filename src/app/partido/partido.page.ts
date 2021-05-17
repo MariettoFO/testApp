@@ -20,7 +20,7 @@ export class PartidoPage implements OnInit {
   partidoSelect: string;
 
 
-  constructor(private modalCtrl: ModalController, private dataService: DataService) { 
+  constructor(private modalCtrl: ModalController, public dataService: DataService) { 
       this.selectSegment = 'todos'
       this.partido = []
       this.partidoSelect = ""
@@ -50,7 +50,7 @@ export class PartidoPage implements OnInit {
       this.dataService.partidos = entact
     })
 
-    firebase.firestore().collection(this.dataService.getPathEntrenamientos()).where('jornada', '==', true).orderBy('numero').onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathPartidos()).where('finalizado', '==', true).orderBy('jornada').onSnapshot((querySnapshot) => {
       var entact = [];
       querySnapshot.forEach((doc) =>{
         entact.push({id: doc.id,
@@ -65,7 +65,7 @@ export class PartidoPage implements OnInit {
       this.jugados = entact
     })
 
-    firebase.firestore().collection(this.dataService.getPathEntrenamientos()).where('jugados', '==', false).orderBy('numero').onSnapshot((querySnapshot) => {
+    firebase.firestore().collection(this.dataService.getPathPartidos()).where('finalizado', '==', false).orderBy('jornada').onSnapshot((querySnapshot) => {
       var entact = [];
       querySnapshot.forEach((doc) =>{
         entact.push({id: doc.id,
@@ -127,6 +127,15 @@ export class PartidoPage implements OnInit {
     // })
 
     return this.partido
+  }
+
+  getPartidoSelect(partido, id, finalizado, fecha){
+    this.dataService.numPartido = partido
+    this.dataService.idPartido = id
+    this.dataService.parFinalizado = finalizado
+    this.dataService.fechaPartido = fecha
+
+    return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido
   }
 
   async abrirModalPartido(){
