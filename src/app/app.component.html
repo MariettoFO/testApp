@@ -116,26 +116,31 @@
     <ion-header>
       <ion-toolbar>
         <ion-title style="color: #040454;">Menú</ion-title>
+        <!-- <ion-label *ngIf="this.dataService.emailUser != ''" style="margin: auto; font-size: small;">{{this.dataService.emailUser}}</ion-label> -->
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
           <ion-item button vertical="center" lines="full" routerLink="home">
-            <ion-label>Gestionar equipos</ion-label>
+            <ion-label>Seleccionar equipo</ion-label>
             <ion-icon style="color: #040454;" slot="start" name="home-outline"></ion-icon>
           </ion-item>
-          <ion-item button vertical="center" lines="full">
+          <!-- <ion-item button vertical="center" lines="full">
             <ion-label>Tareas</ion-label>
             <ion-icon style="color: #040454;" slot="start" name="document-outline"></ion-icon>
-          </ion-item>
-          <ion-item button vertical="center" lines="full">
+          </ion-item> -->
+          <!-- <ion-item button vertical="center" lines="full">
             <ion-label>Foro</ion-label>
             <ion-icon style="color: #040454;" slot="start" name="chatbubbles-outline"></ion-icon>
-          </ion-item>
-          <ion-item button vertical="center" lines="full">
+          </ion-item> -->
+          <ion-item button vertical="center" lines="none">
             <ion-label>Configuración</ion-label>
             <ion-icon style="color: #040454;" slot="start" name="settings-outline"></ion-icon>
+          </ion-item>
+          <ion-item button vertical="center" lines="none">
+            <ion-label>Acerca de</ion-label>
+            <ion-icon style="color: #040454;" slot="start" name="information-circle-outline"></ion-icon>
           </ion-item>
           <ion-item button vertical="center" lines="full" (click)="cerrarSesion()">
             <ion-label color="danger">Cerrar sesión</ion-label>

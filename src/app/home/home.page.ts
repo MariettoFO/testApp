@@ -9,7 +9,7 @@ import firebase from 'firebase/app';
 import { MaxLengthValidator } from '@angular/forms';
 import { SelectorMatcher } from '@angular/compiler';
 import { DataService } from '../data.service';
-import { Equipo } from '../interfaces';
+import { Equipo, EquipoId } from '../interfaces';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class HomePage implements OnInit{
 
   equipoSelect: string
   idSelect: string
-  equipos: Array<Equipo>;
+  equipos: Array<EquipoId>;
   jugadores: Array<string>;
   idEquipos: Array<string>;
   pathJugadores: string;
@@ -103,7 +103,11 @@ export class HomePage implements OnInit{
 
     const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").onSnapshot((querySnapshot) => {
       querySnapshot.docs.forEach(doc =>
-        this.equipos.push({id: doc.id, nombre: doc.data().nombre}))
+        this.equipos.push({id: doc.id, 
+          nombre: doc.data().nombre, 
+          minutos: doc.data().minutos, 
+          modalidad: doc.data().modalidad, 
+          convocados: doc.data().convocados}))
       })
 
     // const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {

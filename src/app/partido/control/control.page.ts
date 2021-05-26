@@ -179,6 +179,12 @@ export class ControlPage implements OnInit {
     }
   }
 
+  quitarTitular(jugador){
+    if((document.getElementById('titular' + jugador) as HTMLIonCheckboxElement).checked == true){
+      (document.getElementById('titular' + jugador) as HTMLIonCheckboxElement).checked = false
+    }
+  }
+
   guardarCambios(){
     try{
 

@@ -34,7 +34,10 @@ salirGuardando(){
   const path = 'users/'+ firebase.auth().currentUser.uid +'/equipos/'
   const nuevoEquipo: Equipo = {
     nombre: (document.getElementById("inputequipo") as HTMLInputElement).value,
-    id: '' //arreglar
+    // id: '', //arreglar,
+    minutos: (document.getElementById("minutos") as HTMLIonSelectElement).value,
+    modalidad: (document.getElementById("modalidad") as HTMLIonSelectElement).value,
+    convocados: (document.getElementById("convocados") as HTMLIonSelectElement).value
   }
   if(nuevoEquipo.nombre.length > 0){
     this.firebaseService.crearEquipo<Equipo>(nuevoEquipo, path);

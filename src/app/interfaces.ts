@@ -6,8 +6,19 @@ export interface User {
 }
 
 export interface Equipo {
+    // id: string;
+    nombre: string;
+    minutos: string;
+    modalidad: string;
+    convocados: string;
+}
+
+export interface EquipoId {
     id: string;
     nombre: string;
+    minutos: string;
+    modalidad: string;
+    convocados: string;
 }
 
 export interface Jugador {

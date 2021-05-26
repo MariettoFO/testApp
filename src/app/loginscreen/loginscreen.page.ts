@@ -6,6 +6,7 @@ import { AlertController, LoadingController, NavController } from '@ionic/angula
 import { FirebaseService } from '../services/firebase.service';
 import { User } from '../interfaces';
 import firebase from 'firebase/app';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class LoginscreenPage implements OnInit {
 
   validationFormUser: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, public firebaseService: FirebaseService, public authService: AuthService, private router: Router, private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController) { }
+  constructor(private dataService: DataService, public formBuilder: FormBuilder, public firebaseService: FirebaseService, public authService: AuthService, private router: Router, private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController) { }
 
   ngOnInit() {
     this.validationFormUser = this.formBuilder.group({
@@ -47,6 +48,7 @@ export class LoginscreenPage implements OnInit {
     try{
       this.authService.loginFireauth(value).then ( resp =>{
         console.log(resp);
+        this.dataService.emailUser = firebase.auth().currentUser.email
         this.router.navigate(['home']);
         // const path = "users/"
         // const nuevoEquipo: User = {

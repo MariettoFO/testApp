@@ -24,6 +24,7 @@ idPartido: string;
 parFinalizado: string;
 fechaPartido: string;
 convocatoria: Array<Convocatoria>;
+emailUser: string;
 
 
   constructor(private http: HttpClient) { 
@@ -46,6 +47,7 @@ convocatoria: Array<Convocatoria>;
     this.parFinalizado = ""
     this.fechaPartido = ""
     this.convocatoria = []  
+    this.emailUser = ""
   }
 
 

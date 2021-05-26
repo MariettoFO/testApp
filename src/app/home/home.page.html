@@ -28,7 +28,10 @@
     <strong>Ready to create an app?</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div> -->
-
+  <ion-item *ngIf="equipos.length < 1" detail="false" button vertical="center" lines="full" (click)="abrirModalEquipo()">  
+      <ion-label style="text-align: center;" id="primerEquipo"><b>Crea tu primer equipo</b></ion-label>
+      <ion-icon name="add" slot="end" color="primary"></ion-icon>
+    </ion-item>
 <ion-list>
   <ion-item-sliding *ngFor="let equipo of equipos">
   <ion-item detail="false" button vertical="center" lines="full" (click)="getJugadores(equipo.nombre)" routerLink="/tabs/equipo">  
@@ -36,7 +39,7 @@
   <!-- {{equipo.nombre}} -->
     <ion-label style="text-align: center;" id="nombre"><b>{{equipo.nombre}}</b></ion-label>
     <ion-thumbnail slot="start">
-      <img src="../../assets/icon/escudoSanro.png">
+      <img class="align-middle" src="../../assets/icon/tactica.png">
     </ion-thumbnail>
     <ion-icon name="chevron-forward-circle-outline" slot="end" color="primary"></ion-icon>
   </ion-item>
