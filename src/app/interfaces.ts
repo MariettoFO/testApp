@@ -2,7 +2,14 @@ export interface User {
     nombre: string;
     telefono: string;
     correo: string;
+    master: Array<AccesoUsuario>;
+    entrenador: Array<AccesoUsuario>
     // equipos: string;
+}
+
+export interface AccesoUsuario {
+    nombre: string;
+    password: string;
 }
 
 export interface Equipo {
@@ -102,4 +109,12 @@ export interface Partido {
     hora: string;
     finalizado: boolean;
     resultado: string;
+}
+
+export interface Peticiones {
+    nombre: string;
+    email: string;
+    telefono: string;
+    tipo: string;
+    revisado: boolean;
 }

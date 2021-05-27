@@ -5,7 +5,7 @@ import { AlertController, LoadingController, NavController } from '@ionic/angula
 import { AuthService } from '../services/auth.service';
 import firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth'
-import { User } from '../interfaces';
+import { Peticiones, User } from '../interfaces';
 import { FirebaseService } from '../services/firebase.service';
 
 
@@ -27,9 +27,12 @@ export class SignupPage implements OnInit {
       {type:"required", message:"Por favor, introduce tu dirección de correo"},
       {type:"pattern", message:"El Email introducido es incorecto. Prueba de nuevo"}
     ],
-    password:[
-      {type:"required", message:"Por favor, introduce tu contraseña"},
-      {type:"minlength", message:"La contraseña debe tener al menos 6 caracteres"}
+    // password:[
+    //   {type:"required", message:"Por favor, introduce tu contraseña"},
+    //   {type:"minlength", message:"La contraseña debe tener al menos 6 caracteres"}
+    // ],
+    tipo:[
+      {type:"required", message:"Por favor, elige el tipo de cuenta que desea"},
     ]
   }
 
@@ -53,12 +56,67 @@ export class SignupPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
 
-      password: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.minLength(6)        
+      // password: new FormControl('', Validators.compose([
+      //   Validators.required,
+      //   Validators.minLength(6)        
+      // ])),
+
+      tipo: new FormControl('', Validators.compose([
+        Validators.required
       ]))
 
     })
+  }
+
+  async peticionUser(){
+    this.showAlert();
+    try{
+      var peticion: Peticiones
+      peticion = {
+        nombre: (document.getElementById("nombre") as HTMLInputElement).value,
+        telefono: (document.getElementById("telefono") as HTMLInputElement).value,
+        email: (document.getElementById("email") as HTMLInputElement).value,
+        tipo: (document.getElementById("tipo") as HTMLInputElement).value,
+        revisado: false 
+      }
+      await this.firebaseService.crearEquipo<Peticiones>(peticion, 'peticion').then(obj => {
+        this.alertCtrl.create({
+          header: "Solicitud enviada",
+          message: "El equipo de Football Staff se pondrá pronto en contacto contigo.\nTambién puede contactar con nosotros directamente enviándonos un correo a: info.fstaff@gmail.com\n¡Muchas gracias!",
+          buttons:[{
+            text:'ok',
+            handler:()=>{
+              this.navCtr.navigateBack(['login'])
+            }
+          }]
+        }).then(alert => alert.present())
+      }), error => {
+        this.alertCtrl.create({
+          header: "Error al enviar",
+          message: "Por favor, compruebe que su conexión a internet sea correcta y vuelve a intentarlo.\n¡Muchas gracias!",
+          buttons:[{
+            text:'ok',
+            handler:()=>{
+              this.navCtr.navigateBack(['login'])
+            }
+          }]
+        }).then(alert => alert.present())
+      }
+
+      this.loadingCtrl.dismiss();
+      this.alertCtrl.create({
+        header: "Solicitud enviada",
+        message: "El equipo de Football Staff se pondrá pronto en contacto contigo.\nTambién puede contactar con nosotros directamente enviándonos un correo a: info.fstaff@gmail.com\n¡Muchas gracias!",
+        buttons:[{
+          text:'ok',
+          handler:()=>{
+            this.navCtr.navigateBack(['login'])
+          }
+        }]
+      }).then(alert => alert.present())
+    }catch(error){
+      console.log(error)
+    } 
   }
 
   registerUser(value){
@@ -66,17 +124,12 @@ export class SignupPage implements OnInit {
     try{
       this.authService.userRegistration(value).then(response =>{
         console.log(response);
-        // const path = "users/" + firebase.auth().currentUser.uid
-        // const nuevoUser: User = {
-        //   nombre: (document.getElementById("nombre") as HTMLInputElement).value,
-        //   telefono: (document.getElementById("apellidos") as HTMLInputElement).value,
-        //   correo: (document.getElementById("email") as HTMLInputElement).value
-        // }
-      // this.firebaseService.crearEquipo<User>( nuevoUser, path); //Crea campo del usuario en la bbdd
+
         firebase.firestore().collection('users').doc(response.user.uid).set({
           nombre: (document.getElementById("nombre") as HTMLInputElement).value,
           telefono: (document.getElementById("telefono") as HTMLInputElement).value,
-          correo: (document.getElementById("email") as HTMLInputElement).value
+          correo: (document.getElementById("email") as HTMLInputElement).value,
+
         })
         if(response.user){
           response.user.updateProfile({
@@ -112,7 +165,7 @@ export class SignupPage implements OnInit {
   }
 
   async showAlert(){
-    var load = await this.loadingCtrl.create({
+    await this.loadingCtrl.create({
       message: "Por favor, espera..."
     })
   }

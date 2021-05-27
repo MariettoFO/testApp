@@ -11,14 +11,15 @@
   <ion-card class="ion-no-margin">
     <ion-card-header>
       <ion-card-title>
-        Regístrate
+        ¡Únete a nosotros!
       </ion-card-title>
       <ion-card-subtitle>
-        Crea tu cuenta rellenando el formulario
+        Solicita tu cuenta rellenando el formulario
       </ion-card-subtitle>
     </ion-card-header>
-    <form [formGroup]="validationFormUser" (ngSubmit)="registerUser(validationFormUser.value)">
-    <ion-card-content>
+    <!-- <form [formGroup]="validationFormUser" (ngSubmit)="registerUser(validationFormUser.value)"> -->
+      <form [formGroup]="validationFormUser" (ngSubmit)="peticionUser()">
+      <ion-card-content>
       <ion-item>
         <ion-input name="names" type="text" placeholder="Nombre completo" formControlName="names" id="nombre">
           <ion-icon name="person-outline"></ion-icon>
@@ -59,6 +60,21 @@
       </div>
 
       <ion-item>
+        <ion-label>Selecciona el tipo de cuenta</ion-label>
+        <ion-select name="tipo" formControlName="tipo" id="tipo">
+          <ion-select-option value="entrenador">Entrenador</ion-select-option>
+          <ion-select-option value="club">Club</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationUserMessage.tipo">
+          <div class="error_message" *ngIf="validationFormUser.get('tipo').hasError(validation.type) && (validationFormUser.get('tipo').dirty || validationFormUser.get('tipo').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- <ion-item>
         <ion-input name="password" type="password" placeholder="**********" formControlName="password">
           <ion-icon name="lock-closed-outline"></ion-icon>
         </ion-input>
@@ -69,12 +85,12 @@
             {{validation.message}}
           </div>
         </ng-container>
-      </div>
+      </div> -->
 
       <div class="sign-btn-wrap">
-        <ion-button shape="round" type="submit" size="full" fill="solid" class="sign-btn" [disabled]="!validationFormUser.valid">CREAR CUENTA</ion-button>
+        <ion-button shape="round" type="submit" size="full" fill="solid" class="sign-btn" [disabled]="!validationFormUser.valid">SOLICITAR CUENTA</ion-button>
       </div>
-      <div class="text-tag">
+      <!-- <div class="text-tag">
         <span>Registrarse con:</span>
       </div>
       <div class="social-btns">
@@ -84,7 +100,7 @@
         <ion-button fill="clear" class ="facebookbtn ion-no-padding">
           <ion-img src="assets/icon/facebook.png"></ion-img>
         </ion-button>
-      </div>
+      </div> -->
     </ion-card-content>
   </form>
   </ion-card>
