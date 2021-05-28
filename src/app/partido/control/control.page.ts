@@ -185,10 +185,38 @@ export class ControlPage implements OnInit {
     }
   }
 
-  guardarCambios(){
-    try{
+  golLoc(){
+    var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
+    var num = parseInt(text);
+    num++;
+    (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
+  delGolLoc(){
+    var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
+    var num = parseInt(text);
+    if(num>0){
+      num--;
+    }
+    (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
 
-    
+  golVis(){
+    var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
+    var num = parseInt(text);
+    num++;
+    (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
+  delGolVis(){
+    var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
+    var num = parseInt(text);
+    if(num>0){
+      num--;
+    }
+    (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
+
+  guardarCambios(){
+    try{    
     //PartidoFinalizado
     var parFinalizado = false
     var miBool = Boolean(this.parFinalizado)
