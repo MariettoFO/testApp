@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+import { Plugins, SplashScreen } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 // import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -34,6 +34,7 @@ export class AppComponent {
   initializeApp() {
     this.AppTitle="Football Staff"
     this.platform.ready().then(() => {
+      SplashScreen.hide();
       this.statusBar.styleDefault();
       this.router.navigateByUrl('splash');
       // this.splashScreen.hide();

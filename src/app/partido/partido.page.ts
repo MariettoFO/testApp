@@ -129,13 +129,15 @@ export class PartidoPage implements OnInit {
     return this.partido
   }
 
-  getPartidoSelect(partido, id, finalizado, fecha){
+  getPartidoSelect(partido, id, finalizado, fecha, campo, rival){
     this.dataService.numPartido = partido
     this.dataService.idPartido = id
     this.dataService.parFinalizado = finalizado
     this.dataService.fechaPartido = fecha
+    this.dataService.campoPartido = campo
+    this.dataService.rivalPartido = rival
 
-    return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido
+    return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido, this.dataService.campoPartido, this.dataService.rivalPartido
   }
 
   async abrirModalPartido(){

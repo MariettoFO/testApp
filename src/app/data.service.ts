@@ -23,6 +23,8 @@ numPartido: string;
 idPartido: string;
 parFinalizado: string;
 fechaPartido: string;
+campoPartido: string;
+rivalPartido: string;
 convocatoria: Array<Convocatoria>;
 emailUser: string;
 
@@ -45,10 +47,15 @@ emailUser: string;
     this.numPartido = ""
     this.idPartido = ""
     this.parFinalizado = ""
-    this.fechaPartido = ""
+    this.fechaPartido = ""    
+    this.campoPartido = ""
+    this.rivalPartido = ""
     this.convocatoria = []  
     this.emailUser = ""
+
   }
+
+
 
 
   getJugadores(){

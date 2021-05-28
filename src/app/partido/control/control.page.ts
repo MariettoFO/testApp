@@ -18,6 +18,8 @@ export class ControlPage implements OnInit {
   checkConvocado: boolean;
   checkTitular: boolean;
   equipoSelect: string;
+  equipoLocal: string;
+  equipoVisitante: string;
 
   constructor(private dataService: DataService) { 
     this.numPartido = this.dataService.numPartido
@@ -28,8 +30,20 @@ export class ControlPage implements OnInit {
     this.checkConvocado = false
     this.checkTitular = false
     this.equipoSelect = this.dataService.equipoSelect
+    this.equipoLocal = ""
+    this.equipoVisitante = ""
   }
 
+  getLocalVisitante(){
+    if(this.dataService.campoPartido == 'local'){
+      this.equipoLocal = this.equipoSelect
+      this.equipoVisitante = this.dataService.rivalPartido
+    }
+    if(this.dataService.campoPartido == 'visitante'){
+      this.equipoLocal = this.dataService.rivalPartido
+      this.equipoVisitante = this.equipoSelect
+    }
+  }
   ngOnInit() {
     this.cargarJugadores()
   }
@@ -82,6 +96,8 @@ export class ControlPage implements OnInit {
       }
 
     })   
+
+    this.getLocalVisitante()
   
 }
 
