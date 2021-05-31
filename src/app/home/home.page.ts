@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { FirebaseApp } from '@angular/fire';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController } from '@ionic/angular';
 import { HomeModalPage } from '../home-modal/home-modal.page';
 import { FirebaseService} from '../services/firebase.service'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -31,7 +31,7 @@ export class HomePage implements OnInit{
   pathEntrenamientos: string;
   pathPartidos: string;
 
-  constructor(private alertCtrl: AlertController ,private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
+  constructor(private menuCtrl: MenuController,private alertCtrl: AlertController ,private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
       this.equipoSelect = ""
       this.pathJugadores = ""
       this.pathEntrenamientos = ""
@@ -44,7 +44,8 @@ export class HomePage implements OnInit{
 
 
   ngOnInit() {
-    this.cargarEquipos()    
+    this.cargarEquipos()  
+    this.menuCtrl.enable(true, 'first')  
   }
 
   segmentChanged(event){

@@ -43,6 +43,7 @@ export class PartidoPage implements OnInit {
           campo: doc.data().campo,
           fecha: doc.data().fecha,
           hora: doc.data().hora,
+          resultado: doc.data().resultado,
           finalizado: doc.data().finalizado})
         });
 
@@ -59,6 +60,7 @@ export class PartidoPage implements OnInit {
           campo: doc.data().campo,
           fecha: doc.data().fecha,
           hora: doc.data().hora,
+          resultado: doc.data().resultado,
           finalizado: doc.data().finalizado})      
         });
 
@@ -74,6 +76,7 @@ export class PartidoPage implements OnInit {
           campo: doc.data().campo,
           fecha: doc.data().fecha,
           hora: doc.data().hora,
+          resultado: doc.data().resultado,
           finalizado: doc.data().finalizado})
       });
 
@@ -144,15 +147,16 @@ export class PartidoPage implements OnInit {
     return this.partido
   }
 
-  getPartidoSelect(partido, id, finalizado, fecha, campo, rival){
+  getPartidoSelect(partido, id, finalizado, fecha, campo, rival, resultado){
     this.dataService.numPartido = partido
     this.dataService.idPartido = id
     this.dataService.parFinalizado = finalizado
     this.dataService.fechaPartido = fecha
     this.dataService.campoPartido = campo
     this.dataService.rivalPartido = rival
+    this.dataService.resultadoPartido = resultado
 
-    return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido, this.dataService.campoPartido, this.dataService.rivalPartido
+    return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido, this.dataService.campoPartido, this.dataService.rivalPartido, this.dataService.resultadoPartido
   }
 
   async abrirModalPartido(){

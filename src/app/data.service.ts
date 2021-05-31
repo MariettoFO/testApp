@@ -27,6 +27,7 @@ campoPartido: string;
 rivalPartido: string;
 convocatoria: Array<Convocatoria>;
 emailUser: string;
+resultadoPartido: string;
 
 
   constructor(private http: HttpClient) { 
@@ -52,6 +53,7 @@ emailUser: string;
     this.rivalPartido = ""
     this.convocatoria = []  
     this.emailUser = ""
+    this.resultadoPartido = ""
 
   }
 

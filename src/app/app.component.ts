@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Plugins, SplashScreen } from '@capacitor/core';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 // import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Capacitor } from '@capacitor/core';
@@ -25,7 +25,8 @@ export class AppComponent {
     private authService: AuthService,
     public dataService: DataService,
     private screenOrientation: ScreenOrientation,
-    public router: Router
+    public router: Router,
+    private menuCtrl: MenuController
   ) {
     this.initializeApp();
   }
@@ -51,9 +52,11 @@ export class AppComponent {
 
   cerrarSesion(){
     this.authService.logoutFireauth()
+    this.menuCtrl.enable(false, 'first')
   }
 
   bloquearOrientacion(){
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
+
 }

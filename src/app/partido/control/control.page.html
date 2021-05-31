@@ -16,7 +16,7 @@
 <ion-content>
   <ion-item lines="full">
     <ion-label>Partido finalizado</ion-label>
-    <ion-toggle checked="{{parFinalizado}}" color="primary" id="parFinalizado"></ion-toggle>
+    <ion-toggle checked="{{parFinalizado}}" (click)="esconderLista()" color="primary" id="parFinalizado"></ion-toggle>
   </ion-item>
   <ion-item-divider>Convocatoria</ion-item-divider>
   <ion-item lines="full" (click)="listaJugadores()" (click)="checkearConvocatoria()">

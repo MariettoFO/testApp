@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -8,9 +8,10 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private nav: NavController) { }
+  constructor(private menuCtrl: MenuController, private nav: NavController) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(false, 'first')
   }
   gotoLoginPage(){
     this.nav.navigateForward(['loginscreen'])

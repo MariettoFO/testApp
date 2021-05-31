@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, NavController } from '@ionic/angular';
 import { FirebaseService } from '../services/firebase.service';
 import { User } from '../interfaces';
 import firebase from 'firebase/app';
@@ -29,7 +29,7 @@ export class LoginscreenPage implements OnInit {
 
   validationFormUser: FormGroup;
 
-  constructor(private dataService: DataService, public formBuilder: FormBuilder, public firebaseService: FirebaseService, public authService: AuthService, private router: Router, private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController) { }
+  constructor(private menuCtrl: MenuController, private dataService: DataService, public formBuilder: FormBuilder, public firebaseService: FirebaseService, public authService: AuthService, private router: Router, private alertCtrl: AlertController, public loadingCtrl: LoadingController, private navCtr: NavController) { }
 
   ngOnInit() {
     this.validationFormUser = this.formBuilder.group({
@@ -42,6 +42,7 @@ export class LoginscreenPage implements OnInit {
         Validators.minLength(6)
       ]))
     })
+    this.menuCtrl.enable(false, 'first')
   }
   LoginUser(value){
     console.log("I am logged in");

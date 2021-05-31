@@ -249,180 +249,6 @@ export class ControlPage implements OnInit {
   })
 })
   }
-
-  //     this.fileChooser.open({"mime": "application/pdf"}).then( url => {
-  //       url = 'file:'+ url;
-  //       console.log(url);
-  //       this.filePath.resolveNativePath(url).then(async res => {
-  //       this.archivo = res.substr(0, res.lastIndexOf('/') + 1).toString();
-  //       console.log(this.archivo)
-  //       var currentName = url.substring(url.lastIndexOf('/') + 1, url.length).toString();
-
-  //       const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-  //         await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>{
-  //           firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-  //             this.enlaceDescarga = url;
-  //             this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-  //           })
-  //       // this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-  //     }).catch(err=>{
-  //       console.log('unable to resolve file path issue', err)
-  //     });
-  //       // (<any>window).filePath.resolveNativePath(url, (nativeFilepath) => {
-  //       //   console.log(nativeFilepath)
-  //       //           console.log(url);
-  //       //   // this.readFileFromStorage(nativeFilepath);
-
-  //       //   })
-  //       // })
-  //     })
-  //   })
-  // }
-
-    //   readFileFromStorage(nativeFilepath) {
-
-    //     let fileName = this.getfilename(nativeFilepath);
-
-    //     let blogType = { type: "application/pdf" };
-    //     console.log(nativeFilepath);
-    //     console.log("prueba");
-
-
-
-    //     (<any>window).resolveLocalFileSystemURL(nativeFilepath, (res) => {
-    //       res.file((resFile) => {
-    //         var reader = new FileReader();
-    //         reader.readAsArrayBuffer(resFile);
-    //         reader.onloadend = (evt: any) => {
-
-    //           var imgBlob = new Blob([evt.target.result], blogType);
-
-    //           //Upload blob to firebase
-    //           this.uploadToFirebase(imgBlob,fileName);
-    //         }
-    //       })
-    //     })
-    //   }
-
-    //   uploadToFirebase(fileBlob, name) {
-
-    //     var rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-    //         this.fireStorage.upload(rutaArchivo, fileBlob).then((obj) =>{
-    //           firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-    //             this.enlaceDescarga = url;
-    //             this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-    //           }).catch((error) => {
-    //       alert("Error: " + JSON.stringify(error));
-    //     });
-
-    //   })
-    // }
-
-
-
-        // this.file.resolveLocalFilesystemUrl(uri).then((url) => {
-          // url is path of selected file
-          // var rutaDir = url.nativeURL
-          // var rutaDirSegmentos = rutaDir.split('/') //Parte el string en array
-          // rutaDirSegmentos.pop() // elimina el ultimo elemento, es el nombre del archivo, para obtener la ruta
-          // rutaDir = rutaDirSegmentos.join('/')
-          // this.file.readAsArrayBuffer(rutaDir, url.name).then((buffer) => {
-          //   var blob = new Blob([buffer], { type: "application/pdf"})
-          //   var rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-          //   this.fireStorage.upload(rutaArchivo, blob).then((obj) =>{
-          //     firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-          //       this.enlaceDescarga = url;
-          //       this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-          //     })
-          // })
-
-
-          // this.archivo = url.substring(url.lastIndexOf("/") + 1)
-          // const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-          // await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>{
-          //   firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-          //     this.enlaceDescarga = url;
-          //     this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-          //   })
-
-
-
-
-          // fileName is selected file name
-  //         }).catch(err => console.log(err));
-  //     }).catch(error => {
-  //         console.log(error)
-  //       });
-  //   })
-  // }
-      
-
-
-
-
-// //Para android e iOS
-//     if(this.equipoSelect != "" && this.numEntrenamiento != ""){
-//       await this.fileChooser.open({"mime": "application/pdf"}).then(async uri => {
-//         uri = this.archivo
-//         console.log(uri)
-//         const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-//         if(this.archivo.length > 0){
-//           await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>{
-//           firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-//             this.enlaceDescarga = url;
-//             this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-//             // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-//           })
-//       }).catch(e => console.log(e));
-//     }
-//      else {
-//       //alerta para que reinicie la aplicación
-//     }
-//   })}
-
-
-
-
-      // await this.chooser.getFile("application/pdf").then(async (obj: ChooserResult) => {
-      //   this.archivo = obj
-      //   var blob1 = new Blob([obj.data.buffer], {type: 'application/pdf'})
-      //   // this.file.resolveLocalFilesystemUrl(obj.uri).then(())
-      //   blob = blob1
-        
-      // })  
-
-
-
-
-      // const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-      // if(this.archivo.length > 0){
-      //   await this.fireStorage.upload(rutaArchivo, this.archivo).then((obj) =>
-      //   firebase.storage().ref(rutaArchivo).getDownloadURL().then((url) => {
-      //     this.enlaceDescarga = url;
-      //     this.textoDescarga = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-      //     // (document.getElementById('documento') as HTMLLabelElement).textContent = 'Entrenamiento_' + this.numEntrenamiento + '.pdf'
-      //   })    
-        
-        // )}
-
-
-
-      // const rutaArchivo = firebase.auth().currentUser.email + '/' + this.equipoSelect + '/Entrenamiento_' + this.numEntrenamiento
-      // const refStorage = this.fireStorage.ref(rutaArchivo)
-      // const subirArchivo = 
-      // this.archivo.data.toString().substring(5)
-      
-    // } else {
-    //   //alerta para que reinicie la aplicación
-    // }
-    // this.fileChooser.open().then(uri => console.log(uri)).catch(e => console.log(e));
-  //   this.fileOpener.open('path/to/file.pdf', 'application/pdf')
-  // .then(() => console.log('File is opened'))
-  // .catch(e => console.log('Error opening file', e));
-
-// this.fileOpener.showOpenWithDialog('path/to/file.pdf', 'application/pdf')
-//   .then(() => console.log('File is opened'))
-//   .catch(e => console.log('Error opening file', e));
   
 
   async updateAsistencia(jugadorId) {
@@ -510,7 +336,27 @@ export class ControlPage implements OnInit {
     
   }
 
+  esconderLista(){
+
+    document.getElementById('listaAsistencia').style.visibility = 'hidden';
+    document.getElementById('listaAsistencia').style.display = 'none';
+    (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline';
+
+  }
+
   checkearAsistencia(){
+    var finalizado = false
+
+    if((document.getElementById('entFinalizado') as HTMLIonToggleElement).checked == true){
+      finalizado = true
+      for(var x = 0; x<this.dataService.asistencia.length; x++){
+        (document.getElementById('asiste' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    } else {
+      for(var x = 0; x<this.dataService.asistencia.length; x++){
+        (document.getElementById('asiste' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    }
 
     //Bucle para coger asistencia de estadisticas y saber si checkear el checkbox
     if(this.checkAsistencia == false){

@@ -16,7 +16,7 @@
 <ion-content>
   <ion-item lines="full">
     <ion-label>Entrenamiento finalizado</ion-label>
-    <ion-toggle checked="{{entFinalizado}}" color="primary" id="entFinalizado"></ion-toggle>
+    <ion-toggle checked="{{entFinalizado}}" (click)="esconderLista()" color="primary" id="entFinalizado"></ion-toggle>
   </ion-item>
   <ion-item-divider><ion-label>Cargar Entrenamiento</ion-label></ion-item-divider>
   <ion-item *ngIf="enlaceDescarga == '' && this.dataService.plataforma == 'web'" lines="full">

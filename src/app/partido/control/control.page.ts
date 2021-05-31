@@ -98,8 +98,17 @@ export class ControlPage implements OnInit {
     })   
 
     this.getLocalVisitante()
+    this.resultado()
   
 }
+
+  resultado(){
+    if(this.dataService.resultadoPartido.length > 0){
+      var resultado: Array<string> = this.dataService.resultadoPartido.split('-');
+      (document.getElementById('localGol') as HTMLIonLabelElement).textContent = resultado[0];
+      (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = resultado[1];
+    }
+  }
 
   listaJugadores(){
 
@@ -154,13 +163,26 @@ export class ControlPage implements OnInit {
 
   checkearConvocatoria(){
 
+    var finalizado = false
+
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == true){
+      finalizado = true
+      for(var x = 0; x<this.dataService.convocatoria.length; x++){
+        (document.getElementById('convocado' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    } else {
+      for(var x = 0; x<this.dataService.convocatoria.length; x++){
+        (document.getElementById('convocado' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    }
+
     //Bucle para coger convocatoria de estadisticas y saber si checkear el checkbox
     if(this.checkConvocado == false){
       this.checkConvocado = true
       for(var x = 0; x<this.dataService.convocatoria.length; x++){
             for(var i = 0; i<this.dataService.convocatoria[x].convocado.length; i++){
               if(this.dataService.convocatoria[x].convocado[i] == this.fechaPartido){
-                (document.getElementById('convocado' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked = true
+                (document.getElementById('convocado' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked = true;
               }
             }
 
@@ -168,7 +190,35 @@ export class ControlPage implements OnInit {
     }
   }
 
+  esconderLista(){
+
+    document.getElementById('listaConvocatoria').style.visibility = 'hidden';
+    document.getElementById('listaConvocatoria').style.display = 'none';
+    (document.getElementById('iconConvocatoria') as HTMLIonIconElement).name = 'chevron-forward-outline';
+
+    (document.getElementById('iconTitulares') as HTMLIonIconElement).name = 'chevron-forward-outline'
+    document.getElementById('listaTitulares').style.visibility = 'hidden'
+    document.getElementById('listaTitulares').style.display = 'none'
+  }
+
   checkearTitulares(){
+    var finalizado = false
+
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == true){
+      finalizado = true
+      for(var x = 0; x<this.dataService.convocatoria.length; x++){
+        (document.getElementById('titular' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    } else {
+      for(var x = 0; x<this.dataService.convocatoria.length; x++){
+        (document.getElementById('titular' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).disabled = finalizado
+      }
+    }
+
+
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == true){
+      finalizado = true
+    }
 
     for(var x = 0; x<this.jugadoresId.length; x++){
       if((document.getElementById('convocado' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked == true){
@@ -187,7 +237,7 @@ export class ControlPage implements OnInit {
       for(var x = 0; x<this.dataService.convocatoria.length; x++){
             for(var i = 0; i<this.dataService.convocatoria[x].titular.length; i++){
               if(this.dataService.convocatoria[x].titular[i] == this.fechaPartido){
-                (document.getElementById('titular' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked = true
+                (document.getElementById('titular' + this.jugadoresId[x].id) as HTMLIonCheckboxElement).checked = true;
               }
             }
 
@@ -202,33 +252,43 @@ export class ControlPage implements OnInit {
   }
 
   golLoc(){
-    var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
-    var num = parseInt(text);
-    num++;
-    (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
-  }
-  delGolLoc(){
-    var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
-    var num = parseInt(text);
-    if(num>0){
-      num--;
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == false){
+      var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
+      var num = parseInt(text);
+      num++;
+      (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
     }
-    (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
+
+  delGolLoc(){
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == false){
+      var text = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
+      var num = parseInt(text);
+      if(num>0){
+        num--;
+      }
+      (document.getElementById('localGol') as HTMLIonLabelElement).textContent = num.toString()
+    }
   }
 
   golVis(){
-    var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
-    var num = parseInt(text);
-    num++;
-    (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
-  }
-  delGolVis(){
-    var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
-    var num = parseInt(text);
-    if(num>0){
-      num--;
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == false){
+      var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
+      var num = parseInt(text);
+      num++;
+      (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
     }
-    (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
+  }
+
+  delGolVis(){
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == false){
+      var text = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
+      var num = parseInt(text);
+      if(num>0){
+        num--;
+      }
+      (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent = num.toString()
+    }
   }
 
   guardarCambios(){
@@ -258,11 +318,20 @@ export class ControlPage implements OnInit {
       this.updateTitular(this.jugadoresId[i].id)
     }
 
+    //Resultado
+    if((document.getElementById('parFinalizado') as HTMLIonToggleElement).checked == true){
+      var local = (document.getElementById('localGol') as HTMLIonLabelElement).textContent
+      var visitante = (document.getElementById('visitanteGol') as HTMLIonLabelElement).textContent
+      var resultado = local + '-' + visitante
+      firebase.firestore().collection(this.dataService.getPathPartidos()).doc(this.idPartido).update({resultado: resultado})
+    }
+
   }catch(err){
-    console.log(err)
+  console.log(err)
   }
 
   }
+  
   async updateConvocatoria(jugadorId) {
 
     var num = 0

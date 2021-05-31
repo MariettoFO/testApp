@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth'
@@ -39,7 +39,7 @@ export class SignupPage implements OnInit {
   validationFormUser: FormGroup;
   loading: any;
 
-  constructor(private nav: NavController,private router: Router, public firebaseService: FirebaseService, private navCtr: NavController, private formBuilder: FormBuilder, private authService: AuthService, public loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
+  constructor(private menuCtrl: MenuController, private nav: NavController,private router: Router, public firebaseService: FirebaseService, private navCtr: NavController, private formBuilder: FormBuilder, private authService: AuthService, public loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.validationFormUser = this.formBuilder.group({
@@ -66,6 +66,8 @@ export class SignupPage implements OnInit {
       ]))
 
     })
+
+    this.menuCtrl.enable(false, 'first')
   }
 
   async peticionUser(){

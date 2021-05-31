@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-splash',
@@ -8,13 +9,14 @@ import { Router } from '@angular/router';
 })
 export class SplashPage implements OnInit {
 
-  constructor(public router: Router) { 
+  constructor(public router: Router, private menuCtrl: MenuController) { 
     setTimeout(() =>{
       this.router.navigateByUrl('login');
     }, 3000)
   }
 
   ngOnInit() {
+    this.menuCtrl.enable(false, 'first')
   }
 
 }

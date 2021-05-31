@@ -45,7 +45,7 @@
 
       </ion-item> -->
 
-      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival)" routerLink="control"> 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival, partido.resultado)" routerLink="control"> 
         <ion-label>
           <p><b>Jornada {{partido.jornada}}</b>
           <p><h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
@@ -78,7 +78,7 @@
 
       </ion-item> -->
 
-      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival)" routerLink="control"> 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival, partido.resultado)" routerLink="control"> 
         <ion-label>
           <p><b>Jornada {{partido.jornada}}</b>
           <h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
@@ -111,7 +111,7 @@
 
       </ion-item> -->
 
-      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival)" routerLink="control"> 
+      <ion-item detail="false" button vertical="center" lines="full" (click)="getPartidoSelect(partido.jornada, partido.id, partido.finalizado, partido.fecha, partido.campo, partido.rival, partido.resultado)" routerLink="control"> 
         <ion-label>
           <p><b>Jornada {{partido.jornada}}</b>
           <h2 *ngIf="partido.campo == 'local'">{{this.dataService.equipoSelect}} vs {{partido.rival}}</h2>
