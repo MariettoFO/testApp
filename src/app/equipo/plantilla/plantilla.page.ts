@@ -30,7 +30,7 @@ export class PlantillaPage implements OnInit {
   edad: Array<string>;
   idJugadores: Array<string>
 
-  constructor(public editAlert: AlertController, public deleteAlert: AlertController, private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
+  constructor(private alertCtrl: AlertController, public editAlert: AlertController, public deleteAlert: AlertController, private dataService: DataService, private modalCtrl: ModalController, private homePage: HomePage) { 
     this.selectSegment = 'todos'
     this.jugadores = []
     this.jugadoresId = []
@@ -339,30 +339,111 @@ export class PlantillaPage implements OnInit {
         }, {
           text: 'Cambiar',
           handler: (data) => {
-            if((data.txtPosicion).toUpperCase() == 'POR' || (data.txtPosicion).toUpperCase() == 'DEF' || (data.txtPosicion).toUpperCase() == 'MED' || (data.txtPosicion).toUpperCase() == 'DEL'){
-              if((data.txtPosicion).toUpperCase() == 'POR'){
-                data.txtPosicion = 'aPOR'
+            var posicion = false
+            var dorsal = false
+
+            if(data.txtNombre.length > 0 && data.txtApellidos.length > 0 && data.txtApodo.length > 0 && data.txtDorsal.length > 0 && data.txtEdad.length > 0){
+              if((data.txtPosicion).toUpperCase() == 'POR' || (data.txtPosicion).toUpperCase() == 'DEF' || (data.txtPosicion).toUpperCase() == 'MED' || (data.txtPosicion).toUpperCase() == 'DEL'){
+                if((data.txtPosicion).toUpperCase() == 'POR'){
+                  data.txtPosicion = 'aPOR'
+                }
+                if((data.txtPosicion).toUpperCase() == 'DEF'){
+                  data.txtPosicion = 'bDEF'
+                }
+                if((data.txtPosicion).toUpperCase() == 'MED'){
+                  data.txtPosicion = 'cMED'
+                }
+                if((data.txtPosicion).toUpperCase() == 'DEL'){
+                  data.txtPosicion = 'dDEL'
+                }
+              } else {
+                posicion = true
               }
-              if((data.txtPosicion).toUpperCase() == 'DEF'){
-                data.txtPosicion = 'bDEF'
+              
+              if(this.comprobarRepetido(data.txtDorsal) == true){
+                dorsal = true
               }
-              if((data.txtPosicion).toUpperCase() == 'MED'){
-                data.txtPosicion = 'cMED'
+
+              if(posicion == true && dorsal == true){
+                firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, edad: data.txtEdad })
+                this.alertCtrl.create({
+                  header: "Error en Posición y Dorsal",
+                  message: "Por favor, debe introducir correctamente los datos y comprobar que el dorsal introducido no haya sido asignado a ningún jugador.",
+                  buttons:[{
+                    text:'ok',
+                    // handler:()=>{
+                    //   this.navCtr.navigateBack(['entrenamiento-modal'])
+                    // }
+                  }]
+                }).then(async alert => await alert.present())
               }
-              if((data.txtPosicion).toUpperCase() == 'DEL'){
-                data.txtPosicion = 'dDEL'
+
+              if(posicion == true && dorsal == false) {
+                firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, edad: data.txtEdad })
+                this.alertCtrl.create({
+                  header: "Error al cambiar posicion",
+                  message: "Por favor, debe introducir correctamente los datos.",
+                  buttons:[{
+                    text:'ok',
+                    // handler:()=>{
+                    //   this.navCtr.navigateBack(['entrenamiento-modal'])
+                    // }
+                  }]
+                }).then(async alert => await alert.present())
               }
-            firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, posicion: data.txtPosicion, edad: data.txtEdad })
-            console.log('Confirm Okay');
+
+              if(posicion == false && dorsal == true) {
+                firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, posicion: data.txtPosicion, edad: data.txtEdad })
+                this.alertCtrl.create({
+                  header: "Error al cambiar dorsal",
+                  message: "Por favor, el dorsal introducido ya ha sido asignado a otro jugador.",
+                  buttons:[{
+                    text:'ok',
+                    // handler:()=>{
+                    //   this.navCtr.navigateBack(['entrenamiento-modal'])
+                    // }
+                  }]
+                }).then(async alert => await alert.present())
+              }
+
+              if (posicion == false && dorsal == false) {
+                firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, posicion: data.txtPosicion, edad: data.txtEdad })
+              }
+              
             } else {
-              firebase.firestore().collection(this.dataService.getPathJugadores()).doc(id).update({nombre: data.txtNombre, apellidos: data.txtApellidos, apodo: data.txtApodo, dorsal: data.txtDorsal, edad: data.txtEdad })
+              this.alertCtrl.create({
+                header: "Error al cambiar",
+                message: "Por favor, debe introducir correctamente los datos.",
+                buttons:[{
+                  text:'ok',
+                  // handler:()=>{
+                  //   this.navCtr.navigateBack(['entrenamiento-modal'])
+                  // }
+                }]
+              }).then(async alert => await alert.present())
             }
+          
+            
           }
         }] 
     })
 
     await alerta.present()
     
+  }
+
+  comprobarRepetido(dorsal) {
+    var bool = false
+    this.getJugadores()
+
+    for(var i = 0; this.jugadoresId.length > i; i++){
+      if(this.jugadoresId[i].dorsal == dorsal) {
+        bool = true
+        break
+      }
+    }
+
+    return bool
   }
 
   async borrarJugador(idJugador){

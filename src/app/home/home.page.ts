@@ -31,7 +31,7 @@ export class HomePage implements OnInit{
   pathEntrenamientos: string;
   pathPartidos: string;
 
-  constructor( private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
+  constructor(private alertCtrl: AlertController ,private modalCtrl: ModalController, public editAlert: AlertController,public deleteAlert: AlertController, private dataService: DataService) { 
       this.equipoSelect = ""
       this.pathJugadores = ""
       this.pathEntrenamientos = ""
@@ -159,6 +159,7 @@ export class HomePage implements OnInit{
 
   async editarEquipo(equipo){
     var id = ""
+    var error = false
 
     this.getEquipos()
     this.getIdEquipos()
@@ -175,6 +176,7 @@ export class HomePage implements OnInit{
       inputs: [{
         name: 'txtNombre',
         type: 'text',
+        value: equipo,
         placeholder: 'Nuevo nombre'
       }],
       buttons: [
@@ -188,13 +190,47 @@ export class HomePage implements OnInit{
         }, {
           text: 'Cambiar',
           handler: (data) => {
-            firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').doc(id).update({nombre: data.txtNombre})
-            console.log('Confirm Okay');
+            if(data.txtNombre.length > 0 && this.comprobarRepetido(data.txtNombre) == false){
+              firebase.firestore().collection('users/' + firebase.auth().currentUser.uid + '/equipos/').doc(id).update({nombre: data.txtNombre})
+              console.log('Confirm Okay');
+            } else {
+              
+                this.alertCtrl.create({
+                  header: "Error al cambiar",
+                  message: "Por favor, debe introducir un nombre de equipo válido.",
+                  buttons:[{
+                    text:'ok',
+                    // handler:()=>{
+                    //   this.navCtr.navigateBack(['entrenamiento-modal'])
+                    // }
+                  }]
+                }).then(async alert => await alert.present())
+              }
+            
           }
         }] 
     })
 
     await alerta.present()
+
+    
+  
+
+  }
+
+  comprobarRepetido(equipo) {
+    var bool = false
+    this.getEquipos()
+    this.getIdEquipos()
+
+    for(var i = 0; this.equipos.length > i; i++){
+      if(this.equipos[i].nombre == equipo) {
+        bool = true
+        break
+      }
+    }
+
+    return bool
   }
 
   async borrarEquipo(equipo){

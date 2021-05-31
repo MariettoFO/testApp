@@ -122,7 +122,7 @@ async salirGuardando(){
       await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
         var jugact = [];
         querySnapshot.forEach((doc) =>{
-          jugact.push({id: doc.id})
+          jugact.push({id: doc.id, dorsal: doc.data().dorsal})
         });
 
         console.log(idAntiguo + 'first')
@@ -134,26 +134,44 @@ async salirGuardando(){
 
       console.log(idAntiguo + 'after')
 
-      await this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
+      var bool = false
+    
+        for(var i = 0; idAntiguo.length > i; i++){
+          if(idAntiguo[i].dorsal == nuevoJugador.dorsal) {
+            bool = true
+            break
+          }
+        }
+    
 
-      await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
-        idNuevo = [];
-        querySnapshot.forEach((doc) =>{
-          idNuevo.push({id: doc.id})
-        });
-      })
+      if(bool != true){
+        await this.firebaseService.crearEquipo<Jugador>(nuevoJugador, path)
 
+        await firebase.firestore().collection(this.dataService.getPathJugadores()).get().then((querySnapshot) => {
+          idNuevo = [];
+          querySnapshot.forEach((doc) =>{
+            idNuevo.push({id: doc.id})
+          });
+        })
 
       await this.calcularId(idAntiguo, idNuevo)
 
-
-
       await this.firebaseService.crearEquipo<JugadorEstadistica>(nuevoJugadorEstadistica, this.dataService.pathJugadoresEstadistica)
+      this.modalCtrl.dismiss();
+    } else{
+      this.alertCtrl.create({
+        header: "Error al crear",
+        message: "Por favor, compruebe que el dorsal introducido no haya sido asignado a otro jugador previamente.",
+        buttons:[{
+          text:'ok',
+          // handler:()=>{
+          //   this.navCtr.navigateBack(['entrenamiento-modal'])
+          // }
+        }]
+      }).then(async alert => await alert.present())
+    }
+        
 
-        this.modalCtrl.dismiss({
-          // uid: firebase.auth().currentUser.uid,
-          // nombre: (document.getElementById("nombres") as HTMLInputElement).value
-        });
     } else {
       this.alertCtrl.create({
         header: "Error al crear",

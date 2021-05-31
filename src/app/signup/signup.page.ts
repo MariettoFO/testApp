@@ -79,7 +79,13 @@ export class SignupPage implements OnInit {
         tipo: (document.getElementById("tipo") as HTMLInputElement).value,
         revisado: false 
       }
+      const loading = await this.loadingCtrl.create({
+        message: 'Por favor, espera...'
+      })
+      loading.present()
+
       await this.firebaseService.crearEquipo<Peticiones>(peticion, 'peticion').then(obj => {
+        loading.dismiss()
         this.alertCtrl.create({
           header: "Solicitud enviada",
           message: "El equipo de Football Staff se pondrá pronto en contacto contigo.\nTambién puede contactar con nosotros directamente enviándonos un correo a: info.fstaff@gmail.com\n¡Muchas gracias!",
