@@ -31,6 +31,19 @@ export class EntrenamientoPage implements OnInit {
     this.getEntrenamientos()
   }
 
+  async infoAlert(){
+    await this.deleteAlert.create({
+      header: "Ayuda",
+      message: "En esta página podrás añadir entrenamientos y gestionar los eventos del mismo.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
+  }
+
   doRefresh(event){
     setTimeout(() => {
       event.target.complete();

@@ -4,8 +4,8 @@
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button>
-        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      <ion-button (click)="infoAlert()">
+        <ion-icon slot="icon-only" name="help-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{this.dataService.equipoSelect}}</ion-title>
@@ -42,7 +42,7 @@
         </ion-card>      
       </ion-col>
       <ion-col size=6>
-        <ion-card mode="md" button>
+        <ion-card mode="md" button routerLink="/ajustes">
           <ion-img src="../../assets/icon/configuracion.png"></ion-img>
           <ion-card-header>
             <ion-card-title style="text-align: center;">Ajustes</ion-card-title>

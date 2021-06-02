@@ -36,6 +36,7 @@ export class AppComponent {
     this.AppTitle="Football Staff"
     this.platform.ready().then(() => {
       SplashScreen.hide();
+      this.temaOscuro()
       this.statusBar.styleDefault();
       this.router.navigateByUrl('splash');
       // this.splashScreen.hide();
@@ -48,6 +49,13 @@ export class AppComponent {
       }
     }); //devuelve ios, android, electron o web
     
+  }
+
+  temaOscuro(){
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    if(prefersDark.matches){
+      document.body.classList.toggle('dark')
+    }
   }
 
   cerrarSesion(){

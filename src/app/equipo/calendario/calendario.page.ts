@@ -38,6 +38,7 @@ export class CalendarioPage implements OnInit {
     console.log($event);
   }
 
+
   eventSource = [];
   viewTitle: string;
  
@@ -57,6 +58,19 @@ export class CalendarioPage implements OnInit {
   ) {}
  
   ngOnInit() {}
+
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás ver los entrenamientos y partidos programados.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
+  }
  
   // Change current month/week/day
   next() {

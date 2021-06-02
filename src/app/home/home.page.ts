@@ -48,9 +48,23 @@ export class HomePage implements OnInit{
     this.menuCtrl.enable(true, 'first')  
   }
 
-  segmentChanged(event){
-    const valorSegmento = event.detail.value;
+
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás elegir el equipo que desees gestionar.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
   }
+
+  // segmentChanged(event){
+  //   const valorSegmento = event.detail.value;
+  // }
 
   async abrirModalEquipo(){
     const modal = await this.modalCtrl.create({

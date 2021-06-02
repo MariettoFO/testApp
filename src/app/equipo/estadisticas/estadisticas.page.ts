@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import firebase from 'firebase/app';
 import { GoogleChartComponent, GoogleChartInterface } from 'ng2-google-charts';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-estadisticas',
@@ -9,12 +12,26 @@ import { GoogleChartComponent, GoogleChartInterface } from 'ng2-google-charts';
 export class EstadisticasPage implements OnInit {
 
 googleChartLibrary
+jugados: Array<any>
+victoria: number
+empate: number
+derrota: number
+favor: number
+contra: number
+noGoles: boolean
 
-  constructor() { }
+  constructor(public dataService: DataService, private alertCtrl: AlertController) {
+    this.jugados = []
+    this.victoria = 0
+    this.empate = 0
+    this.derrota = 0
+    this.favor = 0
+    this.contra = 0
+    this.noGoles = true
+   }
 
   ngOnInit() {
-    this.graficoPartidos(); 
-    this.graficoGoles();  
+    this.getFinalizados()
   }
   
   graficoPartidos() {
@@ -37,15 +54,104 @@ googleChartLibrary
   // Callback that creates and populates a data table,
   // instantiates the pie chart, passes in the data and
   // draws it.
-  drawChartPartidos () {
+
+  async calcularGoles(){
+
+    // await this.getFinalizados()
+
+    for(var i = 0; i<this.dataService.partidosFinalizados.length; i++){
+      if(this.dataService.partidosFinalizados[i].campo == 'local'){
+        var result = this.dataService.partidosFinalizados[i].resultado.split('-');
+        this.favor += parseInt(result[0])
+        this.contra += parseInt(result[1])
+      }
+      if(this.dataService.partidosFinalizados[i].campo == 'visitante'){
+        var result = this.dataService.partidosFinalizados[i].resultado.split('-');
+        this.contra += parseInt(result[0])
+        this.favor += parseInt(result[1])
+      }
+    }
+
+    if(this.favor == 0 && this.contra == 0 && this.dataService.partidosFinalizados.length > 0){
+      this.noGoles = true
+    }
+  }
+
+  async calcularResultados(){
+    // await this.getFinalizados()
+
+    for(var i = 0; i<this.dataService.partidosFinalizados.length; i++){
+      if(this.dataService.partidosFinalizados[i].campo == 'local'){
+        var result = this.dataService.partidosFinalizados[i].resultado.split('-');
+        if(result[0] < result[1]){
+          this.derrota++
+        }
+        if(result[0] == result[1]){
+          this.empate++
+        }
+        if(result[0] > result[1]){
+          this.victoria++
+        }
+      }
+      if(this.dataService.partidosFinalizados[i].campo == 'visitante'){
+        var result = this.dataService.partidosFinalizados[i].resultado.split('-');
+        if(result[0] < result[1]){
+          this.victoria++
+        }
+        if(result[0] == result[1]){
+          this.empate++
+        }
+        if(result[0] > result[1]){
+          this.derrota++
+        }
+      }
+    }
+  }
+
+  getFinalizados(){
+  
+      firebase.firestore().collection(this.dataService.getPathPartidos()).where('finalizado', '==', true).orderBy('jornada').onSnapshot((querySnapshot) => {
+        var entact = [];
+        querySnapshot.forEach((doc) =>{
+          entact.push({id: doc.id,
+            jornada: doc.data().jornada, 
+            rival: doc.data().rival, 
+            campo: doc.data().campo,
+            fecha: doc.data().fecha,
+            hora: doc.data().hora,
+            resultado: doc.data().resultado,
+            finalizado: doc.data().finalizado})      
+          });
+  
+        this.jugados = entact
+        this.dataService.partidosFinalizados = entact
+
+        if(this.dataService.partidosFinalizados.length > 0){
+          this.graficoPartidos(); 
+          this.graficoGoles(); 
+        }
+
+        // if(this.dataService.partidosFinalizados.length == 0){
+        //   (document.getElementsByClassName('welcome-card') as unknown as HTMLIonCardElement).style.display = 'none'
+        // }
+      })
+      
+
+  
+      return this.jugados
+  }
+
+  async drawChartPartidos () {
+
+    await this.calcularResultados()
     // Create the data table.
     var data = new this.googleChartLibrary.visualization.DataTable();
     data.addColumn('string', 'Activity Name');
     data.addColumn('number', 'Partidos');
     data.addRows([
-      ['Ganados', 8],
-      ['Empatados', 8],
-      ['Perdidos', 2],
+      ['Ganados', this.victoria],
+      ['Empatados', this.empate],
+      ['Perdidos', this.derrota],
     ]);
 
     // Instantiate and draw our chart, passing in some options.
@@ -58,14 +164,29 @@ googleChartLibrary
     });
   }
 
-  drawChartGoles () {
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás ver las estadísticas de los entrenamientos y partidos finalizados.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
+  }
+
+  async drawChartGoles () {
+
+    await this.calcularGoles()
     // Create the data table.
     var data = new this.googleChartLibrary.visualization.DataTable();
     data.addColumn('string', 'Activity Name');
     data.addColumn('number', 'Goles');
     data.addRows([
-      ['A favor', 8],
-      ['En contra', 8],
+      ['A favor', this.favor],
+      ['En contra', this.contra],
     ]);
 
     // Instantiate and draw our chart, passing in some options.

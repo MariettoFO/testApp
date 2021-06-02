@@ -432,6 +432,19 @@ export class PlantillaPage implements OnInit {
     
   }
 
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás añadir jugadores a tu plantilla y ver sus datos.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
+  }
+
   comprobarRepetido(dorsal) {
     var bool = false
     this.getJugadores()

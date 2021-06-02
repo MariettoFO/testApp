@@ -20,7 +20,7 @@ export class PartidoPage implements OnInit {
   partidoSelect: string;
 
 
-  constructor(private modalCtrl: ModalController, public dataService: DataService, private deleteAlert: AlertController) { 
+  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController, public dataService: DataService, private deleteAlert: AlertController) { 
       this.selectSegment = 'todos'
       this.partido = []
       this.partidoSelect = ""
@@ -157,6 +157,19 @@ export class PartidoPage implements OnInit {
     this.dataService.resultadoPartido = resultado
 
     return this.dataService.numPartido, this.dataService.idPartido, this.dataService.parFinalizado, this.dataService.fechaPartido, this.dataService.campoPartido, this.dataService.rivalPartido, this.dataService.resultadoPartido
+  }
+
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás crear partidos y acceder a gestionar los eventos del mismo.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
   }
 
   async abrirModalPartido(){

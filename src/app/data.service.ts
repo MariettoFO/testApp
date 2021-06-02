@@ -28,6 +28,7 @@ rivalPartido: string;
 convocatoria: Array<Convocatoria>;
 emailUser: string;
 resultadoPartido: string;
+partidosFinalizados: Array<any>
 
 
   constructor(private http: HttpClient) { 
@@ -54,6 +55,7 @@ resultadoPartido: string;
     this.convocatoria = []  
     this.emailUser = ""
     this.resultadoPartido = ""
+    this.partidosFinalizados = []
 
   }
 

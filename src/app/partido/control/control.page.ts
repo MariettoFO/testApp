@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import { JugadorId } from 'src/app/interfaces';
 import firebase from 'firebase/app';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ControlPage implements OnInit {
   equipoLocal: string;
   equipoVisitante: string;
 
-  constructor(private dataService: DataService) { 
+  constructor(private dataService: DataService, private alertCtrl: AlertController) { 
     this.numPartido = this.dataService.numPartido
     this.jugadoresId = []
     this.idPartido = this.dataService.idPartido
@@ -188,6 +189,19 @@ export class ControlPage implements OnInit {
 
       }
     }
+  }
+
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás controlar los datos del partido. Si está marcado como finalizado aparecerá en la página de estadísticas y no podrás editar sus datos.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
   }
 
   esconderLista(){

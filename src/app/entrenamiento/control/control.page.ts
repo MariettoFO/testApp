@@ -11,6 +11,7 @@ import { Plugins } from '@capacitor/core';
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 import {File} from '@ionic-native/file/ngx'
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { AlertController } from '@ionic/angular';
 
 
 const { Device } = Plugins;
@@ -39,7 +40,7 @@ export class ControlPage implements OnInit {
 
 
 
-  constructor(public dataService: DataService, private fileChooser: FileChooser, private file: File, private filePath: FilePath,
+  constructor(public dataService: DataService, private fileChooser: FileChooser, private file: File, private filePath: FilePath, private alertCtrl: AlertController, 
     private fileOpener: FileOpener, private fireStorage: AngularFireStorage, private chooser: Chooser) {
     this.numEntrenamiento = this.dataService.numEntrenamiento
     this.jugadoresId = []
@@ -342,6 +343,19 @@ export class ControlPage implements OnInit {
     document.getElementById('listaAsistencia').style.display = 'none';
     (document.getElementById('iconAsistencia') as HTMLIonIconElement).name = 'chevron-forward-outline';
 
+  }
+
+  async infoAlert(){
+    await this.alertCtrl.create({
+      header: "Ayuda",
+      message: "En esta página podrás controlar los datos del entrenamiento.",
+      buttons:[{
+        text:'¡Entendido!',
+        // handler:()=>{
+        //   this.navCtr.navigateBack(['entrenamiento-modal'])
+        // }
+      }]
+    }).then(alert => alert.present())
   }
 
   checkearAsistencia(){

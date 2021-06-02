@@ -59,6 +59,18 @@ const routes: Routes = [
   },  {
     path: 'splash',
     loadChildren: () => import('./splash/splash.module').then( m => m.SplashPageModule)
+  },
+  {
+    path: 'acerca-de',
+    loadChildren: () => import('./acerca-de/acerca-de.module').then( m => m.AcercaDePageModule)
+  },
+  {
+    path: 'gestion-entrenadores',
+    loadChildren: () => import('./gestion-entrenadores/gestion-entrenadores.module').then( m => m.GestionEntrenadoresPageModule)
+  },
+  {
+    path: 'ajustes',
+    loadChildren: () => import('./ajustes/ajustes.module').then( m => m.AjustesPageModule)
   }
 
 ];
