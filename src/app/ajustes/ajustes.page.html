@@ -19,7 +19,7 @@
     <ion-item lines="full" vertical="center" detail="false">
       <ion-icon slot="start" name="moon"></ion-icon>
       <ion-label>Modo oscuro</ion-label>
-      <ion-toggle slot="end" ngModel="modoOscuro" (ionChange)="temaOscuro()"></ion-toggle>
+      <ion-toggle slot="end" [ngModel]="modoOscuro" (ionChange)="temaOscuro()"></ion-toggle>
     </ion-item>
     <ion-item-divider>Cuenta</ion-item-divider>
     <ion-item button vertical="center" lines="full" (click)="cerrarSesion()">

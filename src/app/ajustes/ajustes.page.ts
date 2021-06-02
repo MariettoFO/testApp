@@ -33,7 +33,13 @@ export class AjustesPage implements OnInit {
   }
 
   temaOscuro(){
+    this.modoOscuro = !this.modoOscuro;
     document.body.classList.toggle('dark')
+    // if(event.detail.checked){
+    //   document.body.setAttribute('color-theme', 'dark')
+    // } else {
+    //   document.body.setAttribute('color-theme', 'light')
+    // }
   }
 
   cerrarSesion(){
