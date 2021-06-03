@@ -239,34 +239,25 @@ export class PartidoPage implements OnInit {
   }
 
   borrarPartidoJugador(jugadorId, fechaPartido){
-    // for(var i = 0; this.dataService.jugadoresId.length > i; i++){
-    //   var path = this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas' + idPartido
-    //   firebase.firestore().collection(this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-    //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-    //   });
-    // }
 
-    // var docId = ""
     var num = 0
-    // var asistencia = []
-    // var falta = []
     var checkedConv = ""
     var checkedTit = ""
 
-    //Para saber posicion del array de asistencia
+    //Para saber posicion del array de convocatoria
     for(var i = 0; i<this.dataService.jugadoresId.length; i++){
       if(this.dataService.jugadoresId[i].id == jugadorId){
         num = i
       }
     }
-      //Comprobar si existe la fecha en asiste
+      //Comprobar si existe la fecha en convocado
       for(var i = 0; i<this.dataService.convocatoria[num].convocado.length; i++){
         if(this.dataService.convocatoria[num].convocado[i] == fechaPartido){
           checkedConv = "convocado"
         }
       }
 
-      //Comprobar si existe la fecha en falta
+      //Comprobar si existe la fecha en desconvocado
       for(var i = 0; i<this.dataService.convocatoria[num].desconvocado.length; i++){
         if(this.dataService.convocatoria[num].desconvocado[i] == fechaPartido){
           checkedConv = "desconvocado"
@@ -280,44 +271,12 @@ export class PartidoPage implements OnInit {
         }
       }
 
-      //Si no se ha registrado aun esta fecha
-      // if (checkedAsist != 'asiste' && checkedAsist != 'falta') {
-
-      //   //Si no está marcado...
-      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false && bool == false) {
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-      //   //   });
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     asiste: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-      //   //   });
-      //   //   bool = true
-      //   // }
-    
-      //   // //Si está marcado...
-      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true && bool == false) {
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-      //   //   });
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-      //   //   });
-      //   //   bool = true
-      //   // }
-      // }
-
-      //Si se ha registrado esta fecha en asistencia se elimina de asistencia y se añade en falta
+     
       if (checkedConv == 'convocado') {
 
-        //Si no está marcado...
-        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false) {
-          // firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-          //   falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-          // });
           firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.convocatoria[num].id).update({
             convocado: firebase.firestore.FieldValue.arrayRemove(fechaPartido)
           });
-        // }
       }
 
       //Si se ha registrado esta fecha en falta se elimina de falta y se añade en asistencia

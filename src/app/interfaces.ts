@@ -4,7 +4,6 @@ export interface User {
     correo: string;
     master: Array<AccesoUsuario>;
     entrenador: Array<AccesoUsuario>
-    // equipos: string;
 }
 
 export interface AccesoUsuario {
@@ -13,7 +12,6 @@ export interface AccesoUsuario {
 }
 
 export interface Equipo {
-    // id: string;
     nombre: string;
     minutos: string;
     modalidad: string;
