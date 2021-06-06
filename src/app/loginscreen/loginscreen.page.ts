@@ -51,25 +51,19 @@ export class LoginscreenPage implements OnInit {
         console.log(resp);
         this.dataService.emailUser = firebase.auth().currentUser.email
         this.router.navigate(['home']);
-        // const path = "users/"
-        // const nuevoEquipo: User = {
-        //   uid: firebase.auth().currentUser.uid,
-        //   correo: (document.getElementById("email") as HTMLInputElement).value
-        // }
-        // this.firebaseService.crearEquipo<User>(nuevoEquipo, path);
+        this.menuCtrl.enable(true, 'first')
       }, error=>{
         this.loadingCtrl.dismiss();
         this.errorLoading(error.message);
       })
     }catch(error){
       console.log(error);
-      // this.errorLoading(err.message);
     }
   }
   async errorLoading(message: any){
     const loading = await this.alertCtrl.create({
       header: "Error al iniciar sesión",
-      message: "Compruebe que los datos introducidos sean los correctos.",
+      message: "Compruebe su conexión a internet o si los datos introducidos son los correctos.",
       buttons:[{
         text:'ok',
         handler:()=>{

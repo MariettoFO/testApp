@@ -117,12 +117,14 @@ export class HomePage implements OnInit{
     const db = firebase.firestore();
 
     const getEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").onSnapshot((querySnapshot) => {
-      querySnapshot.docs.forEach(doc =>
+      querySnapshot.docs.forEach(doc => {
+        this.equipos = []
         this.equipos.push({id: doc.id, 
           nombre: doc.data().nombre, 
           minutos: doc.data().minutos, 
           modalidad: doc.data().modalidad, 
-          convocados: doc.data().convocados}))
+          convocados: doc.data().convocados})
+        })
       })
 
     // const getIdEquipos = db.collection('users/' + firebase.auth().currentUser.uid + '/equipos/').orderBy("nombre").get().then((querySnapshot) => {

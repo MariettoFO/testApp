@@ -14,45 +14,31 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card class="welcome-card">
     <ion-card-header>
       <ion-card-subtitle>Equipo</ion-card-subtitle>
       <ion-card-title>Partidos</ion-card-title>
     </ion-card-header>
     <ion-card-content id="pie-chart-div-partidos" style="padding: 0;">
-      <ion-item *ngIf="this.dataService.partidosFinalizados.length < 1" detail="false" vertical="center" lines="full">  
+      <ion-item *ngIf="this.noGraphic == true" detail="false" vertical="center" lines="full">  
         <ion-label style="text-align: center;" id="lblPartidosVacios">Disponible tras finalizar partidos</ion-label>
       </ion-item>
-      <!-- <div id="pie-chart-div-partidos"></div> -->
     </ion-card-content>
-    <!-- <ion-card-content *ngIf="this.victoria > 0 || this.empate > 0 || this.derrota > 0" id="pie-chart-div-partidos" style="padding: 0;">
-    </ion-card-content> -->
-    <!-- <ion-card-content *ngIf="this.victoria == 0 && this.empate == 0 && this.derrota == 0">
-      <ion-label>Disponible tras finalizar al menos un partido</ion-label>
-    </ion-card-content> -->
   </ion-card>
-  <!-- <ion-card *ngIf="this.favor > 0 || this.contra > 0 && this.jugados.length > 0" class="welcome-card">
-    <ion-card-header>
-      <ion-card-subtitle>Equipo</ion-card-subtitle>
-      <ion-card-title>Goles</ion-card-title>
-    </ion-card-header>
-    <ion-card-content id="pie-chart-div-goles" style="padding: 0;">
-    </ion-card-content>
-    <ion-card-content *ngIf="this.favor == 0 && this.contra == 0">
-      <ion-label>Disponible tras finalizar al menos un partido</ion-label>
-    </ion-card-content>
-  </ion-card> -->
   <ion-card class="welcome-card">
     <ion-card-header>
       <ion-card-subtitle>Equipo</ion-card-subtitle>
       <ion-card-title>Goles</ion-card-title>
     </ion-card-header>
     <ion-card-content id="pie-chart-div-goles" style="padding: 0;">
-      <ion-item *ngIf="this.dataService.partidosFinalizados.length < 1" detail="false" vertical="center" lines="full">  
+      <ion-item *ngIf="this.noGraphic == true" detail="false" vertical="center" lines="full">  
         <ion-label style="text-align: center;" id="lblPartidosVacios">Disponible tras finalizar partidos</ion-label>
       </ion-item>
-      <ion-item *ngIf="this.noGoles == true" detail="false" vertical="center" lines="full">  
-        <ion-label style="text-align: center;" id="lblPartidosVacios">Disponible tras finalizar partidos</ion-label>
+      <ion-item *ngIf="this.noGoles == true && this.noGraphic == false" detail="false" vertical="center" lines="full">  
+        <ion-label style="text-align: center;" id="lblPartidosVacios">Disponible tras anotar goles</ion-label>
       </ion-item>
     </ion-card-content>
   </ion-card>

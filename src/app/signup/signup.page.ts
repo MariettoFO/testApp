@@ -97,7 +97,9 @@ export class SignupPage implements OnInit {
               this.navCtr.navigateBack(['login'])
             }
           }]
-        }).then(alert => alert.present())
+        }).then(alert => {
+          this.loadingCtrl.dismiss();
+          alert.present()})
       }), error => {
         this.alertCtrl.create({
           header: "Error al enviar",
@@ -108,20 +110,12 @@ export class SignupPage implements OnInit {
               this.navCtr.navigateBack(['login'])
             }
           }]
-        }).then(alert => alert.present())
+        }).then(alert => {
+          this.loadingCtrl.dismiss();
+          alert.present()
+        })
       }
 
-      this.loadingCtrl.dismiss();
-      this.alertCtrl.create({
-        header: "Solicitud enviada",
-        message: "El equipo de Football Staff se pondrá pronto en contacto contigo.\nTambién puede contactar con nosotros directamente enviándonos un correo a: info.fstaff@gmail.com\n¡Muchas gracias!",
-        buttons:[{
-          text:'ok',
-          handler:()=>{
-            this.navCtr.navigateBack(['login'])
-          }
-        }]
-      }).then(alert => alert.present())
     }catch(error){
       console.log(error)
     } 

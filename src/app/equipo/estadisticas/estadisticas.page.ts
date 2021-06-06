@@ -19,6 +19,7 @@ derrota: number
 favor: number
 contra: number
 noGoles: boolean
+noGraphic: boolean
 
   constructor(public dataService: DataService, private alertCtrl: AlertController) {
     this.jugados = []
@@ -28,6 +29,7 @@ noGoles: boolean
     this.favor = 0
     this.contra = 0
     this.noGoles = true
+    this.noGraphic = false
    }
 
   ngOnInit() {
@@ -57,7 +59,9 @@ noGoles: boolean
 
   async calcularGoles(){
 
-    // await this.getFinalizados()
+    this.noGoles = false
+    this.contra = 0
+    this.favor = 0
 
     for(var i = 0; i<this.dataService.partidosFinalizados.length; i++){
       if(this.dataService.partidosFinalizados[i].campo == 'local'){
@@ -75,10 +79,14 @@ noGoles: boolean
     if(this.favor == 0 && this.contra == 0 && this.dataService.partidosFinalizados.length > 0){
       this.noGoles = true
     }
+
+    return this.noGoles
   }
 
   async calcularResultados(){
-    // await this.getFinalizados()
+    this.derrota = 0
+    this.empate = 0
+    this.victoria = 0
 
     for(var i = 0; i<this.dataService.partidosFinalizados.length; i++){
       if(this.dataService.partidosFinalizados[i].campo == 'local'){
@@ -110,7 +118,7 @@ noGoles: boolean
 
   getFinalizados(){
   
-      firebase.firestore().collection(this.dataService.getPathPartidos()).where('finalizado', '==', true).orderBy('jornada').onSnapshot((querySnapshot) => {
+      firebase.firestore().collection(this.dataService.getPathPartidos()).where('finalizado', '==', true).orderBy('jornada').onSnapshot(async (querySnapshot) => {
         var entact = [];
         querySnapshot.forEach((doc) =>{
           entact.push({id: doc.id,
@@ -127,13 +135,15 @@ noGoles: boolean
         this.dataService.partidosFinalizados = entact
 
         if(this.dataService.partidosFinalizados.length > 0){
+          this.noGraphic = false
           this.graficoPartidos(); 
-          this.graficoGoles(); 
+          if(await this.calcularGoles() == false){
+            this.graficoGoles(); 
+          }
+        } else {
+          this.noGraphic = true
         }
 
-        // if(this.dataService.partidosFinalizados.length == 0){
-        //   (document.getElementsByClassName('welcome-card') as unknown as HTMLIonCardElement).style.display = 'none'
-        // }
       })
       
 
@@ -169,10 +179,7 @@ noGoles: boolean
       header: "Ayuda",
       message: "En esta página podrás ver las estadísticas de los entrenamientos y partidos finalizados.",
       buttons:[{
-        text:'¡Entendido!',
-        // handler:()=>{
-        //   this.navCtr.navigateBack(['entrenamiento-modal'])
-        // }
+        text:'¡Entendido!'
       }]
     }).then(alert => alert.present())
   }
@@ -197,5 +204,12 @@ noGoles: boolean
       'height': 300,
       'colors': ['#32a846', '#c41818'],
     });
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      event.target.complete();
+      this.ngOnInit()
+    }, 1500);
   }
 }

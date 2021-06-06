@@ -197,7 +197,7 @@ export class EntrenamientoPage implements OnInit {
     const alerta = await this.deleteAlert.create({
       header: 'Alerta',
       subHeader: 'Ten cuidado',
-      message: 'Va a borrar el entrenamiento nº' + this.entrenamientoId[i].numero + ' , perderá todos los datos de este entrenamiento. ¿Desea continuar?',
+      message: 'Va a borrar el entrenamiento nº' + this.entrenamientoId[i].numero + ', perderá todos los datos de este entrenamiento. ¿Desea continuar?',
       buttons: [
         {
           text: 'Cancelar',
@@ -223,17 +223,8 @@ export class EntrenamientoPage implements OnInit {
   }
 
   borrarEntrenamientoJugador(jugadorId, fechaEntrenamiento){
-    // for(var i = 0; this.dataService.jugadoresId.length > i; i++){
-    //   var path = this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas' + idEntrenamiento
-    //   firebase.firestore().collection(this.dataService.pathJugadores + this.dataService.jugadoresId[i].id + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-    //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-    //   });
-    // }
 
-    // var docId = ""
     var num = 0
-    // var asistencia = []
-    // var falta = []
     var checkedAsist = ""
     var bool = false
 
@@ -257,63 +248,25 @@ export class EntrenamientoPage implements OnInit {
         }
       }
 
-      //Si no se ha registrado aun esta fecha
-      // if (checkedAsist != 'asiste' && checkedAsist != 'falta') {
-
-      //   //Si no está marcado...
-      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false && bool == false) {
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-      //   //   });
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     asiste: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-      //   //   });
-      //   //   bool = true
-      //   // }
-    
-      //   // //Si está marcado...
-      //   // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true && bool == false) {
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-      //   //   });
-      //   //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-      //   //     falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
-      //   //   });
-      //   //   bool = true
-      //   // }
-      // }
-
       //Si se ha registrado esta fecha en asistencia se elimina de asistencia y se añade en falta
       if (checkedAsist == 'asiste' && bool == false) {
 
         //Si no está marcado...
-        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == false) {
-          // firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-          //   falta: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-          // });
           firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             asiste: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
           });
           bool = true
-        // }
       }
 
       //Si se ha registrado esta fecha en falta se elimina de falta y se añade en asistencia
       if (checkedAsist == 'falta' && bool == false) {
     
         //Si está marcado...
-        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true) {
-        //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-        //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-        //   });
           firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
             falta: firebase.firestore.FieldValue.arrayRemove(fechaEntrenamiento)
           });
           bool = true
-        }
-      // }
-
-    
+        }    
   }
 
 

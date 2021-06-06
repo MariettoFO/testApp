@@ -19,4 +19,8 @@ export class SplashPage implements OnInit {
     this.menuCtrl.enable(false, 'first')
   }
 
+  goLogin(){
+    this.router.navigateByUrl('login');
+  }
+
 }

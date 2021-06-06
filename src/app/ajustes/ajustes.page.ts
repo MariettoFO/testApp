@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, MenuController } from '@ionic/angular';
+import { DataService } from '../data.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,9 +12,8 @@ export class AjustesPage implements OnInit {
 
   modoOscuro: boolean
 
-  constructor(private alertCtrl: AlertController, private authService: AuthService, private menuCtrl: MenuController) { 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.modoOscuro = prefersDark.matches
+  constructor(private alertCtrl: AlertController, private authService: AuthService, private dataService: DataService, private menuCtrl: MenuController) { 
+    this.modoOscuro = this.dataService.modoOscuro
   }
 
   ngOnInit() {
@@ -24,22 +24,14 @@ export class AjustesPage implements OnInit {
       header: "Ayuda",
       message: "En esta página podrás modificar la configuración de la aplicación.",
       buttons:[{
-        text:'¡Entendido!',
-        // handler:()=>{
-        //   this.navCtr.navigateBack(['entrenamiento-modal'])
-        // }
+        text:'¡Entendido!'
       }]
     }).then(alert => alert.present())
   }
 
   temaOscuro(){
-    this.modoOscuro = !this.modoOscuro;
+    this.dataService.modoOscuro = !this.dataService.modoOscuro;
     document.body.classList.toggle('dark')
-    // if(event.detail.checked){
-    //   document.body.setAttribute('color-theme', 'dark')
-    // } else {
-    //   document.body.setAttribute('color-theme', 'light')
-    // }
   }
 
   cerrarSesion(){

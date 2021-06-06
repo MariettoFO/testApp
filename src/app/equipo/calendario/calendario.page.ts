@@ -3,14 +3,8 @@ import { CalendarComponent } from 'ionic2-calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
-// import { CalModalPage } from '../pages/cal-modal/cal-modal.page';
-
-// import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponentOptions, CalendarModule } from 'ion2-calendar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
-
 
 
 @Component({
@@ -18,21 +12,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   templateUrl: './calendario.page.html',
   styleUrls: ['./calendario.page.scss'],
 })
+
 export class CalendarioPage implements OnInit {
-
-  // date: string;
-  // type: 'string';
-  // dateMulti: string[];
-
-  // constructor(public calendary: CalendarModule, public forms: FormsModule) {
-  //  }
-
-  // ngOnInit() {
-  // }
-
-  // optionsMulti: CalendarComponentOptions = {
-  //   pickMode: 'multi'
-  // };
 
   onChange($event) {
     console.log($event);
@@ -64,15 +45,12 @@ export class CalendarioPage implements OnInit {
       header: "Ayuda",
       message: "En esta página podrás ver los entrenamientos y partidos programados.",
       buttons:[{
-        text:'¡Entendido!',
-        // handler:()=>{
-        //   this.navCtr.navigateBack(['entrenamiento-modal'])
-        // }
+        text:'¡Entendido!'
       }]
     }).then(alert => alert.present())
   }
  
-  // Change current month/week/day
+  // Cambia de fecha
   next() {
     this.myCal.slideNext();
   }
@@ -81,90 +59,97 @@ export class CalendarioPage implements OnInit {
     this.myCal.slidePrev();
   }
  
-  // Selected date reange and hence title changed
+  // Selecciona el rango de fecha y actualiza el titulo
   onViewTitleChanged(title) {
+    if(title == ''){
+
+    }
+    switch(title){
+      case 'January 2021':
+        this.viewTitle = 'Enero'
+    }
     this.viewTitle = title;
   }
  
   // Calendar event was clicked
-  async onEventSelected(event) {
-    // Use Angular date pipe for conversion
-    let start = formatDate(event.startTime, 'medium', this.locale);
-    let end = formatDate(event.endTime, 'medium', this.locale);
+  // async onEventSelected(event) {
+  //   // Use Angular date pipe for conversion
+  //   let start = formatDate(event.startTime, 'medium', this.locale);
+  //   let end = formatDate(event.endTime, 'medium', this.locale);
  
-    const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK'],
-    });
-    alert.present();
-  }
+  //   const alert = await this.alertCtrl.create({
+  //     header: event.title,
+  //     subHeader: event.desc,
+  //     message: 'From: ' + start + '<br><br>To: ' + end,
+  //     buttons: ['OK'],
+  //   });
+  //   alert.present();
+  // }
  
-  createRandomEvents() {
-    var events = [];
-    for (var i = 0; i < 50; i += 1) {
-      var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
-      var startDay = Math.floor(Math.random() * 90) - 45;
-      var endDay = Math.floor(Math.random() * 2) + startDay;
-      var startTime;
-      var endTime;
-      if (eventType === 0) {
-        startTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + startDay
-          )
-        );
-        if (endDay === startDay) {
-          endDay += 1;
-        }
-        endTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + endDay
-          )
-        );
-        events.push({
-          title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: true,
-        });
-      } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
-        startTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + startDay,
-          0,
-          date.getMinutes() + startMinute
-        );
-        endTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + endDay,
-          0,
-          date.getMinutes() + endMinute
-        );
-        events.push({
-          title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false,
-        });
-      }
-    }
-    this.eventSource = events;
-  }
+  // createRandomEvents() {
+  //   var events = [];
+  //   for (var i = 0; i < 50; i += 1) {
+  //     var date = new Date();
+  //     var eventType = Math.floor(Math.random() * 2);
+  //     var startDay = Math.floor(Math.random() * 90) - 45;
+  //     var endDay = Math.floor(Math.random() * 2) + startDay;
+  //     var startTime;
+  //     var endTime;
+  //     if (eventType === 0) {
+  //       startTime = new Date(
+  //         Date.UTC(
+  //           date.getUTCFullYear(),
+  //           date.getUTCMonth(),
+  //           date.getUTCDate() + startDay
+  //         )
+  //       );
+  //       if (endDay === startDay) {
+  //         endDay += 1;
+  //       }
+  //       endTime = new Date(
+  //         Date.UTC(
+  //           date.getUTCFullYear(),
+  //           date.getUTCMonth(),
+  //           date.getUTCDate() + endDay
+  //         )
+  //       );
+  //       events.push({
+  //         title: 'All Day - ' + i,
+  //         startTime: startTime,
+  //         endTime: endTime,
+  //         allDay: true,
+  //       });
+  //     } else {
+  //       var startMinute = Math.floor(Math.random() * 24 * 60);
+  //       var endMinute = Math.floor(Math.random() * 180) + startMinute;
+  //       startTime = new Date(
+  //         date.getFullYear(),
+  //         date.getMonth(),
+  //         date.getDate() + startDay,
+  //         0,
+  //         date.getMinutes() + startMinute
+  //       );
+  //       endTime = new Date(
+  //         date.getFullYear(),
+  //         date.getMonth(),
+  //         date.getDate() + endDay,
+  //         0,
+  //         date.getMinutes() + endMinute
+  //       );
+  //       events.push({
+  //         title: 'Event - ' + i,
+  //         startTime: startTime,
+  //         endTime: endTime,
+  //         allDay: false,
+  //       });
+  //     }
+  //   }
+  //   this.eventSource = events;
+  // }
  
-  removeEvents() {
-    this.eventSource = [];
-  }
+  // removeEvents() {
+  //   this.eventSource = [];
+  // }
  
 
 }

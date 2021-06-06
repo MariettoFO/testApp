@@ -12,6 +12,7 @@ import { PartidoModalPage } from '../partido-modal/partido-modal.page';
   templateUrl: './partido.page.html',
   styleUrls: ['./partido.page.scss'],
 })
+
 export class PartidoPage implements OnInit {
   selectSegment: string;
   partido: Array<PartidoId>;
@@ -83,20 +84,6 @@ export class PartidoPage implements OnInit {
       this.programados = entact
     })
 
-    // this.dataService.convocatoria = []
-
-    // for(var x = 0; x<this.jugadoresId.length; x++){
-    //   firebase.firestore().collection(this.dataService.pathJugadores + this.jugadoresId[x].id + '/estadisticas').get().then((querySnapshot) => {
-    //     var estact = [];
-    //     querySnapshot.forEach((doc) =>{
-    //       this.dataService.convocatoria.push({id: doc.id, convocado: doc.data().convocado, desconvocado: doc.data().desconvocado, titular: doc.data().titular})
-
-    //     })
-
-    //     console.log(this.dataService.convocatoria)
-
-    //   })
-
       firebase.firestore().collection(this.dataService.getPathJugadores()).orderBy("posicion").onSnapshot((querySnapshot) => {
         var jugact = [];
         querySnapshot.forEach((doc) =>{
@@ -164,10 +151,7 @@ export class PartidoPage implements OnInit {
       header: "Ayuda",
       message: "En esta página podrás crear partidos y acceder a gestionar los eventos del mismo.",
       buttons:[{
-        text:'¡Entendido!',
-        // handler:()=>{
-        //   this.navCtr.navigateBack(['entrenamiento-modal'])
-        // }
+        text:'¡Entendido!'
       }]
     }).then(alert => alert.present())
   }
@@ -194,7 +178,6 @@ export class PartidoPage implements OnInit {
 
   doRefresh(event){
     setTimeout(() => {
-      // this.getJugadores()
       event.target.complete();
     }, 1500);
   }
@@ -213,7 +196,7 @@ export class PartidoPage implements OnInit {
     const alerta = await this.deleteAlert.create({
       header: 'Alerta',
       subHeader: 'Ten cuidado',
-      message: 'Va a borrar la jornada nº' + this.dataService.partidos[i].jornada + ' , perderá todos los datos de este partido. ¿Desea continuar?',
+      message: 'Va a borrar la jornada nº' + this.dataService.partidos[i].jornada + ', perderá todos los datos de este partido. ¿Desea continuar?',
       buttons: [
         {
           text: 'Cancelar',
@@ -283,10 +266,6 @@ export class PartidoPage implements OnInit {
       if (checkedConv == 'desconvocado') {
     
         //Si está marcado...
-        // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true) {
-        //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-        //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-        //   });
           firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.convocatoria[num].id).update({
             desconvocado: firebase.firestore.FieldValue.arrayRemove(fechaPartido)
           });
@@ -295,17 +274,10 @@ export class PartidoPage implements OnInit {
         if (checkedTit == 'titular') {
     
           //Si está marcado...
-          // if ((document.getElementById('asiste' + jugadorId) as HTMLIonCheckboxElement).checked == true) {
-          //   firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.asistencia[num].id).update({
-          //     asiste: firebase.firestore.FieldValue.arrayUnion(fechaEntrenamiento)
-          //   });
             firebase.firestore().collection(this.dataService.pathJugadores + jugadorId + '/estadisticas').doc(this.dataService.convocatoria[num].id).update({
               titular: firebase.firestore.FieldValue.arrayRemove(fechaPartido)
             });
-          }
-      // }
-
-    
+          }  
   }
 
 }

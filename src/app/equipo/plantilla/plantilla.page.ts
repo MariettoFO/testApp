@@ -360,7 +360,7 @@ export class PlantillaPage implements OnInit {
                 posicion = true
               }
               
-              if(this.comprobarRepetido(data.txtDorsal) == true){
+              if(this.comprobarRepetido(data.txtDorsal, idJugador) == true){
                 dorsal = true
               }
 
@@ -445,12 +445,12 @@ export class PlantillaPage implements OnInit {
     }).then(alert => alert.present())
   }
 
-  comprobarRepetido(dorsal) {
+  comprobarRepetido(dorsal, id) {
     var bool = false
     this.getJugadores()
 
     for(var i = 0; this.jugadoresId.length > i; i++){
-      if(this.jugadoresId[i].dorsal == dorsal) {
+      if(this.jugadoresId[i].dorsal == dorsal && this.jugadoresId[i].id != id) {
         bool = true
         break
       }
