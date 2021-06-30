@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-ajustes',
   templateUrl: './ajustes.page.html',
   styleUrls: ['./ajustes.page.scss'],
-})
+}) 
 export class AjustesPage implements OnInit {
 
   modoOscuro: boolean
@@ -40,4 +40,4 @@ export class AjustesPage implements OnInit {
   }
 }
 
-//PRUEBA
+//PRUEBA 44
