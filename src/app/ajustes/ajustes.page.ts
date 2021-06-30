@@ -39,3 +39,5 @@ export class AjustesPage implements OnInit {
     this.menuCtrl.enable(false, 'first')
   }
 }
+
+//PRUEBA

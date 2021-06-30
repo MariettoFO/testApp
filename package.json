@@ -34,7 +34,7 @@
     "@ionic-native/image-picker": "^5.30.0",
     "@ionic-native/screen-orientation": "^5.33.0",
     "@ionic-native/status-bar": "^5.0.0",
-    "@ionic/angular": "^5.0.0",
+    "@ionic/angular": "^5.6.10",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.1",
     "bootstrap-icons": "^1.5.0",
@@ -58,7 +58,7 @@
     "moment": "^2.29.1",
     "ng2-google-charts": "^6.1.0",
     "rxjs": "~6.5.5",
-    "tslib": "^2.0.0",
+    "tslib": "^2.3.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
